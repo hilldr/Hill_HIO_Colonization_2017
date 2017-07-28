@@ -1,0 +1,19 @@
+#+LaTeX_CLASS: elife-paper
+#+LATEX_HEADER:\usepackage[utf8]{inputenc}
+#+OPTIONS: tex:t
+#+OPTIONS: toc:nil
+#+OPTIONS: H:7 num:0
+# +LaTeX_CLASS_OPTIONS: []
+#+LATEX_HEADER:\sisetup{detect-all}
+# https://submit.elifesciences.org/html/elife_author_instructions.html
+#+AUTHOR:
+#+TITLE: 
+ #+BEGIN_LATEX
+ \begin{figure}
+ \begin{fullwidth}
+ \centering\includegraphics[width=0.5\linewidth]{./figures/figure6/Supplemental_Figure4_Muc2-NFkB.pdf}
+ \caption*{\textbf{Figure 6 - Supplement 1. }Representative confocal micrographs of HIOs treated as indicated. Fluorescent immunostaining pseudocoloring applied as indicated in the figure legend. 40X optical magnification with 3X digital zoom.}
+ \label{fig:fullwidth}
+ \end{fullwidth}
+ \end{figure}
+ #+END_LATEX
