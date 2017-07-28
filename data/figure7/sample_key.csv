@@ -1,0 +1,32 @@
+organoid,treatment,exclude
+1,TNF&IFN,0
+2,TNF&IFN,0
+3,TNF&IFN,0
+4,TNF&IFN,1
+5,TNF&IFN,1
+6,TNF&IFN,1
+7,TNF&IFN,0
+8,TNF&IFN,0
+9,TNF&IFN,0
+10,PBS,0
+11,PBS,0
+12,PBS,0
+13,PBS,0
+14,PBS,0
+15,PBS,0
+16,PBS,0
+17,PBS,0
+18,E. coli,0
+19,E. coli,0
+20,E. coli,0
+21,E. coli,0
+22,E. coli,0
+23,E. coli,0
+24,E. coli,0
+25,E. coli,0
+26,E. coli + TNF&IFN,0
+27,E. coli + TNF&IFN,0
+28,E. coli + TNF&IFN,0
+29,E. coli + TNF&IFN,0
+30,E. coli + TNF&IFN,0
+31,E. coli + TNF&IFN,0
