@@ -26,6 +26,29 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	mv $(TEXT).pdf $(FINALTEXT).pdf
 	rm *.bib *.cls *.bst
 
+## output "track changes" pdf
+changes: $(FINALTEXT)_changes.pdf
+$(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
+	./figures/figure1/figure1_multipanel.pdf \
+	./figures/figure2/figure2_multipanel.pdf \
+	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
+	./figures/figure5/figure5_multipanel.pdf \
+	./figures/figure6/figure6_multipanel.pdf \
+	./figures/figure7/figure7_multipanel.pdf \
+	./revisions/elife-1st-submission.tex
+	latexdiff --type=CTRADITIONAL ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
+	pdflatex -output-directory src $(TEXT)_changes
+	pdflatex -output-directory src $(TEXT)_changes
+	cp ./src/bibliography.bib ./
+	cp ./src/elife.cls ./
+	cp ./src/vancouver-elife.bst ./
+	bibtex $(TEXT)_changes
+	pdflatex -output-directory src $(TEXT)_changes
+	pdflatex -output-directory src $(TEXT)_changes
+	mv $(TEXT)_changes.pdf $(FINALTEXT)_changes.pdf
+	rm *.bib *.cls *.bst 
+
 ## output to bioRxiv PDF
 ## work in progress, partially working
 br-pdf: $(BIORXIV).pdf
