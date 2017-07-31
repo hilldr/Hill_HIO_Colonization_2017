@@ -1,3 +1,5 @@
+#+PROPERTY: COOKIE_DATA todo recursive
+
 * Letter from eLife [2017-07-22 Sat]
 From: editorial@elifesciences.org<mailto:editorial@elifesciences.org>
 Date: July 22, 2017 at 10:45:16 AM EDT
@@ -96,31 +98,164 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 * elisp script for custom TODO tracking in Org-mode
 #+begin_src emacs-lisp :eval yes :results silent
 ;; execute this code block to add this agenda view to org-agenda menu
+;; this only needs to be run once unless setq org-agenda-custom commands 
+;; is altered elsewhere or this code block is updated
 (add-to-list 'org-agenda-custom-commands
 	'("r" "eLife revisions"
 	  ((agenda ""
-		   ((org-agenda-files 		     '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
-		    (org-agenda-ndays 3)
-		    (org-deadline-warning-days 14)
+		   ((org-agenda-files 		     
+		   '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
+		   (org-agenda-ndays 3)
+		   (org-deadline-warning-days 14)
 		    ))
 	   (todo "TODO" ;alltodo ""
-		 ((org-agenda-files 		   '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
-		  (org-agenda-skip-function
-		   '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+		 ((org-agenda-files 		   
+		 '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
+		 (org-agenda-skip-function
+		 '(org-agenda-skip-entry-if 'deadline 'scheduled))))
 	   (todo "WAITING|IN-PROGRESS" ;alltodo ""
 		 ((org-agenda-files 
-		   '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
-		  (org-agenda-skip-function
-		   '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+		 '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
+		 (org-agenda-skip-function
+		 '(org-agenda-skip-entry-if 'deadline 'scheduled))))
 	   )
 	  )
 	)
 #+end_src
 
-** TODO scheduled for today
-   SCHEDULED:<2017-07-28 Fri>
-** TODO deadline for tomorrow
-   DEADLINE: <2017-07-29 Sat>
-** TODO not scheduled
-* WAITING Deadline but waiting
-  DEADLINE: <2017-07-30 Sun>
+* eLife revision due date [9%]
+   DEADLINE: <2017-09-22 Fri -60d>
+   :PROPERTIES:
+   :COOKIE_DATA: todo recursive
+   :END:
+ESSENTIAL REVISIONS:
+General comments on presentation in the paper
+** TODO Revise methods reporting [0/6]
+ Especially for a paper where the main point is development of an experimental system, the technical validation and reporting of the methods and results in the paper must be completely solid. The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends. The methods section was considered incomplete to allow a researcher from a related field to exactly reproduce every experiment shown - concentrations, solvents and timings - e.g. Fig 7, how much TNF, how much IFNgamma? It was unclear exactly how the false discovery rate was assessed - which algorithm was used? What sample numbers were used in the calculations and how reproducible were the experiments? Specific information about the E. coli strain should be given, and whether it is motile.
+
+*** TODO Update number of biological and technical replicates in each experiment
+" The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends."
+*** TODO Update concentrations of stimulants and number of injected bacteria
+ The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends.
+*** TODO Describe FDR calculation
+"It was unclear exactly how the false discovery rate was assessed - which algorithm was used? "
+*** TODO Give specific information about E. coli strain
+"Specific information about the E. coli strain should be given, and whether it is motile."
+*** TODO Clarify the application of antibiotics
+"The model depends on selective injection of live bacteria into HIOs and evidence is provided in Figure 1 about this. The experimental protocol needs to be far more explicit in the main body of the text: in the methods under 'HIO culture' it is stated 'HIOs were maintained in ENR media without antibiotics prior to microinjection experiments'; then under 'Microinjection', '..... cultures were rinsed with PBS and treated with ENR media containing penicillin and streptomycin...'. Controls that assess the potential influence of carry-over of antibiotics of the readouts reported in Figure 1 are required."
+*** TODO Clarify dose for figure 1D
+ " C. What dose(s) of injections were used for 1D?"
+
+** TODO Generate control data that assess the influence of abx 
+  Major comments
+  The model depends on selective injection of live bacteria into HIOs and evidence is provided in Figure 1 about this. The experimental protocol needs to be far more explicit in the main body of the text: in the methods under 'HIO culture' it is stated 'HIOs were maintained in ENR media without antibiotics prior to microinjection experiments'; then under 'Microinjection', '..... cultures were rinsed with PBS and treated with ENR media containing penicillin and streptomycin...'. Controls that assess the potential influence of carry-over of antibiotics of the readouts reported in Figure 1 are required.
+and ...
+"Further, the final sentence of the third paragraph of page 4 and the results quoted in the following paragraph after day 3 are contradictory. Controls are absolutely necessary to ensure that these findings are not simply due to antibiotic carry-over."
+** TODO Respond to fixation and/or freezing artifacts criticism of Fig 1B
+"Fig 1B appears to be compromised by fixation and/or freezing artifacts."
+** TODO Fix Fig 1C axis label
+"B. In Figure 1C the y axis is labelled 24h delta CFU. Given that the scale becomes fractional, it seems likely that ratios rather than differences are being used."
+  Further issues on Figure 1.
+  A. Fig 1B appears to be compromised by fixation and/or freezing artifacts.
+  B. In Figure 1C the y axis is labelled 24h delta CFU. Given that the scale becomes fractional, it seems likely that ratios rather than differences are being used.
+  C. What dose(s) of injections were used for 1D?
+  D. As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated. Further, the final sentence of the third paragraph of page 4 and the results quoted in the following paragraph after day 3 are contradictory. Controls are absolutely necessary to ensure that these findings are not simply due to antibiotic carry-over.
+** TODO Consider removal or replacement of 1E
+"As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated."
+** TODO [#A] Experiment evaluating HIO morphology and differentiation [4/8]
+ "The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?"
+*** IN-PROGRESS Treat and collect HIOs [66%]
+**** DONE Spike HIOs with 10 uM EdU
+     SCHEDULED: <2017-07-26 Wed 13:30>
+     :PROPERTIES:
+     :Effort:   0
+     :END: 
+   Entered on [2017-07-26 Wed 13:39]
+**** DONE [#A] Collect HIOs and fix in PFA [24 hr timepoint]
+     SCHEDULED: <2017-07-26 Wed 15:30>
+     :PROPERTIES:
+     :Effort:   0
+     :END: 
+**** DONE [#A] Collect HIOs and fix in PFA [48 hr timepoint]
+     SCHEDULED: <2017-07-27 Thu 15:30>
+     :PROPERTIES:
+     :Effort:   0
+     :END: 
+**** DONE [#A] Collect HIOs and fix in PFA [96 hr timepoint]
+     SCHEDULED: <2017-07-29 Sat 15:30>
+     :PROPERTIES:
+     :Effort:   0
+     :END: 
+**** TODO [#A] Collect HIOs and fix in PFA [192 hr timepoint]
+     SCHEDULED: <2017-08-02 Wed 15:30>
+     :PROPERTIES:
+     :Effort:   0
+     :END: 
+   Entered on [2017-07-26 Wed 13:39]
+**** TODO [#A] Submit HIOs for processing in MIL
+     SCHEDULED: <2017-08-03 Thu>
+*** TODO Give embedded HIOs to Mindy for sectioning
+ The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?
+*** TODO Does goblet cell differentiation contribute to mucus expression?
+     In relation to figure 6, can induction of mucus production and induction of goblet cell differentiation be delineated? The slow appearance of mucin gene upregulation appears more consistent with a differentiation phenotype than simple gene expression?
+
+** TODO Discuss "caveats" to studying hypoxia in absence of blood vessels
+"It is accepted that enteroids are 3 dimensional structures, and the study has been productive in the evaluation of stem cell dynamics and other tissue level events. However, organoids are not vascularized with a capillary network that generate O2 gradients in vivo, thus organism level physiological events such as hypoxia are difficult to address and these caveats must be included in the discussion"
+** TODO [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
+"Using the pathway analysis from the GO and REACTOME databases limits the insight that the reader is given into the changes in gene expression. For example, in Figure 2C 'muscle cell differentiation' is shown as a pathway. It would be possible to report detailed network analyses at least in the supporting material so that the contribution of different transcripts to the overall analysis is clear. This would allow considerable refinement of the time-dependent transcriptional response descriptions in the text."
+** TODO Repeat PMDZ and E-Cad staining experiment [1/2]
+  In Figure 3C it is difficult to appreciate whether the cadherin stain has worked in the PBS panel. How reproducible are these results? What happens with a hypoxic control?
+*** DONE Request HIOs
+    SCHEDULED: <2017-07-31 Mon>
+*** WAITING [#A] Setup and treat HIOs for PMDZ uptake
+    - PBS
+    - E. coli
+    - Hypoxia
+** TODO Revise Figure 4 analysis [0/7]
+   The data analysis shown in Fig 4. was complex and challenging for the reviewers to appreciate in its current form. The subset organisation must be clear and specific.
+*** TODO [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
+    A. Why is there no PBS control with the NFkB inhibitor? Many cell survival/cell death pathways converge on NFkB signalling and the inhibitor may exert effects already at baseline which would then fall into gene set 1 and gene set 2? From the Venn-diagrams shown in panel A, it appears that genes in set 1 and 2 are mutually exclusive, which would make the lacking control less problematic, but apparently the hypoxia-responsive genes are highly enriched in both (of course these may be different genes in the same pathway? But this would be slightly surprising if a statistical exclusion had been made).
+*** TODO Alter discussion to include "vital PAMPS"
+    B. For the discussion of the analysis, it appears that an assumption is made that the effect of live E. coli is identical to dead E. coli combined with hypoxia. There is a large body of literature on "vital PAMPs" (e.g. Nature. 2011 May 22;474(7351):385-9), which might suggest there is more to it. Nevertheless, there appears to be an excellent correlation between genes regulated by live and dead E. coli in the plots in Fig. 4B. If the hypothesis is correct, then injecting dead E. coli and then immediately transferring the organoids to a hypoxic chamber should produce a gene-expression profile that correlates better that the dead E. coli alone. Noticeably the gradient of the correlation between hypoxia/PBS and live E. coli/PBS seems to be close to zero?
+*** TODO Clarify criteria for scatterplots in 4B
+    C. Is there some sort of statistical significance cut-off for the genes identified for each set in panel B? The clouds appear to very closely approach a log2-FC of zero, suggesting genes showing very small changes in expression are included? Would it be logical to show the data pre-filtered for p-value? Or show the limits of the region and color-code for p-value?
+*** TODO Clarify labels for 4C
+    D. In panel C, is it right that "% genes matched to pathway" is this the percentage of genes from each set (e.g. the full 1940 genes in Set 1) that map to the indicated pathway? Thus 5%, i.e. around 400 genes from set 1 map to "regulation of cytoskeleton organization"? Please clarify. 
+*** TODO Supplementary figure showing size changes in gene expression in 4B
+Also, as the plots in B suggest that many genes are included with a very small up- or down-regulation, it would be important to have some handle on not just the significance, but also the average absolute size of the change observed. A second set of graphs, or a supplementary figure with more information would be helpful.
+*** TODO Clarify P-value cut-off for 4C
+    E. In the legend, were pathways with enrichment P-values greater than 0.01 excluded?
+** TODO [#A] Test BD-2 induction in dead E. coli + hypoxia [/]
+    In Fig 5B and C, it would be important to include a group microinjected with dead E. coli, immediately followed by hypoxia, to conclude that both factors act together to induce b-defensins. 
+*** TODO Request HIOs
+*** WAITING Setup HIOs
+*** WAITING Grow E. coli
+*** WAITING Microinject live/dead E. coli
+*** WAITING Transfer to hypoxic chamber
+*** WAITING Collect media
+*** WAITING Submit Media to ELISA core
+*** WAITING Analyze data
+** TODO Respod to reducing agent question as beyond scope
+For Fig 5D, does hBD-2 require a reducing agent for activity as hBD1 does (Nature 469, 419-423)? Typically, these pore-forming AMPs to exert a stronger effect on the rapidly growing bacteria than in the stationary phase, and in fact, your maximum growth rate (i.e. maximum curve gradient) is even higher where the BD-2 is added, suggesting that something in the BD-2 may even permit faster E coli growth in LB. Death over several hours in late stationary phase may be rather due to accumulation of a toxic metabolite. To control for these effects, it will be important to show growth data with heat-inactivation of the BD-2. 
+** TODO [#A] Test recombinant BD-2 activity during stationary phase
+To focus on killing in the stationary phase a late stationary-phase culture could be treated with differing concentrations of BD-2 over short time-courses (including the inactivated controls), measuring loss of membrane integrity by Sytox-green uptake by flow cytometry or microscopy. As O-antigens can inhibit AMP function, E. coli K-12 could be included in these experiments.
+** TODO Prepare BD-2 supplementary figure with E. coli K12
+** TODO Correct statement on epithelial barrier integrity
+    The interpretation that 'Epithelial barrier integrity is enhanced following bacterial association' (p13) is rather at odds with the data in Figure 7 B and D where the PBS and E.coli treated permeability is the same. Is the meaning that NFkappaB signaling is required for the compensatory effects of the barrier in E.coli-treated organoids? 
+** TODO Prepare supplemental figure showing effect of SC514 on barrier function
+What is the effect of the inhibitor alone?
+** TODO Respond to minor points [0/6]
+*** TODO Revise presentation of Figure 2C 
+     The data shown in Fig 2C is potentially misleading. What you are most likely seeing here is a sigmoidal growth to a reasonably uniform carrying capacity of E. coli. The logarithmic growth rate is likely identical for all different inocula, but the plateau phase is reached earlier with the higher dose injections. Please simply plot the injected CFU and the final CFU per organoid. Ideally a time-course over the first 24h of colonization with a low and high dose of E. coli could be shown, giving you a more detailed handle on the type of growth occurring within the organoids.
+*** TODO Provide explanation for BD1 expression
+     What is the explanation for the increase in BD1 over time in the PBS injected organoids (Figure 2E which lacks units)? It would be interesting to include control panels here for cell death (LDH release or similar) and total cell number per sample volume.
+*** TODO Address function of fucosylated mucins
+     Fucosylation of intestinal glycans has been reported to depend upon the presence of bacterial pathobionts or pathogens (e.g. SFB, Salmonella) and the activity of innate lymphoid cells in the lamina propria (e.g. Science 12 Sep 2014:Vol. 345, Issue 6202, 1254009), or to be associated with mature M cells. "Mature carbohydrate modifications" may be something of an oversimplification, and this observation may even suggest that the closed nature of the organoids leads to a non-pathogenic E. coli strain being recognized as quite aggressive.
+*** TODO Clarify principle component analysis
+     Page 3, second paragraph. The description of the principal component analysis should read that PC1 correlates with developmental stage, while PC2 correlates with tissue maturation status. Currently the text implies that there is a direct relationship.
+*** TODO Include suggested references
+     The authors should be accurate in acknowledging older literature (the hypoxia NFkappaB effect has been known since 1994 and the BD-2 effect since 1997) - albeit not in this context.
+
+** TODO [#A] Authenticate cell lines
+   SCHEDULED: <2017-08-01 Tue>
+    If your work involved the use of cell lines, please indicate in the Materials and methods section of your manuscript if their identity has been authenticated, state the authentication method (such as STR profiling), and report the mycoplasma contamination testing status. Please consult our Journal Policies for further details: https://submit.elifesciences.org/html/elife_author_instructions.html#policies
