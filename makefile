@@ -161,6 +161,7 @@ clean:
 	cd src && rm *.aux *.blg *.out *.bbl *.log
 
 ## Generate Figure 1 multipanel figure
+figure1: ./figures/figure1/figure1_multipanel.pdf
 ./figures/figure1/figure1_multipanel.pdf : ./src/figure_Rscripts/figure1.R \
 	./data/figure1/010716_01_R3D.csv \
 	./data/figure1/010716/010716_01_R3D_w594_t01.png \
@@ -200,6 +201,7 @@ clean:
 	R -e "setwd('./src/'); source('figure_Rscripts/figure2-GSEA.R')"
 
 ## Figure 2 multipanel ---------------------------------------------------------
+figure2: ./figures/figure2/figure2_multipanel.pdf
 ./figures/figure2/figure2_multipanel.pdf : ./src/figure_Rscripts/figure2.R \
 	./results/ECOR2HIO_24-96-RNAseq/complete-dataset_DESeq2-normalized-counts.csv \
 	./results/ECOR2HIO_24-96-RNAseq/ECOR2_over_PBS_24hr.csv \
@@ -216,6 +218,7 @@ clean:
 	R -e "setwd('./src/'); source('figure_Rscripts/figure2.R')"
 
 ## Figure 3 multipanel ---------------------------------------------------------
+figure3: ./figures/figure3/figure3_multipanel.pdf
 ./figures/figure3/figure3_multipanel.pdf : ./src/figure_Rscripts/figure3.R \
 	./data/figure3/HIO_O2_final_data.csv \
 	./figures/figure3/figure3c.png
@@ -262,6 +265,7 @@ clean:
 	R -e "setwd('./src/'); source('figure_Rscripts/figure4-kallisto-post.R')"
 
 ## Figure 4 multipanel ---------------------------------------------------------
+figure4: ./figures/figure4/figure4_multipanel.pdf
 ./figures/figure4/figure4_multipanel.pdf ./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv : ./src/figure_Rscripts/figure4.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_ECOR2-HK-NFKBi.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
@@ -272,6 +276,7 @@ clean:
 	R -e "setwd('./src/'); source('figure_Rscripts/figure4.R')"
 
 ## Figure 5 multipanel ---------------------------------------------------------
+figure5: ./figures/figure5/figure5_multipanel.pdf
 ./figures/figure5/figure5_multipanel.pdf : ./src/figure_Rscripts/figure5.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
@@ -282,6 +287,7 @@ clean:
 	R -e "setwd('./src/'); source('figure_Rscripts/figure5.R')"
 
 ## Figure 6 multipanel ---------------------------------------------------------
+figure6: ./figures/figure6/figure6_multipanel.pdf
 ./figures/figure6/figure6_multipanel.pdf : ./src/figure_Rscripts/figure6.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
@@ -295,6 +301,7 @@ clean:
 	R -e "setwd('./src/'); source('figure_Rscripts/figure6.R')"
 
 ## Figure 7 multipanel ---------------------------------------------------------
+figure7: ./figures/figure7/figure7_multipanel.pdf
 ./figures/figure7/figure7_multipanel.pdf : ./src/figure_Rscripts/figure7.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
