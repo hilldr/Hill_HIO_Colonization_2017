@@ -88,6 +88,15 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure1_supplement1.pdf ./supplements/figure1_supplement1.pdf
 	rm *.bib *.cls *.bst
 
+./supplements/figure1_supplement2.pdf: ./src/figure1_supplement2.tex
+	pdflatex -output-directory src ./src/figure1_supplement2
+	pdflatex -output-directory src ./src/figure1_supplement2
+	cp ./src/bibliography.bib ./
+	cp ./src/elsarticle.cls ./
+	cp ./src/model2-names.bst ./
+	mv ./src/figure1_supplement2.pdf ./supplements/figure1_supplement2.pdf
+	rm *.bib *.cls *.bst
+
 ./supplements/figure4_supplement1.pdf: ./src/figure4_supplement1.tex
 	pdflatex -output-directory src ./src/figure4_supplement1
 	pdflatex -output-directory src ./src/figure4_supplement1

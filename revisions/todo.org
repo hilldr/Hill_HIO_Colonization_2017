@@ -123,7 +123,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [9%]
+* eLife revision due date [15%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
@@ -153,8 +153,12 @@ and ...
 "Further, the final sentence of the third paragraph of page 4 and the results quoted in the following paragraph after day 3 are contradictory. Controls are absolutely necessary to ensure that these findings are not simply due to antibiotic carry-over."
 ** TODO Respond to fixation and/or freezing artifacts criticism of Fig 1B
 "Fig 1B appears to be compromised by fixation and/or freezing artifacts."
-** TODO Fix Fig 1C axis label
+** DONE Fix Fig 1C axis label
+   SCHEDULED: <2017-08-01 Tue>
 "B. In Figure 1C the y axis is labelled 24h delta CFU. Given that the scale becomes fractional, it seems likely that ratios rather than differences are being used."
+
+RESPONSE: The reviewers are correct in pointing out that the y-axis label in Figure 1C was inaccurate. This has been amended in the revised manuscript. In addition, Figure 1 - Supplement 2 has been provided to clarify the exact relationship between the input CFU at t=0 and the CFU harvested from the lumen at 24 hours post microinjection
+
   Further issues on Figure 1.
   A. Fig 1B appears to be compromised by fixation and/or freezing artifacts.
   B. In Figure 1C the y axis is labelled 24h delta CFU. Given that the scale becomes fractional, it seems likely that ratios rather than differences are being used.
@@ -163,6 +167,7 @@ and ...
 ** TODO Consider removal or replacement of 1E
 "As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated."
 ** TODO [#A] Experiment evaluating HIO morphology and differentiation [4/8]
+   SCHEDULED: <2017-07-24 Mon>
  "The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?"
 *** IN-PROGRESS Treat and collect HIOs [66%]
 **** DONE Spike HIOs with 10 uM EdU
@@ -203,14 +208,27 @@ and ...
 "It is accepted that enteroids are 3 dimensional structures, and the study has been productive in the evaluation of stem cell dynamics and other tissue level events. However, organoids are not vascularized with a capillary network that generate O2 gradients in vivo, thus organism level physiological events such as hypoxia are difficult to address and these caveats must be included in the discussion"
 ** TODO [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
 "Using the pathway analysis from the GO and REACTOME databases limits the insight that the reader is given into the changes in gene expression. For example, in Figure 2C 'muscle cell differentiation' is shown as a pathway. It would be possible to report detailed network analyses at least in the supporting material so that the contribution of different transcripts to the overall analysis is clear. This would allow considerable refinement of the time-dependent transcriptional response descriptions in the text."
-** TODO Repeat PMDZ and E-Cad staining experiment [1/2]
+** IN-PROGRESS [#A] Repeat PMDZ and E-Cad staining experiment [2/6]
+   SCHEDULED: <2017-07-31 Mon>
   In Figure 3C it is difficult to appreciate whether the cadherin stain has worked in the PBS panel. How reproducible are these results? What happens with a hypoxic control?
 *** DONE Request HIOs
     SCHEDULED: <2017-07-31 Mon>
-*** WAITING [#A] Setup and treat HIOs for PMDZ uptake
+*** DONE [#A] Setup HIOs for PMDZ uptake
+    SCHEDULED: <2017-08-01 Tue>
     - PBS
     - E. coli
     - Hypoxia
+    - dead E. coli
+    - dead E. coli + hypoxia 
+see also [[*Test%20BD-2%20induction%20in%20dead%20E.%20coli%20+%20hypoxia%20%5B/%5D][Test BD-2 induction in dead E. coli + hypoxia]]
+*** TODO [#A] Start ECOR2 culture
+    SCHEDULED: <2017-08-01 Tue>
+*** TODO [#A] Microinject live/dead ECOR2 and start hypoxia treatment
+    SCHEDULED: <2017-08-02 Wed>
+*** TODO [#A] Collect media and fix HIOs in PFA
+    SCHEDULED: <2017-08-03 Thu>
+*** TODO [#A] Transfer HIOs to 70% Ethanol
+    SCHEDULED: <2017-08-04 Fri>
 ** TODO Revise Figure 4 analysis [0/7]
    The data analysis shown in Fig 4. was complex and challenging for the reviewers to appreciate in its current form. The subset organisation must be clear and specific.
 *** TODO [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
@@ -224,16 +242,15 @@ and ...
 *** TODO Supplementary figure showing size changes in gene expression in 4B
 Also, as the plots in B suggest that many genes are included with a very small up- or down-regulation, it would be important to have some handle on not just the significance, but also the average absolute size of the change observed. A second set of graphs, or a supplementary figure with more information would be helpful.
 *** TODO Clarify P-value cut-off for 4C
+    SCHEDULED: <2017-08-01 Tue>
     E. In the legend, were pathways with enrichment P-values greater than 0.01 excluded?
-** TODO [#A] Test BD-2 induction in dead E. coli + hypoxia [/]
-    In Fig 5B and C, it would be important to include a group microinjected with dead E. coli, immediately followed by hypoxia, to conclude that both factors act together to induce b-defensins. 
-*** TODO Request HIOs
-*** WAITING Setup HIOs
-*** WAITING Grow E. coli
-*** WAITING Microinject live/dead E. coli
-*** WAITING Transfer to hypoxic chamber
-*** WAITING Collect media
-*** WAITING Submit Media to ELISA core
+** IN-PROGRESS [#A] Test BD-2 induction in dead E. coli + hypoxia [1/3]
+   SCHEDULED: <2017-07-31 Mon>
+    In Fig 5B and C, it would be important to include a group microinjected with dead E. coli, immediately followed by hypoxia, to conclude that both factors act together to induce b-defensins.
+- cross-reference with [[*Repeat PMDZ and E-Cad staining experiment][Repeat PMDZ and E-Cad staining experiment {1/6}]]
+*** DONE Request HIOs
+*** TODO Submit Media to ELISA core
+    SCHEDULED: <2017-08-03 Thu>
 *** WAITING Analyze data
 ** TODO Respod to reducing agent question as beyond scope
 For Fig 5D, does hBD-2 require a reducing agent for activity as hBD1 does (Nature 469, 419-423)? Typically, these pore-forming AMPs to exert a stronger effect on the rapidly growing bacteria than in the stationary phase, and in fact, your maximum growth rate (i.e. maximum curve gradient) is even higher where the BD-2 is added, suggesting that something in the BD-2 may even permit faster E coli growth in LB. Death over several hours in late stationary phase may be rather due to accumulation of a toxic metabolite. To control for these effects, it will be important to show growth data with heat-inactivation of the BD-2. 
@@ -241,17 +258,22 @@ For Fig 5D, does hBD-2 require a reducing agent for activity as hBD1 does (Natur
 To focus on killing in the stationary phase a late stationary-phase culture could be treated with differing concentrations of BD-2 over short time-courses (including the inactivated controls), measuring loss of membrane integrity by Sytox-green uptake by flow cytometry or microscopy. As O-antigens can inhibit AMP function, E. coli K-12 could be included in these experiments.
 ** TODO Prepare BD-2 supplementary figure with E. coli K12
 ** TODO Correct statement on epithelial barrier integrity
+   SCHEDULED: <2017-08-01 Tue>
     The interpretation that 'Epithelial barrier integrity is enhanced following bacterial association' (p13) is rather at odds with the data in Figure 7 B and D where the PBS and E.coli treated permeability is the same. Is the meaning that NFkappaB signaling is required for the compensatory effects of the barrier in E.coli-treated organoids? 
 ** TODO Prepare supplemental figure showing effect of SC514 on barrier function
 What is the effect of the inhibitor alone?
 ** TODO Respond to minor points [0/6]
 *** TODO Revise presentation of Figure 2C 
      The data shown in Fig 2C is potentially misleading. What you are most likely seeing here is a sigmoidal growth to a reasonably uniform carrying capacity of E. coli. The logarithmic growth rate is likely identical for all different inocula, but the plateau phase is reached earlier with the higher dose injections. Please simply plot the injected CFU and the final CFU per organoid. Ideally a time-course over the first 24h of colonization with a low and high dose of E. coli could be shown, giving you a more detailed handle on the type of growth occurring within the organoids.
+
+RESPONSE: Figure 1 - Supplement 2 has been provided to clarify the exact relationship between the input CFU at t=0 and the CFU harvested from the lumen at 24 hours post microinjection
+
 *** TODO Provide explanation for BD1 expression
      What is the explanation for the increase in BD1 over time in the PBS injected organoids (Figure 2E which lacks units)? It would be interesting to include control panels here for cell death (LDH release or similar) and total cell number per sample volume.
 *** TODO Address function of fucosylated mucins
      Fucosylation of intestinal glycans has been reported to depend upon the presence of bacterial pathobionts or pathogens (e.g. SFB, Salmonella) and the activity of innate lymphoid cells in the lamina propria (e.g. Science 12 Sep 2014:Vol. 345, Issue 6202, 1254009), or to be associated with mature M cells. "Mature carbohydrate modifications" may be something of an oversimplification, and this observation may even suggest that the closed nature of the organoids leads to a non-pathogenic E. coli strain being recognized as quite aggressive.
 *** TODO Clarify principle component analysis
+    SCHEDULED: <2017-08-01 Tue>
      Page 3, second paragraph. The description of the principal component analysis should read that PC1 correlates with developmental stage, while PC2 correlates with tissue maturation status. Currently the text implies that there is a direct relationship.
 *** TODO Include suggested references
      The authors should be accurate in acknowledging older literature (the hypoxia NFkappaB effect has been known since 1994 and the BD-2 effect since 1997) - albeit not in this context.
@@ -259,3 +281,6 @@ What is the effect of the inhibitor alone?
 ** TODO [#A] Authenticate cell lines
    SCHEDULED: <2017-08-01 Tue>
     If your work involved the use of cell lines, please indicate in the Materials and methods section of your manuscript if their identity has been authenticated, state the authentication method (such as STR profiling), and report the mycoplasma contamination testing status. Please consult our Journal Policies for further details: https://submit.elifesciences.org/html/elife_author_instructions.html#policies
+
+Protocol here:
+[[https://umich.app.box.com/file/204465078839]]

@@ -30,6 +30,29 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	mv $(TEXT).pdf $(FINALTEXT).pdf
 	rm *.bib *.cls *.bst
 
+## output "track changes" pdf
+changes: $(FINALTEXT)_changes.pdf
+$(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
+	./figures/figure1/figure1_multipanel.pdf \
+	./figures/figure2/figure2_multipanel.pdf \
+	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
+	./figures/figure5/figure5_multipanel.pdf \
+	./figures/figure6/figure6_multipanel.pdf \
+	./figures/figure7/figure7_multipanel.pdf \
+	./revisions/elife-1st-submission.tex
+	latexdiff --type=CTRADITIONAL ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
+	pdflatex -output-directory src $(TEXT)_changes
+	pdflatex -output-directory src $(TEXT)_changes
+	cp ./src/bibliography.bib ./
+	cp ./src/elife.cls ./
+	cp ./src/vancouver-elife.bst ./
+	bibtex $(TEXT)_changes
+	pdflatex -output-directory src $(TEXT)_changes
+	pdflatex -output-directory src $(TEXT)_changes
+	mv $(TEXT)_changes.pdf $(FINALTEXT)_changes.pdf
+	rm *.bib *.cls *.bst 
+
 ## output to bioRxiv PDF
 ## work in progress, partially working
 br-pdf: $(BIORXIV).pdf
@@ -67,6 +90,15 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
 	mv ./src/figure1_supplement1.pdf ./supplements/figure1_supplement1.pdf
+	rm *.bib *.cls *.bst
+
+./supplements/figure1_supplement2.pdf: ./src/figure1_supplement2.tex
+	pdflatex -output-directory src ./src/figure1_supplement2
+	pdflatex -output-directory src ./src/figure1_supplement2
+	cp ./src/bibliography.bib ./
+	cp ./src/elsarticle.cls ./
+	cp ./src/model2-names.bst ./
+	mv ./src/figure1_supplement2.pdf ./supplements/figure1_supplement2.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure4_supplement1.pdf: ./src/figure4_supplement1.tex
@@ -426,7 +458,9 @@ stats <- lm_eqn(data[data$inject > 0 & data$fold !=0,],
 **** Generate plot
 #+begin_src R :session *R* :exports none :results graphics :file ../figures/figure1/figure1c.png :eval yes :tangle figure_Rscripts/figure1.R
 library(ggplot2)
+library(scales)
 source("ggplot2-themes.R")
+
 figure1c <- ggplot(data, aes(x = inject, y = fold)) +
     geom_smooth(data = data[data$inject > 0 & data$fold !=0,],
                 aes(x=inject, y=fold), colour = "black",
@@ -436,7 +470,7 @@ figure1c <- ggplot(data, aes(x = inject, y = fold)) +
                 level = 0.95) +
     geom_hline(yintercept = 1, color = "black", size = 0.5, linetype = "dashed") +
     geom_point(size = 8,shape = 21, fill=color.set[2]) + 
-    ylab(expression(paste("24 h ",Delta, " CFU/HIO"))) +
+    ylab(latex2exp::TeX("$\\textbf{$\\frac{CFU$\\cdot{}HIO_{$\\textit{t}=24}^{-1}}{CFU$\\cdot{}HIO_{$\\textit{t}=0}^{-1}}}$")) +
     ggtitle("C") + 
     xlab("CFU injected per HIO") + theme1 + 
     scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -451,7 +485,8 @@ figure1c <- ggplot(data, aes(x = inject, y = fold)) +
     annotate("text",x = 1000, y = 100000,
                            label = substr(stats,62,150),
                            parse = TRUE,
-                           size = 10)
+                           size = 10) +
+    theme(axis.title.y = element_text(vjust =-0.8))
 
 png(filename = "../figures/figure1/figure1c.png", width = 800, height = 800)
 print(figure1c)
@@ -501,7 +536,8 @@ source("ggplot2-themes.R")
 figure1d <- ggplot(data[data$CFU > 0,], aes(x = hr, y = CFU)) +
     geom_boxplot(size = 2, aes(group = hr), fill = color.set[2]) +
     geom_point(size = 8, shape = 21, fill = color.set[2]) +
-    ylab("CFU/HIO") + ggtitle("D") + 
+    ylab(latex2exp::TeX("$\\textbf{CFU$\\cdot{}HIO^{-1}}$")) +
+    ggtitle("D") + 
     xlab("Time post-microinjection (h)") + theme1 +
     scale_y_log10(limits = c(1,50000000),
                   breaks = trans_breaks("log10", function(x) 10^x),
@@ -756,6 +792,7 @@ d2surv <- data2[data2$variable == "Survival" & data2$treatment == "E. coli" & da
 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Generate Figure 1 multipanel figure
+figure1: ./figures/figure1/figure1_multipanel.pdf
 ./figures/figure1/figure1_multipanel.pdf : ./src/figure_Rscripts/figure1.R \
 	./data/figure1/010716_01_R3D.csv \
 	./data/figure1/010716/010716_01_R3D_w594_t01.png \
@@ -1639,6 +1676,7 @@ ggsave(filename = "../figures/figure2/figure2-NFkB_supplement.eps",
 ** Makefile  
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Figure 2 multipanel ---------------------------------------------------------
+figure2: ./figures/figure2/figure2_multipanel.pdf
 ./figures/figure2/figure2_multipanel.pdf : ./src/figure_Rscripts/figure2.R \
 	./results/ECOR2HIO_24-96-RNAseq/complete-dataset_DESeq2-normalized-counts.csv \
 	./results/ECOR2HIO_24-96-RNAseq/ECOR2_over_PBS_24hr.csv \
@@ -1901,6 +1939,7 @@ base <- t.test(data[data$time == 0,]$o2,
 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Figure 3 multipanel ---------------------------------------------------------
+figure3: ./figures/figure3/figure3_multipanel.pdf
 ./figures/figure3/figure3_multipanel.pdf : ./src/figure_Rscripts/figure3.R \
 	./data/figure3/HIO_O2_final_data.csv \
 	./figures/figure3/figure3c.png
@@ -2585,6 +2624,7 @@ write.csv(go.results, file = file.path(data.dir, "hypoxia-hk-nfkb_complete-go-re
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Figure 4 multipanel ---------------------------------------------------------
+figure4: ./figures/figure4/figure4_multipanel.pdf
 ./figures/figure4/figure4_multipanel.pdf ./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv : ./src/figure_Rscripts/figure4.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_ECOR2-HK-NFKBi.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
@@ -3155,6 +3195,7 @@ dev.off()
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Figure 5 multipanel ---------------------------------------------------------
+figure5: ./figures/figure5/figure5_multipanel.pdf
 ./figures/figure5/figure5_multipanel.pdf : ./src/figure_Rscripts/figure5.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
@@ -3420,6 +3461,7 @@ dev.off()
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Figure 6 multipanel ---------------------------------------------------------
+figure6: ./figures/figure6/figure6_multipanel.pdf
 ./figures/figure6/figure6_multipanel.pdf : ./src/figure_Rscripts/figure6.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
@@ -4292,6 +4334,7 @@ dev.off()
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
 ## Figure 7 multipanel ---------------------------------------------------------
+figure7: ./figures/figure7/figure7_multipanel.pdf
 ./figures/figure7/figure7_multipanel.pdf : ./src/figure_Rscripts/figure7.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
@@ -4800,6 +4843,96 @@ dev.off()
 
  #+RESULTS:
  [[file:../figures/supplemental/sfigure1_multipanel.png]]
+** Figure 1 - Supplement 2 
+Minimum density /E. coli/ required to establish colonization
+#+begin_src R :session *R* :exports none :eval yes :tangle figure_Rscripts/supplemental.R
+,#+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/sfigure1_supp2.pdf :eval yes :tangle figure_Rscripts/supplemental.R
+## Minimum density /E. coli/ required to establish colonization 
+
+## E. coli growth in HIOs
+## Read in data table
+data <- read.table("../data/figure1/ECOR2growth_fig1.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
+## Index of CFU/HIO injected for each Sample condition (A-G)
+sample.table <- read.table("../data/figure1/sample_table_fig1.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
+## Generate index of rows in sample table that match
+## the sample labels in data
+id <- match(data$sample,sample.table$sample)
+## create column in data of of CFU/HIO values in sample table
+## in matching rows listed in id
+data$inject <- sample.table[id,]$value
+data$fold <- data$mean/data$inject
+data$increase <- ifelse(data$mean > data$inject,"increase","decrease")
+  
+group <- aggregate(mean ~ inject, data = data, FUN = mean)
+group.sem <- aggregate(mean ~ inject, data = data,
+                       FUN = function(x) sd(x)/sqrt(length(x)))
+group$sem <- group.sem$mean
+
+## ANOVA of mean CFU/HIO among colonized HIOs
+fit <- aov(mean ~ sample, data = data[data$inject >1,])
+fit2 <- lm(log(data[data$inject > 0 & data$fold !=0,]$fold) ~ log(log(data[data$inject > 0 & data$fold !=0,]$inject)), data[data$inject > 0 & data$fold !=0,])
+
+p1c <- summary(fit)[[1]][["Pr(>F)"]][[1]]
+
+## % colonized at < 5 CFU
+pct1 <- round(100*(1-length(rownames(data[data$inject < 5 & data$inject > 1 & data$mean < 1,] ))/length(rownames(data[data$inject < 5 & data$inject > 1 & data$mean > 1,] ))),1)
+
+## % colonized at > 100 CFU
+pct2 <- round(100*(1-length(rownames(data[data$inject > 100 & data$mean < 1,] ))/length(rownames(data[data$inject < 5 & data$inject > 1 & data$mean > 1,] ))),2)
+
+## plot
+library(ggplot2)
+library(grid)
+library(scales)
+source("ggplot2-themes.R")
+
+scientific_10 <- function(x) {
+    parse(text=gsub("e", " %*% 10^", scientific_format()(x)))
+}
+
+## generate stats string for plot
+source("custom_fun.R")
+stats <- lm_eqn(data[data$inject > 0 & data$fold !=0,],
+                data[data$inject > 0 & data$fold !=0,]$inject,
+                data[data$inject > 0 & data$fold !=0,]$mean)
+
+
+fig2c <- ggplot(data, aes(x=inject, y=mean)) +
+    geom_smooth(
+                aes(x=inject, y=mean), colour = "black",
+                size = 2,
+                method = "lm",
+                formula = y ~ x,
+                level = 0.95) +
+  #  geom_boxplot(aes(group = inject), size =2, fill = color.set[2]) +
+    geom_point(size = 8, shape =21, fill = color.set[2]) +
+    scale_fill_brewer(palette = "Set1") + 
+    ylab(latex2exp::TeX("$\\textbf{CFU$\\cdot{}HIO^{-1}_{$\\textit{t}=24}}$")) +
+    xlab("CFU injected per HIO") + theme1 +
+    scale_y_log10(limits = c(1,50000000),
+                  breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    scale_x_log10(limits = c(1,100000),
+                  breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +    
+    annotation_logticks(sides = "bl", size = 2,
+                        short = unit(.75,"mm"),
+                        mid = unit(3,"mm"),
+                        long = unit(5,"mm")) +
+        ## size of stats label
+    annotate("text",x = 5e3, y = 5e7,
+                           label = substr(stats,62,150),
+                           parse = TRUE,
+                           size = 10) +
+
+
+pdf(file = "../figures/supplemental/sfigure1_supp2.pdf", width = 10, height = 10, onefile = FALSE)
+print(fig2c)
+dev.off()
+#+end_src
+
+#+RESULTS:
+: 1
 
 * Notes								   :noexport:
 *** Figure 7B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 

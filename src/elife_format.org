@@ -23,6 +23,27 @@
 (ispell-change-dictionary "american")
 #+end_src
 #+LaTeX_CLASS: elife-paper
+# #+begin_latex
+# %DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+# %DIF UNDERLINE PREAMBLE
+# \RequirePackage[normalem]{ulem}
+# \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
+# \providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}}
+# \providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}
+# %DIF SAFE PREAMBLE
+# \providecommand{\DIFaddbegin}{}
+# \providecommand{\DIFaddend}{}
+# \providecommand{\DIFdelbegin}{}
+# \providecommand{\DIFdelend}{}
+# %DIF FLOATSAFE PREAMBLE
+# \providecommand{\DIFaddFL}[1]{\DIFadd{#1}}
+# \providecommand{\DIFdelFL}[1]{\DIFdel{#1}}
+# \providecommand{\DIFaddbeginFL}{}
+# \providecommand{\DIFaddendFL}{}
+# \providecommand{\DIFdelbeginFL}{}
+# \providecommand{\DIFdelendFL}{}
+# %DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+# #+end_latex
 #+LATEX_HEADER:\usepackage[utf8]{inputenc}
 #+OPTIONS: tex:t
 #+OPTIONS: toc:nil
@@ -86,9 +107,9 @@ We further used differential expression analysis to demonstrate that in vitro gr
 ** HIOs can be stably associated with commensal /E. coli/
 Given that the HIO epithelium recapitulates many of the features of the immature intestinal epithelium, we set out to evaluate the effect of bacterial colonization on the na@@latex:{\"i}@@ve HIO epithelium. Previous studies have established that pluripotent stem cell derived intestinal organoids can be injected with live viral \citep{Finkbeiner:2012} or bacterial pathogens \citep{Leslie:2015,Engevik:2015,Forbester:2015}, however it was not known if HIOs could be stably co-cultured with non-pathogenic or commensal microorganisms. We co-cultured HIOs with the human commensal microbe /Esherichia coli/ strain ECOR2 \citep{Ochman:1984} using a microinjection technique to introduce live /E. coli/ into the HIO lumen in a manner that prevented contamination of the surrounding media. HIOs microinjected with \num{e5} live /E. coli/ constitutively expressing GFP exhibit robust green fluorescence within 3 h of microinjection (*Figure 1A* and *Supplementary File 1*). Numerous E. coli localized to the luminal space at 48 h post-microinjection and are present adjacent to the HIO epithelium, with some apparently residing in close opposition to the apical epithelial surface (*Figure 1B*).
 
-In order to determine the minimum number of CFU /E. coli/ required to establish short term colonization (24 hours), we microinjected increasing concentrations of live /E. coli/ suspended in PBS into single HIOs and collected and enumerated bacteria in the luminal contents at 24 h post-microinjection (*Figure 1C*). Single HIOs can be stably colonized by as few as 5 CFU /E. coli/ per HIO with src_R[:session *R* :exports results :results text]{source("figure_Rscripts/text-stats.R"); pct1} % success (positive luminal culture and negative external media culture at 24 h post-injection) and src_R[:session *R* :exports results :results text]{pct2} % success at \geq 100 CFU per HIO (*Figure 1C*).  Increasing the number of CFU /E. coli/ microinjected into each HIO at /t/ = 0 did not increase the mean luminal CFU per HIO at 24 hours post-microinjection (/P/ = src_R[:session *R* :exports results :results text]{round(p1c,2)}; *Figure 1C*). Thus, the 24 h growth rate of /E. coli/ within the HIO lumen was negatively correlated with the CFU injected (R^{2} = 0.625, P = \num{3.1e-12}; *Figure 1C*). 
+In order to determine the minimum number of CFU /E. coli/ required to establish short term colonization (24 hours), we microinjected increasing concentrations of live /E. coli/ suspended in PBS into single HIOs and collected and enumerated bacteria in the luminal contents at 24 h post-microinjection (*Figure 1C*). Single HIOs can be stably colonized by as few as 5 CFU /E. coli/ per HIO with src_R[:session *R* :exports results :results text]{source("figure_Rscripts/text-stats.R"); pct1} % success (positive luminal culture and negative external media culture at 24 h post-injection) and src_R[:session *R* :exports results :results text]{pct2} % success at \geq 100 CFU per HIO (*Figure 1C*).  Increasing the number of CFU /E. coli/ microinjected into each HIO at /t/ = 0 did result in a significant increase in the mean luminal CFU per HIO at 24 hours post-microinjection at any dose (ANOVA /P/ = src_R[:session *R* :exports results :results text]{round(p1c,2)}; *Figure 1 - Supplement 2*). Thus, the 24 h growth rate of /E. coli/ within the HIO lumen was negatively correlated with the CFU injected (r^{2} = 0.625, P = \num{3.1e-12}; *Figure 1C*). 
 
- Next, we examined the stability of HIO and commensal /E. coli/ co-cultures over time /in vitro/. HIOs were microinjected with 10 CFU /E. coli/ and maintained for 24-72 h (*Figure 1D*). Rapid expansion of /E. coli/ density within the HIO lumen was observed in the first 24 h, with relatively stable bacterial density at 48-72 hr. A src_R[:session *R* :exports results :results text]{round(test2d.2$estimate[1]/test2d.2$estimate[2], digits =2)}-fold increase in bacterial density was observed between 24 and 72 h post-microinjection (/P/ = src_R[:session *R* :exports results :results text]{round(test2d.2$p.value, digits = 3)}). Importantly, samples taken from the external HIO culture media were negative for /E. coli/ growth under all microinjection conditions (*Figure 1E*).
+ Next, we examined the stability of HIO and commensal /E. coli/ co-cultures over time /in vitro/. HIOs were microinjected with 10 CFU /E. coli/ and maintained for 24-72 h (*Figure 1D*). Rapid expansion of /E. coli/ density within the HIO lumen was observed in the first 24 h, with relatively stable bacterial density at 48-72 hr. A src_R[:session *R* :exports results :results text]{round(test2d.2$estimate[1]/test2d.2$estimate[2], digits = 2)}-fold increase in bacterial density was observed between 24 and 72 h post-microinjection (/P/ = src_R[:session *R* :exports results :results text]{round(test2d.2$p.value, digits = 3)}). Importantly, samples taken from the external HIO culture media were negative for /E. coli/ growth under all microinjection conditions (*Figure 1E*).
 
 Finally, we examined the stability of HIO cultures following /E. coli/ microinjection (*Figure 1F*). A total of src_R[:session *R* :exports results :results text]{d0surv[1]} individual HIOs were microinjected with 10^{4} CFU /E. coli/ each. Controls were microinjected with sterile PBS alone. The external HIO media was sampled daily and cultured for bacterial growth. External culture media was sterile in 100% of control HIOs throughout the entire experiment, and in src_R[:session *R* :exports results :results text]{round(100*(d2surv/d0surv), digits = 2)[1]} % of /E. coli/ injected HIOs on days 0-2 post-microinjection. On days 3-9 post-microinjection some cultured media was positive for /E. coli/ growth; however, src_R[:session *R* :exports results :results text]{round(100*(d9surv/d0surv), digits = 2)[1]} % of /E. coli/ injected HIOs were negative for /E. coli/ in the external culture media throughout the timecourse. Thus, the large majority of /E. coli/ colonized HIOs remain stable for an extended period when cultured /in vitro/ and without antibiotics.
 
@@ -96,7 +117,7 @@ Finally, we examined the stability of HIO cultures following /E. coli/ microinje
 \begin{figure}
 \begin{fullwidth}
 \includegraphics[width=0.95\linewidth]{./figures/figure1/figure1_multipanel.pdf}
-\caption{\textbf{A} Human intestinal organoid (HIO) containing live GFP+ \textit{E. coli} str. ECOR2. Brightfield, fluorescent, and overlay images are labeled. \textbf{B} Confocal micrograph of the HIO epithelium (E-cadherin) in direct association with GFP+ \textit{E. coli}. \textbf{C} Luminal CFU per HIO \textit{E. coli} at 24 h post-microinjection with \numrange{5e-1}{5e5} CFU per HIO. \textbf{D} Luminal CFU per HIO at 0-72 h post microinjection. \textbf{E} HIO culture media or HIO luminal contents plated on LB agar and cultured overnight at \SI{37}{\celsius}. \textbf{F} Daily proportion of HIO cultures with no culturable \textit{E. coli} in the external media following \textit{E. coli} microinjection (n = 48) or PBS microinjection (n = 8).}
+\caption{\textbf{A} Human intestinal organoid (HIO) containing live GFP+ \textit{E. coli} str. ECOR2. Brightfield, fluorescent, and overlay images are labeled. \textbf{B} Confocal micrograph of the HIO epithelium (E-cadherin) in direct association with GFP+ \textit{E. coli}. \textbf{C} Change in luminal CFU per HIO \textit{E. coli} at 24 h post-microinjection with \numrange{5e-1}{5e5} CFU per HIO. \textbf{D} Luminal CFU per HIO at 0-72 h post microinjection. \textbf{E} HIO culture media or HIO luminal contents plated on LB agar and cultured overnight at \SI{37}{\celsius}. \textbf{F} Daily proportion of HIO cultures with no culturable \textit{E. coli} in the external media following \textit{E. coli} microinjection (n = 48) or PBS microinjection (n = 8).}
 \label{fig:fullwidth}
 \end{fullwidth}
 \end{figure}

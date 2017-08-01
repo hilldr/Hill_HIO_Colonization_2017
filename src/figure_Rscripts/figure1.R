@@ -69,7 +69,9 @@ stats <- lm_eqn(data[data$inject > 0 & data$fold !=0,],
                 data[data$inject > 0 & data$fold !=0,]$fold)
 
 library(ggplot2)
+library(scales)
 source("ggplot2-themes.R")
+
 figure1c <- ggplot(data, aes(x = inject, y = fold)) +
     geom_smooth(data = data[data$inject > 0 & data$fold !=0,],
                 aes(x=inject, y=fold), colour = "black",
@@ -79,7 +81,7 @@ figure1c <- ggplot(data, aes(x = inject, y = fold)) +
                 level = 0.95) +
     geom_hline(yintercept = 1, color = "black", size = 0.5, linetype = "dashed") +
     geom_point(size = 8,shape = 21, fill=color.set[2]) + 
-    ylab(expression(paste("24 h ",Delta, " CFU/HIO"))) +
+    ylab(latex2exp::TeX("$\\textbf{$\\frac{CFU$\\cdot{}HIO_{$\\textit{t}=24}^{-1}}{CFU$\\cdot{}HIO_{$\\textit{t}=0}^{-1}}}$")) +
     ggtitle("C") + 
     xlab("CFU injected per HIO") + theme1 + 
     scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -94,7 +96,8 @@ figure1c <- ggplot(data, aes(x = inject, y = fold)) +
     annotate("text",x = 1000, y = 100000,
                            label = substr(stats,62,150),
                            parse = TRUE,
-                           size = 10)
+                           size = 10) +
+    theme(axis.title.y = element_text(vjust =-0.8))
 
 png(filename = "../figures/figure1/figure1c.png", width = 800, height = 800)
 print(figure1c)
@@ -133,7 +136,8 @@ source("ggplot2-themes.R")
 figure1d <- ggplot(data[data$CFU > 0,], aes(x = hr, y = CFU)) +
     geom_boxplot(size = 2, aes(group = hr), fill = color.set[2]) +
     geom_point(size = 8, shape = 21, fill = color.set[2]) +
-    ylab("CFU/HIO") + ggtitle("D") + 
+    ylab(latex2exp::TeX("$\\textbf{CFU$\\cdot{}HIO^{-1}}$")) +
+    ggtitle("D") + 
     xlab("Time post-microinjection (h)") + theme1 +
     scale_y_log10(limits = c(1,50000000),
                   breaks = trans_breaks("log10", function(x) 10^x),
