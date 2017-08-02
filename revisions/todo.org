@@ -130,7 +130,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
    :END:
 ESSENTIAL REVISIONS:
 General comments on presentation in the paper
-** TODO Revise methods reporting [0/6]
+** TODO Revise methods reporting [1/6]
  Especially for a paper where the main point is development of an experimental system, the technical validation and reporting of the methods and results in the paper must be completely solid. The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends. The methods section was considered incomplete to allow a researcher from a related field to exactly reproduce every experiment shown - concentrations, solvents and timings - e.g. Fig 7, how much TNF, how much IFNgamma? It was unclear exactly how the false discovery rate was assessed - which algorithm was used? What sample numbers were used in the calculations and how reproducible were the experiments? Specific information about the E. coli strain should be given, and whether it is motile.
 
 *** TODO Update number of biological and technical replicates in each experiment
@@ -143,8 +143,10 @@ General comments on presentation in the paper
 "Specific information about the E. coli strain should be given, and whether it is motile."
 *** TODO Clarify the application of antibiotics
 "The model depends on selective injection of live bacteria into HIOs and evidence is provided in Figure 1 about this. The experimental protocol needs to be far more explicit in the main body of the text: in the methods under 'HIO culture' it is stated 'HIOs were maintained in ENR media without antibiotics prior to microinjection experiments'; then under 'Microinjection', '..... cultures were rinsed with PBS and treated with ENR media containing penicillin and streptomycin...'. Controls that assess the potential influence of carry-over of antibiotics of the readouts reported in Figure 1 are required."
-*** TODO Clarify dose for figure 1D
+*** DONE Clarify dose for figure 1D
  " C. What dose(s) of injections were used for 1D?"
+
+RESPONSE: For Figure 1D, the HIOs were microinjected with 10 CFU E. coli each. The figure legend has been amended to fix this.
 
 ** TODO Generate control data that assess the influence of abx 
   Major comments
@@ -210,7 +212,7 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
 "It is accepted that enteroids are 3 dimensional structures, and the study has been productive in the evaluation of stem cell dynamics and other tissue level events. However, organoids are not vascularized with a capillary network that generate O2 gradients in vivo, thus organism level physiological events such as hypoxia are difficult to address and these caveats must be included in the discussion"
 ** TODO [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
 "Using the pathway analysis from the GO and REACTOME databases limits the insight that the reader is given into the changes in gene expression. For example, in Figure 2C 'muscle cell differentiation' is shown as a pathway. It would be possible to report detailed network analyses at least in the supporting material so that the contribution of different transcripts to the overall analysis is clear. This would allow considerable refinement of the time-dependent transcriptional response descriptions in the text."
-** IN-PROGRESS [#A] Repeat PMDZ and E-Cad staining experiment [3/6]
+** IN-PROGRESS [#A] Repeat PMDZ and E-Cad staining experiment [2/6]
    SCHEDULED: <2017-07-31 Mon>
   In Figure 3C it is difficult to appreciate whether the cadherin stain has worked in the PBS panel. How reproducible are these results? What happens with a hypoxic control?
 *** DONE Request HIOs
@@ -223,14 +225,14 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
     - dead E. coli
     - dead E. coli + hypoxia 
 see also [[*Test%20BD-2%20induction%20in%20dead%20E.%20coli%20+%20hypoxia%20%5B/%5D][Test BD-2 induction in dead E. coli + hypoxia]]
-*** DONE [#A] Start ECOR2 culture
-    SCHEDULED: <2017-08-01 Tue>
+*** TODO [#A] Start ECOR2 culture
+    SCHEDULED: <2017-08-13 Sun>
 *** TODO [#A] Microinject live/dead ECOR2 and start hypoxia treatment
-    SCHEDULED: <2017-08-02 Wed>
+    SCHEDULED: <2017-08-14 Mon>
 *** TODO [#A] Collect media and fix HIOs in PFA
-    SCHEDULED: <2017-08-03 Thu>
+    SCHEDULED: <2017-08-15 Tue>
 *** TODO [#A] Transfer HIOs to 70% Ethanol
-    SCHEDULED: <2017-08-04 Fri>
+    SCHEDULED: <2017-08-16 Wed>
 ** TODO Revise Figure 4 analysis [1/6]
    The data analysis shown in Fig 4. was complex and challenging for the reviewers to appreciate in its current form. The subset organisation must be clear and specific.
 *** TODO [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
