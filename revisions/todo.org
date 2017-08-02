@@ -123,7 +123,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [21%]
+* eLife revision due date [23%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
@@ -231,7 +231,7 @@ see also [[*Test%20BD-2%20induction%20in%20dead%20E.%20coli%20+%20hypoxia%20%5B/
     SCHEDULED: <2017-08-03 Thu>
 *** TODO [#A] Transfer HIOs to 70% Ethanol
     SCHEDULED: <2017-08-04 Fri>
-** TODO Revise Figure 4 analysis [0/7]
+** TODO Revise Figure 4 analysis [1/6]
    The data analysis shown in Fig 4. was complex and challenging for the reviewers to appreciate in its current form. The subset organisation must be clear and specific.
 *** TODO [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
     A. Why is there no PBS control with the NFkB inhibitor? Many cell survival/cell death pathways converge on NFkB signalling and the inhibitor may exert effects already at baseline which would then fall into gene set 1 and gene set 2? From the Venn-diagrams shown in panel A, it appears that genes in set 1 and 2 are mutually exclusive, which would make the lacking control less problematic, but apparently the hypoxia-responsive genes are highly enriched in both (of course these may be different genes in the same pathway? But this would be slightly surprising if a statistical exclusion had been made).
@@ -243,9 +243,11 @@ see also [[*Test%20BD-2%20induction%20in%20dead%20E.%20coli%20+%20hypoxia%20%5B/
     D. In panel C, is it right that "% genes matched to pathway" is this the percentage of genes from each set (e.g. the full 1940 genes in Set 1) that map to the indicated pathway? Thus 5%, i.e. around 400 genes from set 1 map to "regulation of cytoskeleton organization"? Please clarify. 
 *** TODO Supplementary figure showing size changes in gene expression in 4B
 Also, as the plots in B suggest that many genes are included with a very small up- or down-regulation, it would be important to have some handle on not just the significance, but also the average absolute size of the change observed. A second set of graphs, or a supplementary figure with more information would be helpful.
-*** TODO Clarify P-value cut-off for 4C
+*** DONE Clarify P-value cut-off for 4C
     SCHEDULED: <2017-08-02 Wed>
     E. In the legend, were pathways with enrichment P-values greater than 0.01 excluded?
+
+RESPONSE: This was a typographical error. pathways with P-values > 0.01 were excluded from the plot and the legend has been amended to fix this.
 ** IN-PROGRESS [#A] Test BD-2 induction in dead E. coli + hypoxia [1/3]
    SCHEDULED: <2017-07-31 Mon>
     In Fig 5B and C, it would be important to include a group microinjected with dead E. coli, immediately followed by hypoxia, to conclude that both factors act together to induce b-defensins.
