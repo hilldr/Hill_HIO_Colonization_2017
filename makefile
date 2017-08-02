@@ -37,7 +37,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./revisions/elife-1st-submission.tex
-	latexdiff --type=CTRADITIONAL ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
+	latexdiff --type=UNDERLINE ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
 	pdflatex -output-directory src $(TEXT)_changes
 	pdflatex -output-directory src $(TEXT)_changes
 	cp ./src/bibliography.bib ./
