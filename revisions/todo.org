@@ -123,7 +123,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [23%]
+* eLife revision due date [34%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
@@ -168,10 +168,10 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
   D. As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated. Further, the final sentence of the third paragraph of page 4 and the results quoted in the following paragraph after day 3 are contradictory. Controls are absolutely necessary to ensure that these findings are not simply due to antibiotic carry-over.
 ** TODO Consider removal or replacement of 1E
 "As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated."
-** IN-PROGRESS [#A] Experiment evaluating HIO morphology and differentiation [4/8]
+** IN-PROGRESS [#A] Experiment evaluating HIO morphology and differentiation [8/10]
 
  "The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?"
-*** IN-PROGRESS Treat and collect HIOs [66%]
+*** DONE Treat and collect HIOs [100%]
    SCHEDULED: <2017-07-24 Mon>
 
 **** DONE Spike HIOs with 10 uM EdU
@@ -195,16 +195,52 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
      :PROPERTIES:
      :Effort:   0
      :END: 
-**** TODO [#A] Collect HIOs and fix in PFA [192 hr timepoint]
+**** DONE [#A] Collect HIOs and fix in PFA [192 hr timepoint]
      SCHEDULED: <2017-08-02 Wed 15:30>
      :PROPERTIES:
      :Effort:   0
      :END: 
    Entered on [2017-07-26 Wed 13:39]
-**** TODO [#A] Submit HIOs for processing in MIL
+**** DONE Transfer HIOs to EtOH
      SCHEDULED: <2017-08-03 Thu>
-*** TODO Give embedded HIOs to Mindy for sectioning
+**** DONE [#A] Submit HIOs for processing in MIL
+     SCHEDULED: <2017-08-04 Fri>
+*** IN-PROGRESS Give embedded HIOs to Mindy for sectioning
+    SCHEDULED: <2017-08-07 Mon>
  The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?
+
+Samples (9):
+- 0 hr HIOs
+- 24 hr HIOs + PBS
+- 24 hr HIOs + E. coli
+- 48 hr HIOs + PBS
+- 48 hr HIOs + E. coli
+- 96 hr HIOs + PBS
+- 96 hr HIOs + E. coli
+- 8 d HIOs + PBS
+- 8 d HIOs + E. coli
+
+Stains:
+Set 1
+ - Edu
+ - Ki67
+ - Ecad
+ - DAPI
+Set 2
+ - MUC2
+ - CHGA
+ - Ecad
+ - DAPI
+Set 3
+ - LYZ or DEFA5
+ - dppIV or SI
+ - Ecad
+ - DAPI
+Set 4 (lower priority)
+ - Sox9
+ - Ecad
+ - Any one of MUC2/CHGA/LYZ/DEFA5/dppIV/SI
+
 *** TODO Does goblet cell differentiation contribute to mucus expression?
      In relation to figure 6, can induction of mucus production and induction of goblet cell differentiation be delineated? The slow appearance of mucin gene upregulation appears more consistent with a differentiation phenotype than simple gene expression?
 
@@ -213,7 +249,8 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
 ** TODO [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
 "Using the pathway analysis from the GO and REACTOME databases limits the insight that the reader is given into the changes in gene expression. For example, in Figure 2C 'muscle cell differentiation' is shown as a pathway. It would be possible to report detailed network analyses at least in the supporting material so that the contribution of different transcripts to the overall analysis is clear. This would allow considerable refinement of the time-dependent transcriptional response descriptions in the text."
 ** IN-PROGRESS [#A] Repeat PMDZ and E-Cad staining experiment [2/6]
-   SCHEDULED: <2017-07-31 Mon>
+   SCHEDULED: <2017-08-14 Mon>
+
   In Figure 3C it is difficult to appreciate whether the cadherin stain has worked in the PBS panel. How reproducible are these results? What happens with a hypoxic control?
 *** DONE Request HIOs
     SCHEDULED: <2017-07-31 Mon>
@@ -250,18 +287,28 @@ Also, as the plots in B suggest that many genes are included with a very small u
     E. In the legend, were pathways with enrichment P-values greater than 0.01 excluded?
 
 RESPONSE: This was a typographical error. pathways with P-values > 0.01 were excluded from the plot and the legend has been amended to fix this.
-** IN-PROGRESS [#A] Test BD-2 induction in dead E. coli + hypoxia [1/3]
-   SCHEDULED: <2017-07-31 Mon>
+** TODO [#A] Test BD-2 induction in dead E. coli + hypoxia [2/3]
+SCHEDULED: <2017-08-14 Mon>
     In Fig 5B and C, it would be important to include a group microinjected with dead E. coli, immediately followed by hypoxia, to conclude that both factors act together to induce b-defensins.
 - cross-reference with [[*Repeat PMDZ and E-Cad staining experiment][Repeat PMDZ and E-Cad staining experiment {1/6}]]
 *** DONE Request HIOs
-*** TODO Submit Media to ELISA core
-    SCHEDULED: <2017-08-03 Thu>
+*** DONE Submit Media to ELISA core
+    SCHEDULED: <2017-08-04 Fri>
 *** WAITING Analyze data
 ** TODO Respod to reducing agent question as beyond scope
 For Fig 5D, does hBD-2 require a reducing agent for activity as hBD1 does (Nature 469, 419-423)? Typically, these pore-forming AMPs to exert a stronger effect on the rapidly growing bacteria than in the stationary phase, and in fact, your maximum growth rate (i.e. maximum curve gradient) is even higher where the BD-2 is added, suggesting that something in the BD-2 may even permit faster E coli growth in LB. Death over several hours in late stationary phase may be rather due to accumulation of a toxic metabolite. To control for these effects, it will be important to show growth data with heat-inactivation of the BD-2. 
-** TODO [#A] Test recombinant BD-2 activity during stationary phase
+** TODO [#A] Test recombinant BD-2 activity during stationary phase [1/3]
 To focus on killing in the stationary phase a late stationary-phase culture could be treated with differing concentrations of BD-2 over short time-courses (including the inactivated controls), measuring loss of membrane integrity by Sytox-green uptake by flow cytometry or microscopy. As O-antigens can inhibit AMP function, E. coli K-12 could be included in these experiments.
+*** DONE Order BD-2
+*** WAITING Heat-inactivate BD2
+Heat at 100C for 30 min
+*** WAITING Treat stationary-phase ECOR2 with BD2
+Dilute overnight culture 1:1000 in PBS
+1. PBS
+2. PBS + 0.1 ug/ml BD-2
+3. PBS + 1 ug/ml BD-2
+4. PBS + 0.1 ug/ml BD-2 (heat inactivated)
+5. PBS + 10 ug/ml BD-2 (heat inactivated)
 ** TODO Prepare BD-2 supplementary figure with E. coli K12
 ** DONE Correct statement on epithelial barrier integrity
    SCHEDULED: <2017-08-02 Wed>
@@ -270,12 +317,14 @@ To focus on killing in the stationary phase a late stationary-phase culture coul
 RESPONSE: The reviewers are correct to note that E. coli colonization itself does not result in a decrease in barrier permeability compared to PBS, and that the presence of NF-kB inhibitor results in increased barrier permeability. This implies that NF-kB is required for the mediating the response to E. coli colonization. Our original intention was to highlight two findings: 1 - that maintenance of epithelial barrier integrity following E. coli colonization is NF-kB dependent, and 2 - that bacterial colonization mitigates damage to the epithelial barrier and increases in epithelial barrier permeability following exposure to pr-inflammatory cytokines. We orignially highlighted these two findings under a single header, stating that both were evidence of enhanced barrier integrity. The reviewer's comments, however, make it clear that these data are probably best presented as two distinct findings, and that is the approach we took in the 'Discussion'. We have therefore separated our description of these results into two distinct headers in the 'Results' section. We hope that this will clarify and highlight the effects of bacterial colonization on HIO barrier function and improve consistency with the interpretation we have laid out in the Discussion.
 ** TODO Prepare supplemental figure showing effect of SC514 on barrier function
 What is the effect of the inhibitor alone?
-** TODO Respond to minor points [1/5]
-*** TODO Revise presentation of Figure 2C 
-     The data shown in Fig 2C is potentially misleading. What you are most likely seeing here is a sigmoidal growth to a reasonably uniform carrying capacity of E. coli. The logarithmic growth rate is likely identical for all different inocula, but the plateau phase is reached earlier with the higher dose injections. Please simply plot the injected CFU and the final CFU per organoid. Ideally a time-course over the first 24h of colonization with a low and high dose of E. coli could be shown, giving you a more detailed handle on the type of growth occurring within the organoids.
 
-RESPONSE: Figure 1 - Supplement 2 has been provided to clarify the exact relationship between the input CFU at t=0 and the CFU harvested from the lumen at 24 hours post microinjection
+** TODO Revise presentation of Figure 2C 
+    The data shown in Fig 2C is potentially misleading. What you are most likely seeing here is a sigmoidal growth to a reasonably uniform carrying capacity of E. coli. The logarithmic growth rate is likely identical for all different inocula, but the plateau phase is reached earlier with the higher dose injections. Please simply plot the injected CFU and the final CFU per organoid. 
+**** TODO [#A] E. coli growth timecourse for < 24 hours
+Ideally a time-course over the first 24h of colonization with a low and high dose of E. coli could be shown, giving you a more detailed handle on the type of growth occurring within the organoids.
 
+ RESPONSE: Figure 1 - Supplement 2 has been provided to clarify the exact relationship between the input CFU at t=0 and the CFU harvested from the lumen at 24 hours post microinjection. We interpret the imaging data shown in Figure 1A as demonstrating that E. coli starts log-phase growth shortly after introduction to the HIO lumen, similar to the growth of E. coli in broth in vitro (Figure 5).
+** TODO Respond to minor points [1/6]
 *** TODO Provide explanation for BD1 expression
      What is the explanation for the increase in BD1 over time in the PBS injected organoids (Figure 2E which lacks units)? It would be interesting to include control panels here for cell death (LDH release or similar) and total cell number per sample volume.
 *** TODO Address function of fucosylated mucins
@@ -289,14 +338,15 @@ RESPONSE: We thank the reviewers for pointing out this inaccuracy and we have ma
 *** TODO Include suggested references
      The authors should be accurate in acknowledging older literature (the hypoxia NFkappaB effect has been known since 1994 and the BD-2 effect since 1997) - albeit not in this context.
 
-** IN-PROGRESS [#A] Authenticate cell lines [1/3]
+** DONE [#A] Authenticate cell lines [2/2]
    SCHEDULED: <2017-08-01 Tue>
     If your work involved the use of cell lines, please indicate in the Materials and methods section of your manuscript if their identity has been authenticated, state the authentication method (such as STR profiling), and report the mycoplasma contamination testing status. Please consult our Journal Policies for further details: https://submit.elifesciences.org/html/elife_author_instructions.html#policies
 
+RESPONSE: We have added a statement to the Materials and Methods section to confirm that the hESC cell line used in these studies was authenticated using STR profiling and tested negative for /Mycoplasma/
 *** DONE Start ES cell culture 
     SCHEDULED: <2017-08-01 Tue>
 
-*** TODO Harvest ES cells and submit to core
+*** DONE Harvest ES cells and submit to core
     SCHEDULED: <2017-08-04 Fri>
  Protocol here:
  [[https://umich.app.box.com/file/204465078839]]

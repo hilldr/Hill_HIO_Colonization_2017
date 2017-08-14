@@ -23,27 +23,6 @@
 (ispell-change-dictionary "american")
 #+end_src
 #+LaTeX_CLASS: elife-paper
-# #+begin_latex
-# %DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
-# %DIF UNDERLINE PREAMBLE
-# \RequirePackage[normalem]{ulem}
-# \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
-# \providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}}
-# \providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}
-# %DIF SAFE PREAMBLE
-# \providecommand{\DIFaddbegin}{}
-# \providecommand{\DIFaddend}{}
-# \providecommand{\DIFdelbegin}{}
-# \providecommand{\DIFdelend}{}
-# %DIF FLOATSAFE PREAMBLE
-# \providecommand{\DIFaddFL}[1]{\DIFadd{#1}}
-# \providecommand{\DIFdelFL}[1]{\DIFdel{#1}}
-# \providecommand{\DIFaddbeginFL}{}
-# \providecommand{\DIFaddendFL}{}
-# \providecommand{\DIFdelbeginFL}{}
-# \providecommand{\DIFdelendFL}{}
-# %DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
-# #+end_latex
 #+LATEX_HEADER:\usepackage[utf8]{inputenc}
 #+OPTIONS: tex:t
 #+OPTIONS: toc:nil
@@ -239,7 +218,7 @@ While great progress has been made in characterizing the composition of the gut 
 * Materials and Methods
 
 ** HIO culture
-Human ES cell line  H9 (NIH registry #0062) was obtained from the WiCell Research Institute. Stem cells were maintained on Matrigel (BD Biosciences, San Jose, CA) in mTeSR1 medium (STEMCELL Technologies, Vancouver, Canada). hESCs were passaged and differentiated into human intestinal organoid tissue as previously described \citep{Spence:2011,McCracken:2011}. HIOs were maintained in ENR media without antibiotics prior to microinjection experiments.
+Human ES cell line H9 (NIH registry #0062) was obtained from the WiCell Research Institute. H9 cells were authenticated using Short Tandem Repeat (STR) DNA profiling \citep{Matsuo:1999} at the University of Michigan DNA Sequencing Core. The H9 cell line was negative for /Mycoplasma/ contamination. Stem cells were maintained on Matrigel (BD Biosciences, San Jose, CA) in mTeSR1 medium (STEMCELL Technologies, Vancouver, Canada). hESCs were passaged and differentiated into human intestinal organoid tissue as previously described \citep{Spence:2011,McCracken:2011}. HIOs were maintained in ENR media without antibiotics prior to microinjection experiments.
 For hypoxic culture experiments, HIOs were transferred to a hydrated and sealed Modular Incubator Chamber (MIC-101, Billups-Rothenburg, Inc. Del Mar CA) filled with 1% O_{2}, 5% CO_{2}, and balance N_{2} and maintained at \SI{37}{\celsius} for 24 h.
 ** HIO transplantation and tissue derived enteroid culture
 HIO transplantations: This study was performed in strict accordance with the recommendations in the Guide for the Care and Use of Laboratory Animals of the National Institutes of Health. All animal experiments were approved by the University of Michigan Institutional Animal Care and Use Committee (IACUC; protocol # PRO00006609). HIO transplants into the kidney capsule were performed as previously described \citep{Finkbeiner:2015,Dye:2016} Briefly, mice were anesthetized using 2% isofluorane. The left flank was sterilized using Chlorhexidine and isopropyl alcohol, and an incision was made to expose the kidney. HIOs were manually placed in a subcapsular pocket of the kidney of male 7–10 week old NOD-SCID IL2Rgnull (NSG) mice using forceps. An intraperitoneal flush of Zosyn (100 mg/kg; Pfizer Inc.) was administered prior to closure in two layers. The mice were sacrificed and transplant retrieved after 10 weeks. 
