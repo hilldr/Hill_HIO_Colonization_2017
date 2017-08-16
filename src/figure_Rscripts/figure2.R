@@ -310,7 +310,8 @@ source("ggplot2-themes.R")
 ## adjust order for legend
 data2$treatment <- factor(data2$treatment,
                      levels = c("PBS", "E. coli"))
-
+## remove NAs from other experimental conditions
+data2 <- subset(data2, data2$treatment == "PBS" | data2$treatment == "E. coli")
 
 figure2e  <- ggplot(data = data2[data2$variable != "Survival",],
                     aes(x = day, y = avg, color = treatment, fill = treatment)) +
