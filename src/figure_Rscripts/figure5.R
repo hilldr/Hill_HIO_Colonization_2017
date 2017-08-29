@@ -289,7 +289,6 @@ data2 <- plyr::join(data2, plate2, by ="cell")
 data2$dose <- as.numeric(data2$dose)
 data2 <- data2[complete.cases(data2),]
 
-
 test1 <- t.test(data2[data2$Time == 18 & data2$dose == 1,]$value,
                 data2[data2$Time == 18 & data2$dose == 0.1,]$value,
                 alternative = "two.sided")
@@ -298,7 +297,6 @@ test2 <- t.test(data2[data2$Time == 18 & data2$dose == 1,]$value,
                 data2[data2$Time == 18 & data2$dose == 1e-8,]$value,
                 alternative = "two.sided")
 
-library(magrittr) 
 plot.data <- data2[data2$dose == 1e-8| data2$dose == 0.1 |data2$dose == 1,] %>%
     dplyr::group_by(dose, Time) %>%
     dplyr::summarize(avg = mean(value), sem = sd(value)/sqrt(n()))
@@ -345,6 +343,77 @@ ggsave(filename = "../figures/figure5/eps/figure5d.eps",
 plot = figure5d, 
 width = 24, height = 16)
 
+## calculate growth curves & carrying capacity
+library(magrittr)
+## limit dataset to log - stationary phase (exclude post-stationary phase)
+data3 <- subset(data2, data2$Time < 10)
+
+gc.data <- dplyr::group_by(data3, cell) %>%
+    dplyr::summarise(K = growthcurver::SummarizeGrowth(Time, value)[1]$vals$k,
+                     DT = growthcurver::SummarizeGrowth(Time, value)[1]$vals$t_gen,
+                     t_mid = growthcurver::SummarizeGrowth(Time, value)[1]$vals$t_mid) %>%
+    dplyr::right_join(dplyr::select(data2, cell, dose) , by = "cell") %>%
+    dplyr::distinct(cell, K, DT, dose, t_mid)
+
+gc.data <- subset(gc.data, gc.data$dose > 1e-02 | gc.data$dose == 1e-8)
+gc.data[gc.data$dose == 1e-8,]$dose <- 0
+
+## statistical tests
+gc.test1 <- t.test(gc.data[gc.data$dose == 0,]$K,
+                   gc.data[gc.data$dose == 1,]$K,
+                   alternative = "two.sided")
+gc.test2 <- t.test(gc.data[gc.data$dose == 0,]$K,
+                   gc.data[gc.data$dose == 0.1,]$K,
+                   alternative = "two.sided")
+gc.test3 <- t.test(gc.data[gc.data$dose == 0,]$DT,
+                   gc.data[gc.data$dose == 1,]$DT,
+                   alternative = "two.sided")
+gc.test4 <- t.test(gc.data[gc.data$dose == 0,]$DT,
+                   gc.data[gc.data$dose == 0.1,]$DT,
+                   alternative = "two.sided")
+
+library(ggplot2)
+source("ggplot2-themes.R")
+figure5e <- ggplot(data = gc.data, aes(x = factor(dose), y = K)) +
+    geom_boxplot(aes(color = factor(dose)), size = 2, outlier.size = 3) +
+    xlab(expression(paste("BD-2 (",mu,"g/mL)"))) +
+    ylab("Carrying capacity (K)") +
+    scale_fill_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
+    scale_color_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
+    theme1 +
+    theme(legend.position = "none",
+          legend.title = element_text(size = 24),
+	  legend.key.size = unit(1.5,"cm"),
+	  legend.text = element_text(size = 24)) +
+    annotate("text", x = 2, y = 0.49,
+             label = paste("P = ", round(gc.test2$p.value, digits = 3)),
+             size = 6, color = "grey30") +
+    annotate("text", x = 3, y = 0.47,
+             label = paste("P = ", round(gc.test1$p.value, digits = 4)),
+             size = 6, color = "grey30") +
+    ggtitle("E")
+
+figure5f <- ggplot(data = gc.data, aes(x = factor(dose), y = DT)) +
+    geom_boxplot(aes(color = factor(dose)), size = 2, outlier.size = 3) +
+    xlab(expression(paste("BD-2 (",mu,"g/mL)"))) +
+    ylab("Doubling time (h)") +
+    scale_fill_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
+    scale_color_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
+    theme1 +
+    theme(legend.position = "none",
+          legend.title = element_text(size = 24),
+	  legend.key.size = unit(1.5,"cm"),
+	  legend.text = element_text(size = 24)) +
+    ggtitle("F")
+
+png(filename = "../figures/figure5/figure5e.png", width = 800, height = 800)
+#print(figure5e)
+gridExtra::grid.arrange(figure5e, figure5f, ncol = 2)
+dev.off()
+ggsave(filename = "../figures/figure5/eps/figure5e.eps", 
+plot = figure5e, 
+width = 16, height = 16)
+
 ## Figure 5 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 library(ggplot2)
@@ -352,20 +421,20 @@ library(gridExtra)
 source("custom_fun.R")
 
 layout <- rbind(c(1,2,3),
-                c(4,4,4))
+                c(4,4,5))
 
 
 ## PDF output
 pdf(file = "../figures/figure5/figure5_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
-gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, layout_matrix = layout)
+gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure5/eps/figure5_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
 png(filename = "../figures/figure5/figure5_multipanel.png", width = 1600, height = 1600)
-gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, layout_matrix = layout)
+gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout)
 dev.off()
