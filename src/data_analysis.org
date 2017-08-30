@@ -119,6 +119,15 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure4_supplement2.pdf ./supplements/figure4_supplement2.pdf
 	rm *.bib *.cls *.bst
 
+./supplements/figure4_supplement3.pdf: ./src/figure4_supplement3.tex
+	pdflatex -output-directory src ./src/figure4_supplement3
+	pdflatex -output-directory src ./src/figure4_supplement3
+	cp ./src/bibliography.bib ./
+	cp ./src/elsarticle.cls ./
+	cp ./src/model2-names.bst ./
+	mv ./src/figure4_supplement3.pdf ./supplements/figure4_supplement3.pdf
+	rm *.bib *.cls *.bst
+
 ./supplements/figure5_supplement1.pdf: ./src/figure5_supplement1.tex
 	pdflatex -output-directory src ./src/figure5_supplement1
 	pdflatex -output-directory src ./src/figure5_supplement1
@@ -5010,6 +5019,281 @@ fig2c <- ggplot(data, aes(x=inject, y=mean)) +
 
 pdf(file = "../figures/supplemental/sfigure1_supp2.pdf", width = 10, height = 10, onefile = FALSE)
 print(fig2c)
+dev.off()
+#+end_src
+
+#+RESULTS:
+: 1
+** Figure 4 -Supplement 3
+#+begin_src R :session *R* :exports none :eval yes :tangle figure_Rscripts/supplemental.R
+## Figure 4 - Supplement 3
+## import raw data
+data <- readr::read_csv(file = "../data/figure4/170825_ELISA_results.csv")
+
+## load libraries
+library(scales)
+library(grid)
+library(ggplot2)
+source("ggplot2-themes.R")
+library(magrittr)
+
+## statistical tests
+## BD-1
+bd1.p <- t.test(data[data$treatment == "PBS" & data$cytokine == "BD-1",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "BD-1",]$pg_ml,
+                alternative = "greater")$p.value
+bd1.p2 <- t.test(data[data$treatment == "PBS" & data$cytokine == "BD-1",]$pg_ml,
+                data[data$treatment == "Heat-inactivated + hypoxia" & data$cytokine == "BD-1",]$pg_ml,
+                alternative = "two.sided")$p.value
+bd1.p3 <- t.test(data[data$treatment == "PBS" & data$cytokine == "BD-1",]$pg_ml,
+                data[data$treatment == "hypoxia" & data$cytokine == "BD-1",]$pg_ml,
+                alternative = "two.sided")$p.value
+## BD-2
+bd2.p <- t.test(data[data$treatment == "PBS" & data$cytokine == "BD-2",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "BD-2",]$pg_ml,
+                alternative = "less")$p.value
+bd2.p2 <- t.test(data[data$treatment == "PBS" & data$cytokine == "BD-2",]$pg_ml,
+                data[data$treatment == "Heat-inactivated + hypoxia" & data$cytokine == "BD-2",]$pg_ml,
+                alternative = "less")$p.value
+## IL-6
+il6.p <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-6",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "IL-6",]$pg_ml,
+                alternative = "less")$p.value
+il6.p2 <- t.test(data[data$treatment == "Heat-inactivated + hypoxia" & data$cytokine == "IL-6",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "IL-6",]$pg_ml,
+                alternative = "less")$p.value
+il6.p3 <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-6",]$pg_ml,
+                data[data$treatment == "Heat-inactivated + hypoxia" & data$cytokine == "IL-6",]$pg_ml,
+                alternative = "less")$p.value
+il6.p4 <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-6",]$pg_ml,
+                data[data$treatment == "Heat-inactivated" & data$cytokine == "IL-6",]$pg_ml,
+                alternative = "less")$p.value
+il6.p5 <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-6",]$pg_ml,
+                data[data$treatment == "hypoxia" & data$cytokine == "IL-6",]$pg_ml,
+                alternative = "less")$p.value
+## IL-8
+il8.p <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-8",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "IL-8",]$pg_ml,
+                alternative = "less")$p.value
+il8.p2 <- t.test(data[data$treatment == "Heat-inactivated + hypoxia" & data$cytokine == "IL-8",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "IL-8",]$pg_ml,
+                alternative = "less")$p.value
+il8.p3 <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-8",]$pg_ml,
+                data[data$treatment == "Heat-inactivated + hypoxia" & data$cytokine == "IL-8",]$pg_ml,
+                alternative = "less")$p.value
+il8.p4 <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-8",]$pg_ml,
+                data[data$treatment == "Heat-inactivated" & data$cytokine == "IL-8",]$pg_ml,
+                alternative = "less")$p.value
+il8.p5 <- t.test(data[data$treatment == "PBS" & data$cytokine == "IL-8",]$pg_ml,
+                data[data$treatment == "hypoxia" & data$cytokine == "IL-8",]$pg_ml,
+                alternative = "less")$p.value
+
+## VEGF
+vegf.p <- t.test(data[data$treatment == "Heat-inactivated" & data$cytokine == "VEGF",]$pg_ml,
+                data[data$treatment == "E. coli" & data$cytokine == "VEGF",]$pg_ml,
+                alternative = "less")$p.value
+
+
+data <- dplyr::group_by(data, treatment, cytokine) %>%
+    dplyr::summarise(avg = mean(pg_ml),
+                     num = n(),
+                     sem = sd(pg_ml, na.rm = TRUE) / n(),
+                     total = sum(pg_ml, na.rm = TRUE))
+
+data$treatment <- factor(data$treatment,
+                         levels = c("PBS",
+                                    "E. coli",
+                                    "Heat-inactivated",
+                                    "hypoxia",
+                                    "Heat-inactivated + hypoxia")
+                         )
+
+
+
+elisa <- ggplot(data,
+                aes(x = treatment, y = avg,
+                    fill = factor(treatment),
+                    color = factor(treatment))) +
+    geom_bar(stat = "identity") +
+    geom_errorbar(aes(ymax = avg + sem,
+                      ymin = avg - sem),
+                  width = 0, color = "grey70", size = 2) +
+    facet_wrap(~cytokine, scales = "free_y") +
+    xlab("") +
+    ylab("pg/ml") +
+    scale_fill_brewer(palette = "Set1", direction = 1) +
+    scale_color_brewer(palette = "Set1", direction = 1) +
+    ## statistical annotations
+    ## BD-1
+    geom_segment(data = data[data$cytokine == "BD-1",],
+                 aes(x = 1,
+                     xend = 2, 
+                     y = 53+4,
+                     yend = 53+4),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "BD-1",],
+                 aes(x = 1.5,
+                     y = 55+4),
+              color = "grey30",
+              label = paste("P = ", format(bd1.p, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "BD-1",],
+                 aes(x = 1,
+                     xend = 5, 
+                     y = 73+4,
+                     yend = 73+4),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "BD-1",],
+                 aes(x = 3,
+                     y = 75+4),
+              color = "grey30",
+              label = paste("P = ", format(bd1.p2, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "BD-1",],
+                 aes(x = 1,
+                     xend = 4, 
+                     y = 73,
+                     yend = 73),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "BD-1",],
+                 aes(x = 2.5,
+                     y = 75),
+              color = "grey30",
+              label = paste("P = ", format(bd1.p3, digits = 1))) +
+    ## BD-2
+    geom_segment(data = data[data$cytokine == "BD-2",],
+                 aes(x = 1,
+                     xend = 2, 
+                     y = 750,
+                     yend = 750),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "BD-2",],
+                 aes(x = 1.5,
+                     y = 750+20),
+              color = "grey30",
+              label = paste("P = ", format(bd2.p, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "BD-2",],
+                 aes(x = 1,
+                     xend = 5, 
+                     y = 750+40,
+                     yend = 750+40),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "BD-2",],
+                 aes(x = 3,
+                     y = 750+60),
+              color = "grey30",
+              label = paste("P = ", format(bd2.p2, digits = 1))) +
+    ## IL-6
+    geom_segment(data = data[data$cytokine == "IL-6",],
+                 aes(x = 1,
+                     xend = 2, 
+                     y = 160,
+                     yend = 160),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-6",],
+                 aes(x = 1.5,
+                     y = 160+10),
+              color = "grey30",
+              label = paste("P = ", format(il6.p, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "IL-6",],
+                 aes(x = 1,
+                     xend = 3, 
+                     y = 160+20,
+                     yend = 160+20),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-6",],
+                 aes(x = 2,
+                     y = 160+30),
+              color = "grey30",
+              label = paste("P = ", format(il6.p4, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "IL-6",],
+                 aes(x = 1,
+                     xend = 4, 
+                     y = 160+40,
+                     yend = 160+40),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-6",],
+                 aes(x = 2.5,
+                     y = 160+50),
+              color = "grey30",
+              label = paste("P = ", format(il6.p5, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "IL-6",],
+                 aes(x = 1,
+                     xend = 5, 
+                     y = 160+60,
+                     yend = 160+60),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-6",],
+                 aes(x = 3,
+                     y = 160+70),
+              color = "grey30",
+              label = paste("P = ", format(il6.p3, digits = 1))) +
+    ## IL-8
+    geom_segment(data = data[data$cytokine == "IL-8",],
+                 aes(x = 1,
+                     xend = 2, 
+                     y = 2100,
+                     yend = 2100),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-8",],
+                 aes(x = 1.5,
+                     y = 2100+100),
+              color = "grey30",
+              label = paste("P = ", format(il8.p, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "IL-8",],
+                 aes(x = 1,
+                     xend = 4, 
+                     y = 2700,
+                     yend = 2700),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-8",],
+                 aes(x = 2.5,
+                     y = 2700+100),
+              color = "grey30",
+              label = paste("P = ", format(il8.p5, digits = 1))) +
+    geom_segment(data = data[data$cytokine == "IL-8",],
+                 aes(x = 1,
+                     xend = 5, 
+                     y = 3800,
+                     yend = 3800),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "IL-8",],
+                 aes(x = 3,
+                     y = 3800+100),
+              color = "grey30",
+              label = paste("P = ", format(il8.p3, digits = 1))) +
+    ## VEGF
+    geom_segment(data = data[data$cytokine == "VEGF",],
+                 aes(x = 2,
+                     xend = 3, 
+                     y = 650,
+                     yend = 650),
+                 size = 1,
+		 color = "grey30")+
+    geom_text(data = data[data$cytokine == "VEGF",],
+                 aes(x = 2.5,
+                     y = 650+25),
+              color = "grey30",
+              label = paste("P = ", format(vegf.p, digits = 1))) +
+    theme1 +
+    theme(axis.text.x = element_text(angle = 45,
+                                     vjust = 1,
+                                     hjust = 1),
+          strip.text = element_text(color = "white", size = 24),
+	  strip.background = element_rect(color = "white",
+                                          fill = "grey30"))
+pdf(file = "../figures/supplemental/sfigure4_supp3.pdf", width = 18, height = 15, onefile = FALSE)
+print(elisa)
 dev.off()
 #+end_src
 
