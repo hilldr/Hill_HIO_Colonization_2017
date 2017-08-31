@@ -826,3 +826,113 @@ elisa <- ggplot(data,
 pdf(file = "../figures/supplemental/sfigure4_supp3.pdf", width = 18, height = 15, onefile = FALSE)
 print(elisa)
 dev.off()
+
+## FIGURE 5 - Supplement 2 -----------------------------------------------------
+## import data
+data2 <- read.csv(file = "../data/figure5/170831_BD_invitro_growth/170831_OD600.csv",
+                   header = TRUE, skip = 2, stringsAsFactors = FALSE)
+
+plate2 <- read.csv(file = "../data/figure5/170831_BD_invitro_growth/170831_plate_layout.csv",
+                  header = TRUE, stringsAsFactors = FALSE)
+
+## long format
+data2 <- reshape2::melt(data2, id.vars =c("Time", "Temperature..C."))
+data2 <- plyr::rename(data2, c("variable"="cell"))
+
+## reformat time to hours
+data2$Time <- sapply(strsplit(data2$Time, ":"), function(x) {
+    x <- as.numeric(x)
+    x[1] + ((x[2] + (x[3]/60))/60)
+}
+)
+
+## add cell labels from plate layout      
+data2 <- plyr::join(data2, plate2, by ="cell")
+data2 <- data2[complete.cases(data2),]
+
+
+library(magrittr) 
+plot.data <- data2 %>%
+    dplyr::group_by(treatment, strain, Time) %>%
+    dplyr::summarize(avg = mean(value),
+                     sem = sd(value)/sqrt(n()))
+
+library(ggplot2)
+source("ggplot2-themes.R")
+sfigure5.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = avg)) +
+    geom_point(shape = 21, size = 5, aes(fill = factor(treatment), color = factor(treatment))) +
+    geom_errorbar(aes(ymax = avg + sem, ymin = avg - sem, 
+                      color = factor(treatment)), width = 0) +
+    xlab("Time (h)") +
+    ylab(expression(paste(Delta,"OD"[600]))) +
+    scale_fill_brewer(name = "Treatment", palette = "Set1", direction = 1) +
+    scale_color_brewer(name = "Treatment", palette = "Set1", direction = 1) +
+    facet_wrap(~strain, ncol = 2) +
+    theme1 +
+    theme(legend.position = c(0.15, 0.9),
+          legend.title = element_text(size = 24),
+	  legend.key.size = unit(1,"cm"),
+	  legend.text = element_text(size = 24),
+	  strip.text = element_text(size = 32)) +
+    ggtitle("A")
+
+png(filename = "../figures/figure5/sfigure5_2.png", width = 1200, height = 800)
+print(sfigure5.2)
+dev.off()
+ggsave(filename = "../figures/figure5/eps/sfigure5_2.eps", 
+plot = sfigure5.2, 
+width = 24, height = 16)
+
+library(ggplot2)
+source("ggplot2-themes.R")
+figure5e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 20), y = K)) +
+    geom_boxplot(aes(color = treatment), size = 2, outlier.size = 3) +
+    facet_wrap(~strain, ncol = 2) +	
+    xlab("") +
+    ylab("Carrying capacity (K)") +
+    scale_fill_brewer(name = "Treatment", palette = "Set1", direction = 1) +
+    scale_color_brewer(name = "Treatment", palette = "Set1", direction = 1) +
+    theme1 +
+    theme(legend.position = "none",
+          legend.title = element_text(size = 24),
+	  legend.key.size = unit(1.5,"cm"),
+	  legend.text = element_text(size = 24),
+          axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+	  strip.text = element_text(size = 32)) +
+    geom_text(data = gc.data[gc.data$strain == "E. coli ECOR2",],
+                 aes(x = 1,
+                     y = 0.205),
+              size = 10,
+              color = "grey30",
+              label = paste("P = ", format(gc.test1, digits = 1))) +
+    geom_text(data = gc.data[gc.data$strain == "E. coli K12",],
+              aes(x = 1,
+                  y = 0.220),
+              size = 10,
+              color = "grey30",
+              label = paste("P = ", format(gc.test2, digits = 1))) +
+    ggtitle("B")
+
+png(filename = "../figures/figure5/sfigure5_2b.png", width = 1000, height = 800)
+print(figure5e)
+dev.off()
+ggsave(filename = "../figures/figure5/eps/sfigure5_2b.png", 
+plot = figure5e, 
+width = 16, height = 16)
+
+library(gridExtra)
+layout <- rbind(c(1),
+                c(2))
+
+## PDF output
+pdf(file = "../figures/figure5/figure5_supplement2.pdf", width = 6400/300, height = 6400/300, onefile = FALSE)
+gridExtra::grid.arrange(sfigure5.2,figure5e, layout_matrix = layout)
+dev.off()
+
+png(filename = "../figures/figure5/sfigure5_2.png", width = 1920, height = 1600)
+gridExtra::grid.arrange(sfigure5.2,figure5e, layout_matrix = layout)
+dev.off()
+
+ggsave(filename = "../figures/figure5/sfigure5_2.eps", 
+plot = gridExtra::grid.arrange(sfigure5.2,figure5e, layout_matrix = layout),
+       width = 48, height = 12)
