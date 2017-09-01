@@ -166,7 +166,7 @@ ggsave(filename = "../figures/figure1/eps/figure1d.eps",
        width = 16, height = 16)
 
 ## FIGURE 1 --------------------------------------------------------------------
-## Figure Figure 1F: /E. coli/ colonized HIOs are stable for up to 9 days 
+## Figure Figure 1E: /E. coli/ colonized HIOs are stable for up to 9 days 
 ## import data
 data <- readr::read_csv(file = "../data/figure1/161206_survival/survival_and_ELISA.csv")
 ## subset data
@@ -207,7 +207,7 @@ d2surv <- data2[data2$variable == "Survival" & data2$treatment == "E. coli" & da
 library(ggplot2)
 source("ggplot2-themes.R")
 
-figure1f  <- ggplot(data = data2[data2$variable == "Survival",], 
+figure1e  <- ggplot(data = data2[data2$variable == "Survival",], 
                     aes(x = day, y = 1-avg, fill = treatment)) +
     geom_step(data = data2[data2$variable == "Survival",],
               direction = "hv", aes(color = treatment), 
@@ -222,17 +222,17 @@ figure1f  <- ggplot(data = data2[data2$variable == "Survival",],
            color = guide_legend(title = NULL)) +
     theme1 + 
     #coord_fixed(ratio = 4) + 
-    ggtitle("F") +
-    theme(legend.position = c(0.2, 0.8),
+    ggtitle("E") +
+    theme(legend.position = c(0.2, 0.9),
           legend.key.size = unit(2,"cm"),
 	  legend.text = element_text(size = 32))
 
 png(filename = "../figures/figure1/figure1f.png", width = 1000, height = 800)
-print(figure1f)
+print(figure1e)
 dev.off()
 
 ggsave(filename = "../figures/figure1/eps/figure1f.eps", 
-       plot = figure1f, 
+       plot = figure1e, 
        width = 20, height = 16)
 
 ## Figure 1 multipanel ---------------------------------------------------------
@@ -244,8 +244,8 @@ source("custom_fun.R")
 figure1b <- png2ggplot("../figures/figure1/figure1b.png") +
     img.theme + ggtitle("B")
 
-figure1e <- png2ggplot("../figures/figure1/figure1e.png") +
-    img.theme + ggtitle("E") + coord_fixed(ratio = 0.6)
+#figure1e <- png2ggplot("../figures/figure1/figure1e.png") +
+#    img.theme + ggtitle("E") + coord_fixed(ratio = 0.6)
 
 layout2 <- rbind(c(2,2),
                 c(2,2),
@@ -255,24 +255,24 @@ layout2 <- rbind(c(2,2),
 layout <- rbind(c(1,1,1,2,2,2),
                 c(1,1,1,2,2,2),
                 c(3,3,4,4,5,5),
-                c(3,3,4,4,6,6))
+                c(3,3,4,4,5,5))
 
 figure1a <- grid.arrange(fig, figure1a,
                          layout_matrix = layout2)
 
 ## PDF output
 pdf(file = "../figures/figure1/figure1_multipanel.pdf", width = 7500/300, height = 7500/300, onefile = FALSE)
-gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e, figure1f,
+gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e,
              layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure1/eps/figure1_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e, figure1f, layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e,  layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
 png(filename = "../figures/figure1/figure1_multipanel.png", width = 2000, height = 2000)
-gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e, figure1f,
+gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e, 
              layout_matrix = layout)
 dev.off()
