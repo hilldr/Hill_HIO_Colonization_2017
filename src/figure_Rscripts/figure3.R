@@ -138,28 +138,47 @@ ggsave(filename = "../figures/figure3/eps/figure3b.eps",
        plot = figure3b, 
        width = 20, height = 20)
 
+## PMDZ staining table
+stain <- data.frame(pbs = c(1,12,13),
+                    ecoli = c(10,2,12),
+                    hk = c(3,10,13),
+                    o2 = c(14,0,14))
+rownames(stain) <- c("PMDZ +", "PMDZ -", "n")
+colnames(stain) <- c("PBS\n(negative control)", "E. coli\n(live)", "E. coli\n(heat-inactivated)", "1% oxygen\n(positive control)")
+
+library(gridExtra)
+library(grid)
+tt <- ttheme_default(
+		     colhead=list(fg_params=list(col="black", fontface=4L, cex = 1.5),
+                                  bg_params = list(fill = c(rep('grey70', times = 2), 'grey80'))),
+                     core = list(fg_params = list(fontface = "bold", cex = 1.5)),
+                     rowhead = list(fg_params=list(col="black", fontface=4L, cex = 1.5, hjust = 1),
+                                    bg_params = list(fill = c("white",rep(c('grey90','grey80'), times = 5)))))
+grid.table(t(stain), theme = tt) 
+
 ## Figure 3 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 library(ggplot2)
 library(gridExtra)
 
 figure3c <- png2ggplot("../figures/figure3/figure3c.png") +
-    img.theme + ggtitle("C") + coord_fixed(ratio = 0.4)
+    img.theme + ggtitle("C") + coord_fixed(ratio = 0.6)
 
-layout <- rbind(c(1,2),
-                c(3,3))
+layout <- rbind(c(1,1,2,2),
+                c(3,3,3,4))
 
 ## PDF output
 pdf(file = "../figures/figure3/figure3_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
-gridExtra::grid.arrange(figure3a, figure3b, figure3c,layout_matrix = layout)
+gridExtra::grid.arrange(figure3a, figure3b, figure3c, tableGrob(t(stain), theme = tt), 
+layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure3/eps/figure3_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure3a, figure3b, figure3c,layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure3a, figure3b, figure3c, tableGrob(t(stain), theme = tt), layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
 png(filename = "../figures/figure3/figure3_multipanel.png", width = 1600, height = 1600)
-gridExtra::grid.arrange(figure3a, figure3b, figure3c,layout_matrix = layout)
+gridExtra::grid.arrange(figure3a, figure3b, figure3c, tableGrob(t(stain), theme = tt), layout_matrix = layout)
 dev.off()
