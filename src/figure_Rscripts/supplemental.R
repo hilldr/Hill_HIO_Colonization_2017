@@ -1,13 +1,13 @@
-## Figure 6 multipanel ---------------------------------------------------------
+## Figure 8 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 source("custom_fun.R")
 library(ggplot2)
 library(gridExtra)
 
-sfig4a <- png2ggplot("../data/figure7/occludin_cropped.png") +
+sfig4a <- png2ggplot("../data/figure8/occludin_cropped.png") +
     img.theme + coord_fixed(ratio = 1/1.6) + ggtitle("A")
 
-sfig4b <- png2ggplot("../data/figure7/acTub_cropped.png") +
+sfig4b <- png2ggplot("../data/figure8/acTub_cropped.png") +
     img.theme + coord_fixed(ratio = 1/1.6) + ggtitle("B")
 
 
@@ -920,19 +920,62 @@ ggsave(filename = "../figures/figure5/eps/sfigure5_2b.png",
 plot = figure5e, 
 width = 16, height = 16)
 
+## import data 
+data <- readr::read_csv(file = "../data/figure5/170825_ECOR2_BD2_invitro/9_1_2017.csv", col_names = TRUE, skip = 12)
+## retrieve letter
+data$letter <- substr(data$Plate_ID,1,1)
+
+## groups dataframe
+groups <- readr::read_csv(file = "../data/figure5/170825_ECOR2_BD2_invitro/170901_plate_layout.csv", col_names = TRUE)
+
+## map to data frame
+data <- dplyr::left_join(data, groups, by = 'letter')
+
+## statistical tests
+tt1 <- t.test(data[data$letter == "A" | data$letter == "D",]$Count_per_ml,
+              data[data$letter == "B",]$Count_per_ml,
+              alternative = 'greater')
+
+tt2 <- t.test(data[data$letter == "A" | data$letter == "D",]$Count_per_ml,
+              data[data$letter == "C",]$Count_per_ml,
+              alternative = 'greater')
+
+library(ggplot2)
+
+source("ggplot2-themes.R")
+
+sfig5.2c <- ggplot(data = data[data$letter != "B",], aes(x = stringr::str_wrap(treatment, width = 20), y = Count_per_ml)) +
+    geom_boxplot(aes(color = treatment), size = 3) +
+    ylab("CFU/mL") +
+    xlab("") +
+    theme1 +
+    scale_color_brewer(palette = "Set1", direction = 1) +
+    geom_text(x = 1, y = 7400, size = 8, color = "grey30",
+             label = paste("P =" , round(tt2$p.value, digits = 3))) +
+    ylim(c(5800,8100)) +
+    facet_wrap(~ c(stringr::str_wrap("E. coli ECOR2 (stationary phase)", width = 20))) +
+    theme(legend.position = "none",
+          axis.text.x = element_text(angle = 45,
+                                     vjust = 1,
+                                     hjust = 1),
+          strip.text = element_text(size = 24)) +
+    ggtitle("C")
+
+print(sfig5.2c)
+
 library(gridExtra)
-layout <- rbind(c(1),
-                c(2))
+layout <- rbind(c(1,1,1),
+                c(2,2,3))
 
 ## PDF output
 pdf(file = "../figures/figure5/figure5_supplement2.pdf", width = 6400/300, height = 6400/300, onefile = FALSE)
-gridExtra::grid.arrange(sfigure5.2,figure5e, layout_matrix = layout)
+gridExtra::grid.arrange(sfigure5.2,figure5e,sfig5.2c, layout_matrix = layout)
 dev.off()
 
 png(filename = "../figures/figure5/sfigure5_2.png", width = 1920, height = 1600)
-gridExtra::grid.arrange(sfigure5.2,figure5e, layout_matrix = layout)
+gridExtra::grid.arrange(sfigure5.2,figure5e,sfig5.2c, layout_matrix = layout)
 dev.off()
 
 ggsave(filename = "../figures/figure5/sfigure5_2.eps", 
-plot = gridExtra::grid.arrange(sfigure5.2,figure5e, layout_matrix = layout),
+plot = gridExtra::grid.arrange(sfigure5.2,figure5e, sfig5.2c, layout_matrix = layout),
        width = 48, height = 12)

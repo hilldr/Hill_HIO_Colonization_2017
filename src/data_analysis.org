@@ -17,7 +17,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure3/figure3_multipanel.pdf \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
-	./figures/figure6/figure6_multipanel.pdf \
+	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXT)
 	pdflatex -output-directory src $(TEXT)
@@ -38,7 +38,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure3/figure3_multipanel.pdf \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
-	./figures/figure6/figure6_multipanel.pdf \
+	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf \
 	./revisions/elife-1st-submission.tex
 	latexdiff --type=UNDERLINE ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
@@ -62,7 +62,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure3/figure3_multipanel.pdf \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
-	./figures/figure6/figure6_multipanel.pdf \
+	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXTBR)
 	pdflatex -output-directory src $(TEXTBR)
@@ -80,7 +80,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure4_supplement1.pdf \
 	./supplements/figure4_supplement2.pdf \
 	./supplements/figure5_supplement1.pdf \
-	./supplements/figure6_supplement1.pdf \
+	./supplements/figure7_supplement1.pdf \
 	./supplements/figure8_supplement1.pdf
 
 ./supplements/figure1_supplement1.pdf: ./src/figure1_supplement1.tex
@@ -146,13 +146,13 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure5_supplement2.pdf ./supplements/figure5_supplement2.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure6_supplement1.pdf: ./src/figure6_supplement1.tex
-	pdflatex -output-directory src ./src/figure6_supplement1
-	pdflatex -output-directory src ./src/figure6_supplement1
+./supplements/figure7_supplement1.pdf: ./src/figure7_supplement1.tex
+	pdflatex -output-directory src ./src/figure7_supplement1
+	pdflatex -output-directory src ./src/figure7_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure6_supplement1.pdf ./supplements/figure6_supplement1.pdf
+	mv ./src/figure7_supplement1.pdf ./supplements/figure7_supplement1.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure8_supplement1.pdf: ./src/figure8_supplement1.tex
@@ -1583,9 +1583,9 @@ dev.off()
 
 *** Supplemental NF-kB pathway heatmap
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
-## FIGURE 6 --------------------------------------------------------------------
-## Figure 6A: RNA-seq mucus expression and glycotransferases timecourse
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure2.R
+## FIGURE 2 --------------------------------------------------------------------
+## Figure 2 supplement: RNA-seq NF-kb heatmap
 ## import data
 ## Load dataset from file
 data.dir <- "../results/ECOR2HIO_24-96-RNAseq/"
@@ -3633,14 +3633,14 @@ figure5: ./figures/figure5/figure5_multipanel.pdf
 	R -e "setwd('./src/'); source('figure_Rscripts/figure5.R')"
 #+end_src
 
-* Figure 6 
+* Figure 7 
 
-*** Figure 6A: RNA-seq mucus expression and glycotransferases timecourse
+*** Figure 7A: RNA-seq mucus expression and glycotransferases timecourse
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
-## FIGURE 6 --------------------------------------------------------------------
-## Figure 6A: RNA-seq mucus expression and glycotransferases timecourse
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
+## FIGURE 7 --------------------------------------------------------------------
+## Figure 7A: RNA-seq mucus expression and glycotransferases timecourse
 ## import data
 ## Load dataset from file
 data.dir <- "../results/ECOR2HIO_24-96-RNAseq/"
@@ -3699,12 +3699,12 @@ data.scaled$SYMBOL <- factor(data.scaled$SYMBOL,
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6a.png :eval yes :tangle figure_Rscripts/figure6.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7a.png :eval yes :tangle figure_Rscripts/figure7.R
 ## plot
 library(ggplot2)
 source("ggplot2-themes.R")
 
-figure6a <- ggplot(data.scaled,
+figure7a <- ggplot(data.scaled,
               aes(y = SYMBOL, x = hr)) +
     geom_tile(stat = "identity", aes(fill = mean_zscore)) +
     facet_grid(category ~ ., scales = "free_y", space = "free", switch = "y") +
@@ -3720,23 +3720,23 @@ figure6a <- ggplot(data.scaled,
 	  panel.border = element_blank()) +
     ggtitle("A")
 
-png(filename = "../figures/figure6/figure6a.png", width = 600, height = 1000)
-print(figure6a)
+png(filename = "../figures/figure7/figure7a.png", width = 600, height = 1000)
+print(figure7a)
 dev.off()
-ggsave(filename = "../figures/figure6/eps/figure6a.eps", 
-       plot = figure6a, 
+ggsave(filename = "../figures/figure7/eps/figure7a.eps", 
+       plot = figure7a, 
        width = 12, height = 20)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure6/figure6a.png]]
+[[file:../figures/figure7/figure7a.png]]
 
-*** Figure 6E: Mucin expression is NF-kB dependent
+*** Figure 7E: Mucin expression is NF-kB dependent
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
-## FIGURE 6 --------------------------------------------------------------------
-## Figure 6E: Mucin expression is NF-kB dependent
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
+## FIGURE 7 --------------------------------------------------------------------
+## Figure 7E: Mucin expression is NF-kB dependent
 ## import data
 data.dir <- "../results/ECOR2_hypoxia_nfkb/"
 library(magrittr)
@@ -3806,12 +3806,12 @@ data.scaled$comparison <- factor(data.scaled$comparison,
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6e.png :eval yes :tangle figure_Rscripts/figure6.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7e.png :eval yes :tangle figure_Rscripts/figure7.R
 ## plot
 library(ggplot2)
 source("ggplot2-themes.R")
 
-figure6e <- ggplot(data.scaled,
+figure7e <- ggplot(data.scaled,
               aes(y = SYMBOL, x = comparison)) +
     geom_tile(stat = "identity", aes(fill = mean_zscore)) +
     facet_grid(category ~ ., scales = "free_y", space = "free", switch = "y") +
@@ -3828,38 +3828,38 @@ figure6e <- ggplot(data.scaled,
 	  panel.border = element_blank()) +
     ggtitle("E")
 
-png(filename = "../figures/figure6/figure6e.png", width = 600, height = 1000)
-print(figure6e)
+png(filename = "../figures/figure7/figure7e.png", width = 600, height = 1000)
+print(figure7e)
 dev.off()
-ggsave(filename = "../figures/figure6/eps/figure6e.eps", 
-plot = figure6e, 
+ggsave(filename = "../figures/figure7/eps/figure7e.eps", 
+plot = figure7e, 
 width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure6/figure6e.png]]
+[[file:../figures/figure7/figure7e.png]]
 
-*** Figure 6 multipanel 
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6_multipanel.png  :width 1600 :height 1600 :eval yes :tangle figure_Rscripts/figure6.R
-## Figure 6 multipanel ---------------------------------------------------------
+*** Figure 7 multipanel 
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7_multipanel.png  :width 1600 :height 1600 :eval yes :tangle figure_Rscripts/figure7.R
+## Figure 7 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 source("custom_fun.R")
 library(ggplot2)
 library(gridExtra)
 
 ## control & E. coli 10X PAS-Alcian blue
-figure6b <- png2ggplot("../figures/figure6/figure6b.png") +
+figure7b <- png2ggplot("../figures/figure7/figure7b.png") +
     img.theme + coord_fixed(ratio = 1/1.75) + ggtitle("B")
 
 ## control & E. coli 100X H&E, AB, PAS, and PAS-Alcian blue
-figure6c <- png2ggplot("../figures/figure6/figure6c.png") +
+figure7c <- png2ggplot("../figures/figure7/figure7c.png") +
     img.theme + coord_fixed(ratio = 1/2) + ggtitle("C")
 
 ## control & E. coli 60X confocal
-figure6d <- png2ggplot("../figures/figure6/figure6d.png") +
+figure7d <- png2ggplot("../figures/figure7/figure7d.png") +
     img.theme + coord_fixed(ratio = 1/2) + ggtitle("D")
 
-figure6f <- png2ggplot("../figures/figure6/figure6f.png") +
+figure7f <- png2ggplot("../figures/figure7/figure7f.png") +
     img.theme + coord_fixed(ratio = 1/3) + ggtitle("F")
 
 layout <- rbind(c(1,2,2,2),
@@ -3867,39 +3867,39 @@ layout <- rbind(c(1,2,2,2),
 		c(5,6,6,6))
 
 ## PDF output
-pdf(file = "../figures/figure6/figure6_multipanel.pdf", width = 7000/300, height = 8250/300, onefile = FALSE)
-gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, figure6f, layout_matrix = layout)
+pdf(file = "../figures/figure7/figure7_multipanel.pdf", width = 7000/300, height = 8250/300, onefile = FALSE)
+gridExtra::grid.arrange(figure7a, figure7b, figure7c, figure7d, figure7e, figure7f, layout_matrix = layout)
 dev.off()
 
 ## EPS output
-ggsave(filename = "../figures/figure6/eps/figure6_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, figure6f, layout_matrix = layout), 
+ggsave(filename = "../figures/figure7/eps/figure7_multipanel.eps", 
+       plot = gridExtra::grid.arrange(figure7a, figure7b, figure7c, figure7d, figure7e, figure7f, layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
-png(filename = "../figures/figure6/figure6_multipanel.png", width = 1865, height = 2000)
-gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, figure6f, layout_matrix = layout)
+png(filename = "../figures/figure7/figure7_multipanel.png", width = 1865, height = 2000)
+gridExtra::grid.arrange(figure7a, figure7b, figure7c, figure7d, figure7e, figure7f, layout_matrix = layout)
 dev.off()
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure6/figure6_multipanel.png]]
+[[file:../figures/figure7/figure7_multipanel.png]]
 
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
-## Figure 6 multipanel ---------------------------------------------------------
-figure6: ./figures/figure6/figure6_multipanel.pdf
-./figures/figure6/figure6_multipanel.pdf : ./src/figure_Rscripts/figure6.R \
+## Figure 7 multipanel ---------------------------------------------------------
+figure7: ./figures/figure7/figure7_multipanel.pdf
+./figures/figure7/figure7_multipanel.pdf : ./src/figure_Rscripts/figure7.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-NFKBi_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv \
-	./figures/figure6/figure6b.png \
-	./figures/figure6/figure6c.png \
-	./figures/figure6/figure6d.png \
-	./figures/figure6/figure6f.png
-	R -e "setwd('./src/'); source('figure_Rscripts/figure6.R')"
+	./figures/figure7/figure7b.png \
+	./figures/figure7/figure7c.png \
+	./figures/figure7/figure7d.png \
+	./figures/figure7/figure7f.png
+	R -e "setwd('./src/'); source('figure_Rscripts/figure7.R')"
 #+end_src
 
 * Figure 8 
@@ -4690,7 +4690,7 @@ ggsave(filename = "../figures/figure8/eps/figure8c.eps",
 
 *** Figure 8 multipanel  
 #+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8_multipanel.png :eval yes :tangle figure_Rscripts/figure8.R
-## Figure 6 multipanel ---------------------------------------------------------
+## Figure 7 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 source("custom_fun.R")
 library(ggplot2)
@@ -4723,7 +4723,7 @@ dev.off()
 
 *** Supplemental  multipanel  
 #+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/sfigure4_multipanel.png :eval yes :tangle figure_Rscripts/supplemental.R
-## Figure 6 multipanel ---------------------------------------------------------
+## Figure 8 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 source("custom_fun.R")
 library(ggplot2)
