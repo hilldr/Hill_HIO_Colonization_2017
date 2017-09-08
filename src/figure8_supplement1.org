@@ -12,7 +12,7 @@
  \begin{figure}
  \begin{fullwidth}
  \centering\includegraphics[width=0.85\linewidth]{./figures/supplemental/sfigure4_multipanel.pdf}
- \caption*{\textbf{Figure 7 - Supplement 1. }Representative confocal micrographs of HIOs treated as indicated. Fluorescent immunostaining pseudocoloring applied as indicated in the figure legends. 60X optical magnification with 2X digital zoom.}
+ \caption*{\textbf{Figure 8 - Supplement 1. }Representative confocal micrographs of HIOs treated as indicated. Fluorescent immunostaining pseudocoloring applied as indicated in the figure legends. 60X optical magnification with 2X digital zoom.}
  \label{fig:fullwidth}
  \end{fullwidth}
  \end{figure}

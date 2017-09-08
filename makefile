@@ -14,7 +14,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
-	./figures/figure7/figure7_multipanel.pdf		
+	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXT)
 	pdflatex -output-directory src $(TEXT)
 	cp ./src/bibliography.bib ./
@@ -35,7 +35,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
-	./figures/figure7/figure7_multipanel.pdf \
+	./figures/figure8/figure8_multipanel.pdf \
 	./revisions/elife-1st-submission.tex
 	latexdiff --type=UNDERLINE ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
 	pdflatex -output-directory src $(TEXT)_changes
@@ -59,7 +59,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
-	./figures/figure7/figure7_multipanel.pdf		
+	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXTBR)
 	pdflatex -output-directory src $(TEXTBR)
 	cp ./src/bibliography.bib ./
@@ -77,7 +77,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure4_supplement2.pdf \
 	./supplements/figure5_supplement1.pdf \
 	./supplements/figure6_supplement1.pdf \
-	./supplements/figure7_supplement1.pdf
+	./supplements/figure8_supplement1.pdf
 
 ./supplements/figure1_supplement1.pdf: ./src/figure1_supplement1.tex
 	pdflatex -output-directory src ./src/figure1_supplement1
@@ -151,13 +151,13 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure6_supplement1.pdf ./supplements/figure6_supplement1.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure7_supplement1.pdf: ./src/figure7_supplement1.tex
-	pdflatex -output-directory src ./src/figure7_supplement1
-	pdflatex -output-directory src ./src/figure7_supplement1
+./supplements/figure8_supplement1.pdf: ./src/figure8_supplement1.tex
+	pdflatex -output-directory src ./src/figure8_supplement1
+	pdflatex -output-directory src ./src/figure8_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure7_supplement1.pdf ./supplements/figure7_supplement1.pdf
+	mv ./src/figure8_supplement1.pdf ./supplements/figure8_supplement1.pdf
 	rm *.bib *.cls *.bst
 
 ## output figures oly
@@ -244,6 +244,15 @@ figure2: ./figures/figure2/figure2_multipanel.pdf
 	./data/figure1/161206_survival/survival_and_ELISA.csv
 	R -e "setwd('./src/'); source('figure_Rscripts/figure2.R')"
 
+## Figure 4_ multipanel ---------------------------------------------------------
+figure4_: ./figures/figure4_/figure4_multipanel.pdf
+./figures/figure4_/figure4_multipanel.pdf: ./data/figure4_/dapi_ki67_edu_counts.tar.gz \
+	./data/figure4_/EdU_figure_cropped.png \
+	./data/figure4_/sox9_figure.png \
+	./data/figure4_/dppiv_figure.png
+	tar -xzvf ./data/figure4_/dapi_ki67_edu_counts.tar.gz
+	R -e "setwd('./src/'); source('figure_Rscripts/figure4_.R')"
+
 ## Figure 3 multipanel ---------------------------------------------------------
 figure3: ./figures/figure3/figure3_multipanel.pdf
 ./figures/figure3/figure3_multipanel.pdf : ./src/figure_Rscripts/figure3.R \
@@ -327,15 +336,15 @@ figure6: ./figures/figure6/figure6_multipanel.pdf
 	./figures/figure6/figure6f.png
 	R -e "setwd('./src/'); source('figure_Rscripts/figure6.R')"
 
-## Figure 7 multipanel ---------------------------------------------------------
-figure7: ./figures/figure7/figure7_multipanel.pdf
-./figures/figure7/figure7_multipanel.pdf : ./src/figure_Rscripts/figure7.R \
+## Figure 8 multipanel ---------------------------------------------------------
+figure8: ./figures/figure8/figure8_multipanel.pdf
+./figures/figure8/figure8_multipanel.pdf : ./src/figure_Rscripts/figure8.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-NFKBi_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv \
-	./data/figure7/results.csv \
-	./data/figure7/sample_key.csv \
-	./data/figure7/ECOR2_TNF_IFN_permeability.csv
-	R -e "setwd('./src/'); source('figure_Rscripts/figure7.R')"
+	./data/figure8/results.csv \
+	./data/figure8/sample_key.csv \
+	./data/figure8/ECOR2_TNF_IFN_permeability.csv
+	R -e "setwd('./src/'); source('figure_Rscripts/figure8.R')"

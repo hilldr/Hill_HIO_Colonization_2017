@@ -18,7 +18,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
-	./figures/figure7/figure7_multipanel.pdf		
+	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXT)
 	pdflatex -output-directory src $(TEXT)
 	cp ./src/bibliography.bib ./
@@ -39,7 +39,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
-	./figures/figure7/figure7_multipanel.pdf \
+	./figures/figure8/figure8_multipanel.pdf \
 	./revisions/elife-1st-submission.tex
 	latexdiff --type=UNDERLINE ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
 	pdflatex -output-directory src $(TEXT)_changes
@@ -63,7 +63,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
-	./figures/figure7/figure7_multipanel.pdf		
+	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXTBR)
 	pdflatex -output-directory src $(TEXTBR)
 	cp ./src/bibliography.bib ./
@@ -81,7 +81,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure4_supplement2.pdf \
 	./supplements/figure5_supplement1.pdf \
 	./supplements/figure6_supplement1.pdf \
-	./supplements/figure7_supplement1.pdf
+	./supplements/figure8_supplement1.pdf
 
 ./supplements/figure1_supplement1.pdf: ./src/figure1_supplement1.tex
 	pdflatex -output-directory src ./src/figure1_supplement1
@@ -155,13 +155,13 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure6_supplement1.pdf ./supplements/figure6_supplement1.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure7_supplement1.pdf: ./src/figure7_supplement1.tex
-	pdflatex -output-directory src ./src/figure7_supplement1
-	pdflatex -output-directory src ./src/figure7_supplement1
+./supplements/figure8_supplement1.pdf: ./src/figure8_supplement1.tex
+	pdflatex -output-directory src ./src/figure8_supplement1
+	pdflatex -output-directory src ./src/figure8_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure7_supplement1.pdf ./supplements/figure7_supplement1.pdf
+	mv ./src/figure8_supplement1.pdf ./supplements/figure8_supplement1.pdf
 	rm *.bib *.cls *.bst
 
 ## output figures oly
@@ -3902,13 +3902,13 @@ figure6: ./figures/figure6/figure6_multipanel.pdf
 	R -e "setwd('./src/'); source('figure_Rscripts/figure6.R')"
 #+end_src
 
-* Figure 7 
-*** Figure 7A: Regulation of cytoskeleton organization and cell-cell adhesion is NF-kB dependent
+* Figure 8 
+*** Figure 8A: Regulation of cytoskeleton organization and cell-cell adhesion is NF-kB dependent
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7A: Regulation of cytoskeleton organization and cell-cell adhesion is NF-kB dependent
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8A: Regulation of cytoskeleton organization and cell-cell adhesion is NF-kB dependent
 ## import data
 data.dir <- "../results/ECOR2_hypoxia_nfkb/"
 library(magrittr)
@@ -3989,12 +3989,12 @@ data.scaled$SYMBOL <- factor(data.scaled$SYMBOL,
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7a.png :eval yes :tangle figure_Rscripts/figure7.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8a.png :eval yes :tangle figure_Rscripts/figure8.R
 ## plot
 library(ggplot2)
 source("ggplot2-themes.R")
 
-figure7a <- ggplot(data.scaled,
+figure8a <- ggplot(data.scaled,
               aes(y = SYMBOL, x = comparison)) +
     geom_tile(stat = "identity", aes(fill = mean_zscore)) +
     facet_grid(category ~ ., scales = "free_y", space = "free", switch = "y", labeller = labeller(groupwrap = label_wrap_gen(10))) +
@@ -4011,26 +4011,26 @@ figure7a <- ggplot(data.scaled,
 	  panel.border = element_blank()) +
     ggtitle("A")
 
-png(filename = "../figures/figure7/figure7a.png", width = 400, height = 1200)
-print(figure7a)
+png(filename = "../figures/figure8/figure8a.png", width = 400, height = 1200)
+print(figure8a)
 dev.off()
-ggsave(filename = "../figures/figure7/eps/figure7a.eps", 
-       plot = figure7a, 
+ggsave(filename = "../figures/figure8/eps/figure8a.eps", 
+       plot = figure8a, 
        width = 8, height = 24)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure7/figure7a.png]]
+[[file:../figures/figure8/figure8a.png]]
 
-*** Figure 7B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
+*** Figure 8B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
 ## import data
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/results.csv")
+data <- readr::read_csv(file = "../data/figure8/results.csv")
 
 ## data wrangling ##########
 
@@ -4061,7 +4061,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -4083,7 +4083,7 @@ data_mean$sem <- data_mean$stdev/sqrt(data_mean$num)
 
 
 ##Import csv
-data <- read.table("../data/figure7/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",", stringsAsFactors = FALSE)
+data <- read.table("../data/figure8/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",", stringsAsFactors = FALSE)
 
 library(ggplot2)
 
@@ -4103,7 +4103,7 @@ attributes(data_mean) <- NULL
 data_mean <- rbind(data, data_mean)
 data_mean <- data_mean[order(data_mean$treatment,data_mean$mean),]
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/041417_deltavision/thresh40.csv")
+data <- readr::read_csv(file = "../data/figure8/041417_deltavision/thresh40.csv")
 
 ## data wrangling ##########
 
@@ -4134,7 +4134,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/041417_deltavision/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/041417_deltavision/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -4162,7 +4162,7 @@ attributes(data_mean2) <- NULL
 data_mean <- rbind(data_mean, data_mean2)
 
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/041717_deltavision/thesh40.csv")
+data <- readr::read_csv(file = "../data/figure8/041717_deltavision/thesh40.csv")
 
 ## data wrangling ##########
 
@@ -4193,7 +4193,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/041717_deltavision/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/041717_deltavision/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -4221,12 +4221,12 @@ attributes(data_mean3) <- NULL
 data_mean <- rbind(data_mean, data_mean3)
 #+end_src
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/text-stats.R
-,#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
+,#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
 ## import data
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/results.csv")
+data <- readr::read_csv(file = "../data/figure8/results.csv")
 
 ## data wrangling ##########
 
@@ -4257,7 +4257,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -4279,7 +4279,7 @@ data_mean$sem <- data_mean$stdev/sqrt(data_mean$num)
 
 
 ##Import csv
-data <- read.table("../data/figure7/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",", stringsAsFactors = FALSE)
+data <- read.table("../data/figure8/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",", stringsAsFactors = FALSE)
 
 library(ggplot2)
 
@@ -4300,7 +4300,7 @@ attributes(data_mean) <- NULL
 data_mean <- rbind(data, data_mean)
 data_mean <- data_mean[order(data_mean$treatment,data_mean$mean),]
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/041417_deltavision/thresh40.csv")
+data <- readr::read_csv(file = "../data/figure8/041417_deltavision/thresh40.csv")
 
 ## data wrangling ##########
 
@@ -4331,7 +4331,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/041417_deltavision/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/041417_deltavision/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -4359,7 +4359,7 @@ attributes(data_mean2) <- NULL
 data_mean <- rbind(data_mean, data_mean2)
 
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/041717_deltavision/thesh40.csv")
+data <- readr::read_csv(file = "../data/figure8/041717_deltavision/thesh40.csv")
 
 ## data wrangling ##########
 
@@ -4390,7 +4390,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/041717_deltavision/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/041717_deltavision/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -4439,7 +4439,7 @@ tt.fig7b <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli" &
                     n2 = data_mean[data_mean$treatment == "E. coli + SC-514" &
                                        data_mean$hr == 20,]$num,
                     equal.variance = TRUE)
-tt.fig7d <- t.test2(m1 = data_mean[data_mean$treatment == "PBS" &
+tt.fig8d <- t.test2(m1 = data_mean[data_mean$treatment == "PBS" &
                                        data_mean$hr == 20,]$mean[2],
                     m2 = data_mean[data_mean$treatment == "TNF&IFN" &
                                        data_mean$hr == 20,]$mean[1],
@@ -4452,7 +4452,7 @@ tt.fig7d <- t.test2(m1 = data_mean[data_mean$treatment == "PBS" &
                     n2 = data_mean[data_mean$treatment == "TNF&IFN" &
                                        data_mean$hr == 20,]$num[1],
                     equal.variance = TRUE)
-tt.fig7d2 <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli + TNF&IFN" &
+tt.fig8d2 <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli + TNF&IFN" &
                                        data_mean$hr == 20,]$mean[2],
                     m2 = data_mean[data_mean$treatment == "TNF&IFN" &
                                        data_mean$hr == 20,]$mean[1],
@@ -4468,7 +4468,7 @@ tt.fig7d2 <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli + TNF&IFN" &
 
 #+end_src
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7d.png :eval yes :tangle figure_Rscripts/figure7.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8d.png :eval yes :tangle figure_Rscripts/figure8.R
 library(ggplot2)
 source("ggplot2-themes.R")
 data_mean$treatment <- factor(data_mean$treatment,
@@ -4496,7 +4496,7 @@ plot.data2 <- subset(data_mean,
                                                 "E. coli + SC-514"))
 
 
-figure7d <- ggplot(plot.data1, aes(x = hr, y = mean, color = treatment)) +
+figure8d <- ggplot(plot.data1, aes(x = hr, y = mean, color = treatment)) +
     scale_color_brewer(palette = "Spectral", name = "Treatment group", direction = -1) +
     geom_smooth(size = 3) +
     ylim(c(0.25, 1.05)) +
@@ -4510,18 +4510,18 @@ figure7d <- ggplot(plot.data1, aes(x = hr, y = mean, color = treatment)) +
     	  legend.key.size = unit(1,"cm"),
           legend.text = element_text(size = 32))
 
-png(filename = "../figures/figure7/figure7d.png", width = 800, height = 800)
-print(figure7d)
+png(filename = "../figures/figure8/figure8d.png", width = 800, height = 800)
+print(figure8d)
 dev.off()
-ggsave(filename = "../figures/figure7/eps/figure7d.eps", 
-       plot = figure7d, 
+ggsave(filename = "../figures/figure8/eps/figure8d.eps", 
+       plot = figure8d, 
        width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure7/figure7d.png]]
+[[file:../figures/figure8/figure8d.png]]
 
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7b.png :eval yes :tangle figure_Rscripts/figure7.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8b.png :eval yes :tangle figure_Rscripts/figure8.R
 library(ggplot2)
 source("ggplot2-themes.R")
 data_mean$treatment <- factor(data_mean$treatment,
@@ -4550,7 +4550,7 @@ plot.data2 <- subset(data_mean,
 
 
 
-figure7b <- ggplot(plot.data2, aes(x = hr, y = mean, color = treatment)) +
+figure8b <- ggplot(plot.data2, aes(x = hr, y = mean, color = treatment)) +
     scale_color_brewer(palette = "Set1", name = "Treatment group", direction = -1) +
     scale_color_manual(name = expression(paste("h",beta,"D-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
     geom_smooth(size = 3) +
@@ -4565,27 +4565,27 @@ figure7b <- ggplot(plot.data2, aes(x = hr, y = mean, color = treatment)) +
     	  legend.key.size = unit(1,"cm"),
           legend.text = element_text(size = 32))
 
-png(filename = "../figures/figure7/figure7b.png", width = 800, height = 800)
-print(figure7b)
+png(filename = "../figures/figure8/figure8b.png", width = 800, height = 800)
+print(figure8b)
 dev.off()
-ggsave(filename = "../figures/figure7/eps/figure7b.eps", 
-       plot = figure7b, 
+ggsave(filename = "../figures/figure8/eps/figure8b.eps", 
+       plot = figure8b, 
        width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure7/figure7b.png]]
+[[file:../figures/figure8/figure8b.png]]
 
 
 
 
-*** Figure 7C: Survival is impaired in presence of NFkB inhibitor
+*** Figure 8C: Survival is impaired in presence of NFkB inhibitor
     
 **** Data import and manipulation 
 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7C: Survival is impaired in presence of NFkB inhibitor
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8C: Survival is impaired in presence of NFkB inhibitor
 ## import data
 data <- readr::read_csv(file = "../data/figure1/161206_survival/survival_and_ELISA.csv")
 ## subset data
@@ -4625,8 +4625,8 @@ d2surv <- data2[data2$variable == "Survival" & data2$treatment == "E. coli" & da
 #+end_src
 
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/text-stats.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7C: Survival is impaired in presence of NFkB inhibitor
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8C: Survival is impaired in presence of NFkB inhibitor
 ## import data
 data <- readr::read_csv(file = "../data/figure1/161206_survival/survival_and_ELISA.csv")
 ## subset data
@@ -4652,11 +4652,11 @@ data2 <- dplyr::group_by(data,day, treatment, variable) %>%
 
 #+end_src     
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7c.png :eval yes :tangle figure_Rscripts/figure7.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8c.png :eval yes :tangle figure_Rscripts/figure8.R
 library(ggplot2)
 source("ggplot2-themes.R")
 
-figure7c  <- ggplot(data = data2[data2$variable == "Survival" & data2$treatment != "HK- E. coli",], 
+figure8c  <- ggplot(data = data2[data2$variable == "Survival" & data2$treatment != "HK- E. coli",], 
                     aes(x = day, y = 1-avg, fill = treatment)) +
     geom_step(data = data2[data2$variable == "Survival" & data2$treatment != "HK- E. coli",],
               direction = "hv", aes(color = treatment), 
@@ -4675,51 +4675,51 @@ figure7c  <- ggplot(data = data2[data2$variable == "Survival" & data2$treatment 
           legend.key.size = unit(1,"cm"),
 	  legend.text = element_text(size = 32))
 
-png(filename = "../figures/figure7/figure7c.png", width = 1000, height = 800)
-print(figure7c)
+png(filename = "../figures/figure8/figure8c.png", width = 1000, height = 800)
+print(figure8c)
 dev.off()
 
-ggsave(filename = "../figures/figure7/eps/figure7c.eps", 
-       plot = figure7c, 
+ggsave(filename = "../figures/figure8/eps/figure8c.eps", 
+       plot = figure8c, 
        width = 20, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure7/figure7c.png]]
+[[file:../figures/figure8/figure8c.png]]
 
 
-*** Figure 7 multipanel  
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7_multipanel.png :eval yes :tangle figure_Rscripts/figure7.R
+*** Figure 8 multipanel  
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8_multipanel.png :eval yes :tangle figure_Rscripts/figure8.R
 ## Figure 6 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 source("custom_fun.R")
 library(ggplot2)
 library(gridExtra)
 
-figure7e <- png2ggplot("../figures/figure7/figure7e.png") +
+figure8e <- png2ggplot("../figures/figure8/figure8e.png") +
     img.theme + coord_fixed(ratio = 1/1.6) + ggtitle("E")
 
 layout <- rbind(c(1,2,2,3,3,3),
                 c(1,4,4,5,5,5))
 
 ## PDF output
-pdf(file = "../figures/figure7/figure7_multipanel.pdf", width = 8250/300, height = 5250/300, onefile = FALSE)
-gridExtra::grid.arrange(figure7a, figure7b, figure7c, figure7d, figure7e, layout_matrix = layout)
+pdf(file = "../figures/figure8/figure8_multipanel.pdf", width = 8250/300, height = 5250/300, onefile = FALSE)
+gridExtra::grid.arrange(figure8a, figure8b, figure8c, figure8d, figure8e, layout_matrix = layout)
 dev.off()
 
 ## EPS output
-ggsave(filename = "../figures/figure7/eps/figure7_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure7a, figure7b, figure7c, figure7d, figure7e, layout_matrix = layout), 
+ggsave(filename = "../figures/figure8/eps/figure8_multipanel.eps", 
+       plot = gridExtra::grid.arrange(figure8a, figure8b, figure8c, figure8d, figure8e, layout_matrix = layout), 
        width = 44, height = 28)
 
 ## PNG output
-png(filename = "../figures/figure7/figure7_multipanel.png", width = 2200, height = 1400)
-gridExtra::grid.arrange(figure7a, figure7b, figure7c, figure7d,figure7e, layout_matrix = layout)
+png(filename = "../figures/figure8/figure8_multipanel.png", width = 2200, height = 1400)
+gridExtra::grid.arrange(figure8a, figure8b, figure8c, figure8d,figure8e, layout_matrix = layout)
 dev.off()
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure7/figure7_multipanel.png]]
+[[file:../figures/figure8/figure8_multipanel.png]]
 
 *** Supplemental  multipanel  
 #+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/sfigure4_multipanel.png :eval yes :tangle figure_Rscripts/supplemental.R
@@ -4729,10 +4729,10 @@ source("custom_fun.R")
 library(ggplot2)
 library(gridExtra)
 
-sfig4a <- png2ggplot("../data/figure7/occludin_cropped.png") +
+sfig4a <- png2ggplot("../data/figure8/occludin_cropped.png") +
     img.theme + coord_fixed(ratio = 1/1.6) + ggtitle("A")
 
-sfig4b <- png2ggplot("../data/figure7/acTub_cropped.png") +
+sfig4b <- png2ggplot("../data/figure8/acTub_cropped.png") +
     img.theme + coord_fixed(ratio = 1/1.6) + ggtitle("B")
 
 
@@ -4760,18 +4760,18 @@ dev.off()
 
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
-## Figure 7 multipanel ---------------------------------------------------------
-figure7: ./figures/figure7/figure7_multipanel.pdf
-./figures/figure7/figure7_multipanel.pdf : ./src/figure_Rscripts/figure7.R \
+## Figure 8 multipanel ---------------------------------------------------------
+figure8: ./figures/figure8/figure8_multipanel.pdf
+./figures/figure8/figure8_multipanel.pdf : ./src/figure_Rscripts/figure8.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-NFKBi_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv \
-	./data/figure7/results.csv \
-	./data/figure7/sample_key.csv \
-	./data/figure7/ECOR2_TNF_IFN_permeability.csv
-	R -e "setwd('./src/'); source('figure_Rscripts/figure7.R')"
+	./data/figure8/results.csv \
+	./data/figure8/sample_key.csv \
+	./data/figure8/ECOR2_TNF_IFN_permeability.csv
+	R -e "setwd('./src/'); source('figure_Rscripts/figure8.R')"
 #+end_src
 
 * Supplemental Figures  
@@ -5849,15 +5849,15 @@ plot = gridExtra::grid.arrange(sfigure5.2,figure5e, sfig5.2c, layout_matrix = la
 
 
 * Notes								   :noexport:
-*** Figure 7B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
+*** Figure 8B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8B: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
 ## import data
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/results.csv")
+data <- readr::read_csv(file = "../data/figure8/results.csv")
 
 ## data wrangling ##########
 
@@ -5888,7 +5888,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -5920,7 +5920,7 @@ data_mean_area <- dplyr::group_by(data, treatment, hr) %>%
 data_mean_area$sem <- data_mean_area$stdev/sqrt(data_mean_area$num)
 
 ##Import csv
-data <- read.table("../data/figure7/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",")
+data <- read.table("../data/figure8/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",")
 
 library(ggplot2)
 
@@ -5943,10 +5943,10 @@ data_mean <- data_mean[order(data_mean$treatment,data_mean$mean),]
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure7/figure7b.png :eval yes :tangle figure_Rscripts/figure7.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure8/figure8b.png :eval yes :tangle figure_Rscripts/figure8.R
 library(ggplot2)
 source("ggplot2-themes.R")
-figure7b <- ggplot(data_mean, aes(x = hr, y = mean, color = treatment)) +
+figure8b <- ggplot(data_mean, aes(x = hr, y = mean, color = treatment)) +
     scale_color_brewer(palette = "Spectral", name = "Treatment group", direction = -1) +
     geom_smooth(size = 3) +
     theme_bw() +
@@ -5959,14 +5959,14 @@ figure7b <- ggplot(data_mean, aes(x = hr, y = mean, color = treatment)) +
     	  legend.key.size = unit(1.5,"cm"),
           legend.text = element_text(size = 32))
 
-png(filename = "../figures/figure7/figure7b.png", width = 800, height = 800)
-print(figure7b)
+png(filename = "../figures/figure8/figure8b.png", width = 800, height = 800)
+print(figure8b)
 dev.off()
-ggsave(filename = "../figures/figure7/eps/figure7b.eps", 
-       plot = figure7b, 
+ggsave(filename = "../figures/figure8/eps/figure8b.eps", 
+       plot = figure8b, 
        width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure7/figure7b.png]]
+[[file:../figures/figure8/figure8b.png]]
 -
