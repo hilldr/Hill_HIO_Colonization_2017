@@ -1,0 +1,60 @@
+HGNC ID	Approved Symbol	Approved Name	Status	Previous Symbols	Synonyms	Chromosome	Accession Numbers	RefSeq IDs	Gene Family Tag	Gene family description	Gene family ID
+2761	DEFA1	defensin alpha 1	Approved	DEF1, MRS, DEFA2	HNP-1	8p23.1	M26602	NM_004084	DEFA	Defensins, alpha	502
+31801	DEFA10P	defensin alpha 10, pseudogene	Approved			8p23.1	AY746435		DEFA	Defensins, alpha	502
+33354	DEFA11P	defensin alpha 11, pseudogene	Approved		DEFAP3	8p23.1	AY746436		DEFA	Defensins, alpha	502
+32231	DEFA1A3	defensin alpha 1 and alpha 3, variable copy number locus	Approved		DEFA1, DEFA3, DEFT1P	8p23.1			DEFA	Defensins, alpha	502
+33596	DEFA1B	defensin alpha 1B	Approved			8p23.1		NM_001042500	DEFA	Defensins, alpha	502
+2762	DEFA3	defensin alpha 3	Approved	DEF3	HNP-3	8p23.1	M23281	NM_005217	DEFA	Defensins, alpha	502
+2763	DEFA4	defensin alpha 4	Approved	DEF4	HP-4	8p23.1	X65977	NM_001925	DEFA	Defensins, alpha	502
+2764	DEFA5	defensin alpha 5	Approved	DEF5	HD-5	8p23.1	BC069690	NM_021010	DEFA	Defensins, alpha	502
+2765	DEFA6	defensin alpha 6	Approved		HD-6, DEF6	8p23.1	M98331	NM_001926	DEFA	Defensins, alpha	502
+31798	DEFA7P	defensin alpha 7, pseudogene	Approved	DEFA7		8p23.1	AY746432		DEFA	Defensins, alpha	502
+31799	DEFA8P	defensin alpha 8, pseudogene	Approved		DEFAP1	8p23.1	AY746433		DEFA	Defensins, alpha	502
+31800	DEFA9P	defensin alpha 9, pseudogene	Approved		DEFAP2	8p23.1	AY746434		DEFA	Defensins, alpha	502
+2766	DEFB1	defensin beta 1	Approved		HBD-1, DEFB-1, DEFB101, HBD1, BD1, MGC51822	8p23.1	X92744	NM_005218	DEFB	Defensins, beta	503
+15967	DEFB103A	defensin beta 103A	Approved	DEFB3, DEFB103	HBD-3, HBP-3, HBD3, HBP3, DEFB-3	8p23.1	AF217245	NM_001081551	DEFB	Defensins, beta	503
+31702	DEFB103B	defensin beta 103B	Approved			8p23.1		NM_018661	DEFB	Defensins, beta	503
+18115	DEFB104A	defensin beta 104A	Approved	DEFB104	DEFB4, DEFB-4	8p23.1	AJ314835	NM_080389	DEFB	Defensins, beta	503
+26165	DEFB104B	defensin beta 104B	Approved			8p23.1			DEFB	Defensins, beta	503
+18087	DEFB105A	defensin beta 105A	Approved	DEFB105	DEFB-5	8p23.1	AB089180	NM_152250	DEFB	Defensins, beta	503
+29930	DEFB105B	defensin beta 105B	Approved			8p23.1			DEFB	Defensins, beta	503
+18088	DEFB106A	defensin beta 106A	Approved	DEFB106	DEFB-6	8p23.1	AY122466	NM_152251	DEFB	Defensins, beta	503
+28879	DEFB106B	defensin beta 106B	Approved			8p23.1			DEFB	Defensins, beta	503
+18086	DEFB107A	defensin beta 107A	Approved	DEFB107	DEFB-7	8p23.1	AF540979		DEFB	Defensins, beta	503
+31918	DEFB107B	defensin beta 107B	Approved		HsT21816	8p23.1			DEFB	Defensins, beta	503
+29966	DEFB108B	defensin beta 108B	Approved			11q13.4	AF529416	NM_001002035	DEFB	Defensins, beta	503
+18089	DEFB108P1	defensin beta 108 pseudogene 1	Approved	DEFB108	DEFB-8, DEFB108A	8p23.1		NG_005426	DEFB	Defensins, beta	503
+30847	DEFB108P2	defensin beta 108 pseudogene 2	Approved			8p23.1		NG_007389.1	DEFB	Defensins, beta	503
+26227	DEFB108P3	defensin beta 108 pseudogene 3	Approved			8p23.1		NG_007390.1	DEFB	Defensins, beta	503
+30174	DEFB108P4	defensin beta 108 pseudogene 4	Approved			8p23.1		NG_007391.1	DEFB	Defensins, beta	503
+18090	DEFB109P1	defensin beta 109 pseudogene 1	Approved	DEFB109	DEFB-9, DEFB109A	8p23.1		NR_024044	DEFB	Defensins, beta	503
+33469	DEFB109P1B	defensin beta 109 pseudogene 1B	Approved			8p23.1			DEFB	Defensins, beta	503
+30592	DEFB109P2	defensin beta 109 pseudogene 2	Approved			8p23.1			DEFB	Defensins, beta	503
+30838	DEFB109P3	defensin beta 109 pseudogene 3	Approved			8p23.1			DEFB	Defensins, beta	503
+18091	DEFB110	defensin beta 110	Approved		DEFB-10, DEFB-11, DEFB111	6p12.3	DQ012014, BC148541	NM_001037728	DEFB	Defensins, beta	503
+18093	DEFB112	defensin beta 112	Approved		DEFB-12	6p12.3	DQ012016	NM_001037498	DEFB	Defensins, beta	503
+18094	DEFB113	defensin beta 113	Approved		DEFB-13	6p12.3	DQ012017	NM_001037729	DEFB	Defensins, beta	503
+18095	DEFB114	defensin beta 114	Approved		DEFB-14	6p12.3	DQ012018	NM_001037499	DEFB	Defensins, beta	503
+18096	DEFB115	defensin beta 115	Approved		DEFB-15	20q11.21	DQ012019	NM_001037730	DEFB	Defensins, beta	503
+18097	DEFB116	defensin beta 116	Approved		DEFB-16	20q11.21	DQ012020	NM_001037731	DEFB	Defensins, beta	503
+18098	DEFB117	defensin beta 117 (pseudogene)	Approved		DEFB-17	20q11.21	DQ012021		DEFB	Defensins, beta	503
+16196	DEFB118	defensin beta 118	Approved	C20orf63	dJ1018D12.3, DEFB-18, ESC42	20q11.21	AF347073	NM_054112	DEFB	Defensins, beta	503
+18099	DEFB119	defensin beta 119	Approved	DEFB120	DEFB-19, DEFB-20	20q11.21	AA939044	NM_153289	DEFB	Defensins, beta	503
+18101	DEFB121	defensin beta 121	Approved		DEFB-21	20q11.21	AI476463	NM_001011878	DEFB	Defensins, beta	503
+18102	DEFB122	defensin beta 122 (pseudogene)	Approved		DEFB-22, DEFB122P	20q11.21	AI989655	NR_045677	DEFB	Defensins, beta	503
+18103	DEFB123	defensin beta 123	Approved		DEFB-23	20q11.21	AA933749	NM_153324	DEFB	Defensins, beta	503
+18104	DEFB124	defensin beta 124	Approved		DEFB-24	20q11.21	DQ119827	NM_001037500	DEFB	Defensins, beta	503
+18105	DEFB125	defensin beta 125	Approved		DEFB-25	20p13	AA935636	NM_153325	DEFB	Defensins, beta	503
+15900	DEFB126	defensin beta 126	Approved	C20orf8	bA530N10.1, DEFB-26	20p13		NM_030931	DEFB	Defensins, beta	503
+16206	DEFB127	defensin beta 127	Approved	C20orf73	bA530N10.2, DEF-27	20p13	AY358796	NM_139074	DEFB	Defensins, beta	503
+18106	DEFB128	defensin beta 128	Approved		DEFB-28	20p13	AF525930	NM_001037732	DEFB	Defensins, beta	503
+16218	DEFB129	defensin beta 129	Approved	C20orf87	bA530N10.3, DEFB-29	20p13	AY358186	NM_080831	DEFB	Defensins, beta	503
+18107	DEFB130	defensin beta 130	Approved		DEFB-30, DEFB30	8p23.1	DQ012022	NM_001037804	DEFB	Defensins, beta	503
+18108	DEFB131	defensin beta 131	Approved		DEFB-31	4p16.1	AF529414	NM_001040448	DEFB	Defensins, beta	503
+33806	DEFB132	defensin beta 132	Approved		RP5-1103G7.6, DEFB32	20p13	AF525932	NM_207469	DEFB	Defensins, beta	503
+31331	DEFB133	defensin beta 133	Approved			6p12.3		NM_001166478	DEFB	Defensins, beta	503
+32399	DEFB134	defensin beta 134	Approved			8p23.1	AY621331, DQ012024	NM_001033019	DEFB	Defensins, beta	503
+32400	DEFB135	defensin beta 135	Approved			8p23.1	DQ012025	NM_001033017	DEFB	Defensins, beta	503
+34433	DEFB136	defensin beta 136	Approved		DEFB137	8p23.1	DQ012026	NM_001033018	DEFB	Defensins, beta	503
+2767	DEFB4A	defensin beta 4A	Approved	DEFB102, DEFB2, DEFB4	SAP1, HBD-2, DEFB-2	8p23.1	AJ000152	NM_004942	DEFB	Defensins, beta	503
+30193	DEFB4B	defensin beta 4B	Approved	DEFB4P		8p23.1			DEFB	Defensins, beta	503

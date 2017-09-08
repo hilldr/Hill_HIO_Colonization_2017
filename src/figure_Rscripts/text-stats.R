@@ -128,7 +128,7 @@ base <- t.test(data[data$time == 0,]$o2,
              alternative = "less")$p.value
 
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5B: DEFB4A expression is NF-kB independent
+## Figure 6B: DEFB4A expression is NF-kB independent
 ## import data
 data.dir <- "../results/ECOR2_hypoxia_nfkb/"
 library(magrittr)
@@ -205,12 +205,12 @@ hbd2.stats3 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment =
 hbd2.stats4 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment == "hypoxia",]$value, alternative = "two.sided")
 
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5D: BD-2 suppresses growth of /E. coli/ /in vitro/
+## Figure 6D: BD-2 suppresses growth of /E. coli/ /in vitro/
 ## import data
-data2 <- read.csv(file = "../data/figure5/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
+data2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
                    header = TRUE, skip = 2, stringsAsFactors = FALSE)
 
-plate2 <- read.csv(file = "../data/figure5/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
+plate2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
                   header = TRUE, stringsAsFactors = FALSE)
 data2 <- reshape2::melt(data2, id.vars =c("Time", "Temperature..C."))
 data2 <- plyr::rename(data2, c("variable"="cell"))
@@ -446,7 +446,7 @@ source("custom_fun.R")
 # m0: the null value for the difference in means to be tested for. Default is 0. 
 # equal.variance: whether or not to assume equal variance. Default is FALSE. 
 # t.test2 <- function(m1,m2,s1,s2,n1,n2,m0=0,equal.variance=FALSE)
-tt.fig7b <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli" &
+tt.fig8b <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli" &
                                        data_mean$hr == 20,]$mean[1],
                     m2 = data_mean[data_mean$treatment == "E. coli + SC-514" &
                                        data_mean$hr == 20,]$mean,

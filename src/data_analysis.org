@@ -16,7 +16,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
 	./figures/figure4/figure4_multipanel.pdf \
-	./figures/figure5/figure5_multipanel.pdf \
+	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXT)
@@ -37,7 +37,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
 	./figures/figure4/figure4_multipanel.pdf \
-	./figures/figure5/figure5_multipanel.pdf \
+	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf \
 	./revisions/elife-1st-submission.tex
@@ -61,7 +61,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
 	./figures/figure4/figure4_multipanel.pdf \
-	./figures/figure5/figure5_multipanel.pdf \
+	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf		
 	pdflatex -output-directory src $(TEXTBR)
@@ -79,7 +79,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure4_supplement1.pdf \
 	./supplements/figure4_supplement2.pdf \
-	./supplements/figure5_supplement1.pdf \
+	./supplements/figure6_supplement1.pdf \
 	./supplements/figure7_supplement1.pdf \
 	./supplements/figure8_supplement1.pdf
 
@@ -128,22 +128,22 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure4_supplement3.pdf ./supplements/figure4_supplement3.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure5_supplement1.pdf: ./src/figure5_supplement1.tex
-	pdflatex -output-directory src ./src/figure5_supplement1
-	pdflatex -output-directory src ./src/figure5_supplement1
+./supplements/figure6_supplement1.pdf: ./src/figure6_supplement1.tex
+	pdflatex -output-directory src ./src/figure6_supplement1
+	pdflatex -output-directory src ./src/figure6_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure5_supplement1.pdf ./supplements/figure5_supplement1.pdf
+	mv ./src/figure6_supplement1.pdf ./supplements/figure6_supplement1.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure5_supplement2.pdf: ./src/figure5_supplement2.tex
-	pdflatex -output-directory src ./src/figure5_supplement2
-	pdflatex -output-directory src ./src/figure5_supplement2
+./supplements/figure6_supplement2.pdf: ./src/figure6_supplement2.tex
+	pdflatex -output-directory src ./src/figure6_supplement2
+	pdflatex -output-directory src ./src/figure6_supplement2
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure5_supplement2.pdf ./supplements/figure5_supplement2.pdf
+	mv ./src/figure6_supplement2.pdf ./supplements/figure6_supplement2.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure7_supplement1.pdf: ./src/figure7_supplement1.tex
@@ -164,7 +164,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure8_supplement1.pdf ./supplements/figure8_supplement1.pdf
 	rm *.bib *.cls *.bst
 
-## output figures oly
+## output oly
 figures: $(FINALTEXT)_figures.pdf
 $(FINALTEXT)_figures.pdf : ./src/figures_only.tex
 	pdflatex -output-directory src ./src/figures_only
@@ -2982,20 +2982,20 @@ figure4: ./figures/figure4/figure4_multipanel.pdf
 	R -e "setwd('./src/'); source('figure_Rscripts/figure4.R')"
 #+end_src
 
-* Figure 5 
-*** Figure 5A: Antimcrobial peptide expression is broadly up-regulated
+* Figure 6 
+*** Figure 6A: Antimcrobial peptide expression is broadly up-regulated
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5A: title
+## Figure 6A: title
 ## import data
 ## load data
 data.dir <- "../results/ECOR2_hypoxia_nfkb/"
 library(magrittr)
 ecor2.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
 ## load list of defensins
-def <- readr::read_delim(file = "../figures/figure5/defensin_gene_family.txt", delim = "\t")
+def <- readr::read_delim(file = "../figures/figure6/defensin_gene_family.txt", delim = "\t")
 
 amps <- c("CAMP", "CAP18","FALL39", "LTF", "HAMP", "HTN1", "HTN3", "LEAP2", "PPBP", "CXCL14", "REG3A", "CCL20", "CXCL1", "CXCL2", "CXCL3", "CXCL9","CXCL10","CXCL11", "CXCL12","CXCL13", "CCL1", "CCL8", "CCL11","CCL13","CCL17","CCL18","CCL19","CCL25","CCL21", "SLPI", "CXCL4","CXCL6", "CCL27", "LYZ", "CCL24", "CCL26")
 amps <- c(unlist(def[,2]), amps)
@@ -3009,13 +3009,13 @@ plot.data$SYMBOL <- factor(plot.data$SYMBOL,
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/figure5a.png :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6a.png :eval yes :tangle figure_Rscripts/figure6.R
 ## plot
 library(ggplot2)
 library(ggstance)
 source("ggplot2-themes.R")
 
-figure5a <- ggplot(plot.data[plot.data$baseMean > 1,],
+figure6a <- ggplot(plot.data[plot.data$baseMean > 1,],
               aes(x = log2FoldChange, y = SYMBOL, fill = log2FoldChange, color =log2FoldChange)) +
     geom_barh(stat = "identity") +
     geom_errorbarh(aes(xmax = log2FoldChange + lfcSE, xmin = log2FoldChange - lfcSE), width = 0, color = "grey70") +
@@ -3027,23 +3027,23 @@ figure5a <- ggplot(plot.data[plot.data$baseMean > 1,],
     ggtitle("A", subtitle = "Antimicrobial peptides") +
     theme(plot.subtitle = element_text(size = 32, hjust = 0.5, face = "bold"))
 
-png(filename = "../figures/figure5/figure5a.png", width = 600, height = 1000)
-print(figure5a)
+png(filename = "../figures/figure6/figure6a.png", width = 600, height = 1000)
+print(figure6a)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/figure5a.eps", 
-       plot = figure5a, 
+ggsave(filename = "../figures/figure6/eps/figure6a.eps", 
+       plot = figure6a, 
        width = 12, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/figure5a.png]]
+[[file:../figures/figure6/figure6a.png]]
 
-*** Figure 5B: DEFB4A expression is NF-kB independent
+*** Figure 6B: DEFB4A expression is NF-kB independent
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5B: DEFB4A expression is NF-kB independent
+## Figure 6B: DEFB4A expression is NF-kB independent
 ## import data
 data.dir <- "../results/ECOR2_hypoxia_nfkb/"
 library(magrittr)
@@ -3106,7 +3106,7 @@ tt4 <- t.test2(m1 = data.sub[data.sub$comparison == 'E. coli',]$log2FoldChange[2
 
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/text-stats.R
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5B: DEFB4A expression is NF-kB independent
+## Figure 6B: DEFB4A expression is NF-kB independent
 ## import data
 data.dir <- "../results/ECOR2_hypoxia_nfkb/"
 library(magrittr)
@@ -3160,9 +3160,9 @@ tt2 <- t.test2(m1 = data.sub[data.sub$comparison == 'E. coli',]$log2FoldChange[1
 
 #+end_src
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/figure5b.png :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6b.png :eval yes :tangle figure_Rscripts/figure6.R
 ## subset to show DEFB4A only (possibly plot duplicate in supplement)
-figure5b <- ggplot(data.sub[data.sub$baseMean > 1 & data.sub$SYMBOL == 'DEFB4A',],
+figure6b <- ggplot(data.sub[data.sub$baseMean > 1 & data.sub$SYMBOL == 'DEFB4A',],
                    aes(y = log2FoldChange, x = comparison,
                        fill = comparison, color = comparison)) +
     geom_bar(stat = "identity") +
@@ -3182,19 +3182,19 @@ figure5b <- ggplot(data.sub[data.sub$baseMean > 1 & data.sub$SYMBOL == 'DEFB4A',
           axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
 	  strip.text.x =  element_text(size = 32, face = "bold"))
 
-png(filename = "../figures/figure5/figure5b.png", width = 600, height = 1000)
-print(figure5b)
+png(filename = "../figures/figure6/figure6b.png", width = 600, height = 1000)
+print(figure6b)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/figure5b.eps", 
-       plot = figure5b, 
+ggsave(filename = "../figures/figure6/eps/figure6b.eps", 
+       plot = figure6b, 
        width = 12, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/figure5b.png]]
+[[file:../figures/figure6/figure6b.png]]
 
 **** Generate supplemental plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/DEFB4B-expression.png :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/DEFB4B-expression.png :eval yes :tangle figure_Rscripts/figure6.R
 ## subset to show DEFB4A only (possibly plot duplicate in supplement)
 defb4b.supp <- ggplot(data.sub[data.sub$baseMean > 1 & data.sub$SYMBOL == 'DEFB4B',],
                    aes(y = log2FoldChange, x = comparison,
@@ -3230,12 +3230,12 @@ dev.off()
 
 
 
-*** Figure 5C: /E. coli/ colonization is associated with increased h\beta{}D-2 expression
+*** Figure 6C: /E. coli/ colonization is associated with increased h\beta{}D-2 expression
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5C: /E. coli/ colonization is associated with increased h\beta{}D-2 expression
+## Figure 6C: /E. coli/ colonization is associated with increased h\beta{}D-2 expression
 ## import data
 
 data <- readr::read_csv(file = "../data/figure1/161206_survival/survival_and_ELISA.csv")
@@ -3290,7 +3290,7 @@ hbd2.stats4 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment =
 
 #+end_src
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/figure5c.png :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6c.png :eval yes :tangle figure_Rscripts/figure6.R
 library(scales)
 library(grid)
 library(ggplot2)
@@ -3303,7 +3303,7 @@ data_mean <- data %>% dplyr::group_by(day, treatment, variable) %>%
     summarize(mean = mean(value),
               sem = sd(value)/sqrt(n()))
 
-figure5c <- ggplot(data[data$variable == "BD2" & data$day == 1,],
+figure6c <- ggplot(data[data$variable == "BD2" & data$day == 1,],
                aes(x = treatment, y = value, color = factor(treatment))) +
     geom_boxplot(size = 2, outlier.size = 3) +
     xlab("") +
@@ -3333,7 +3333,7 @@ figure5c <- ggplot(data[data$variable == "BD2" & data$day == 1,],
           axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
 	  strip.text.x =  element_text(size = 32, face = "bold"))
 
-figure5c.alt <- ggplot(data[data$variable == "BD2" & data$day == 1,],
+figure6c.alt <- ggplot(data[data$variable == "BD2" & data$day == 1,],
                aes(x = treatment, y = value, fill = factor(treatment), color = factor(treatment))) +
     geom_bar(stat = "identity", size = 0.5) +
     geom_errorbar(aes(ymax = mean + sem, ymin = mean - sem), size = 1.5, width = 0, color = "grey70") +
@@ -3366,29 +3366,29 @@ figure5c.alt <- ggplot(data[data$variable == "BD2" & data$day == 1,],
 	  strip.text.x =  element_text(size = 32, face = "bold"))
 
 
-png(filename = "../figures/figure5/figure5c.png", width = 600, height = 800)
-print(figure5c)
+png(filename = "../figures/figure6/figure6c.png", width = 600, height = 800)
+print(figure6c)
 dev.off()
 
-ggsave(filename = "../figures/figure5/eps/figure5c.eps", 
-       plot = figure5c, 
+ggsave(filename = "../figures/figure6/eps/figure6c.eps", 
+       plot = figure6c, 
        width = 12, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/figure5c.png]]
+[[file:../figures/figure6/figure6c.png]]
 
-*** Figure 5D: BD-2 suppresses growth of /E. coli/ /in vitro/
+*** Figure 6D: BD-2 suppresses growth of /E. coli/ /in vitro/
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5D: BD-2 suppresses growth of /E. coli/ /in vitro/
+## Figure 6D: BD-2 suppresses growth of /E. coli/ /in vitro/
 ## import data
-data2 <- read.csv(file = "../data/figure5/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
+data2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
                    header = TRUE, skip = 2, stringsAsFactors = FALSE)
 
-plate2 <- read.csv(file = "../data/figure5/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
+plate2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
                   header = TRUE, stringsAsFactors = FALSE)
 data2 <- reshape2::melt(data2, id.vars =c("Time", "Temperature..C."))
 data2 <- plyr::rename(data2, c("variable"="cell"))
@@ -3421,12 +3421,12 @@ plot.data[plot.data$dose == 1e-8,]$dose <- 0
 
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/text-stats.R
 ## FIGURE 5 --------------------------------------------------------------------
-## Figure 5D: BD-2 suppresses growth of /E. coli/ /in vitro/
+## Figure 6D: BD-2 suppresses growth of /E. coli/ /in vitro/
 ## import data
-data2 <- read.csv(file = "../data/figure5/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
+data2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
                    header = TRUE, skip = 2, stringsAsFactors = FALSE)
 
-plate2 <- read.csv(file = "../data/figure5/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
+plate2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
                   header = TRUE, stringsAsFactors = FALSE)
 data2 <- reshape2::melt(data2, id.vars =c("Time", "Temperature..C."))
 data2 <- plyr::rename(data2, c("variable"="cell"))
@@ -3460,11 +3460,11 @@ plot.data[plot.data$dose == 1e-8,]$dose <- 0
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/figure5d.png :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6d.png :eval yes :tangle figure_Rscripts/figure6.R
 library(ggplot2)
 source("ggplot2-themes.R")
-figure5d <- ggplot(data = plot.data, aes(x = Time, y = avg)) +
-    geom_point(shape = 21, size = 5, aes(fill = factor(dose), color = factor(dose))) +
+figure6d <- ggplot(data = plot.data, aes(x = Time, y = avg)) +
+    geom_point(shape = 21, size = 3.5, aes(fill = factor(dose), color = factor(dose))) +
     geom_errorbar(aes(ymax = avg + sem, ymin = avg - sem, 
                       color = factor(dose)), width = 0) +
     xlab("Time (h)") +
@@ -3479,14 +3479,14 @@ figure5d <- ggplot(data = plot.data, aes(x = Time, y = avg)) +
              size = 2, color = "grey30") +
     annotate("text", x = 20, y = 0.3,
              label = paste("P = ", round(test1$p.value, digits = 3)),
-             size = 10, color = "grey30") +
+             size = 8, color = "grey30") +
     annotate("segment", x = 18.25, xend = 18.25,
              y = mean(plot.data[plot.data$Time == 18 & plot.data$dose == 0,]$avg),
              yend = mean(plot.data[plot.data$Time == 18 & plot.data$dose == 1,]$avg),
              size = 2, color = "grey30") +
     annotate("text", x = 20, y = 0.45,
              label = paste("P = ", round(test2$p.value, digits = 3)),
-             size = 10, color = "grey30") +
+             size = 8, color = "grey30") +
     theme(legend.position = c(0.8, 0.15),
           legend.title = element_text(size = 24),
 	  legend.key.size = unit(1.5,"cm"),
@@ -3494,19 +3494,19 @@ figure5d <- ggplot(data = plot.data, aes(x = Time, y = avg)) +
 
     ggtitle("D")
 
-png(filename = "../figures/figure5/figure5d.png", width = 1200, height = 800)
-print(figure5d)
+png(filename = "../figures/figure6/figure6d.png", width = 1200, height = 800)
+print(figure6d)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/figure5d.eps", 
-plot = figure5d, 
+ggsave(filename = "../figures/figure6/eps/figure6d.eps", 
+plot = figure6d, 
 width = 24, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/figure5d.png]]
+[[file:../figures/figure6/figure6d.png]]
 
 **** K and DT calculation
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
 ## calculate growth curves & carrying capacity
 library(magrittr)
 ## limit dataset to log - stationary phase (exclude post-stationary phase)
@@ -3539,10 +3539,10 @@ gc.test4 <- t.test(gc.data[gc.data$dose == 0,]$DT,
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/figure5e.png :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6e.png :eval yes :tangle figure_Rscripts/figure6.R
 library(ggplot2)
 source("ggplot2-themes.R")
-figure5e <- ggplot(data = gc.data, aes(x = factor(dose), y = K)) +
+figure6e <- ggplot(data = gc.data, aes(x = factor(dose), y = K)) +
     geom_boxplot(aes(color = factor(dose)), size = 2, outlier.size = 3) +
     xlab(expression(paste("BD-2 (",mu,"g/mL)"))) +
     ylab("Carrying capacity (K)") +
@@ -3561,7 +3561,7 @@ figure5e <- ggplot(data = gc.data, aes(x = factor(dose), y = K)) +
              size = 6, color = "grey30") +
     ggtitle("E")
 
-figure5f <- ggplot(data = gc.data, aes(x = factor(dose), y = DT)) +
+figure6f <- ggplot(data = gc.data, aes(x = factor(dose), y = DT)) +
     geom_boxplot(aes(color = factor(dose)), size = 2, outlier.size = 3) +
     xlab(expression(paste("BD-2 (",mu,"g/mL)"))) +
     ylab("Doubling time (h)") +
@@ -3574,22 +3574,22 @@ figure5f <- ggplot(data = gc.data, aes(x = factor(dose), y = DT)) +
 	  legend.text = element_text(size = 24)) +
     ggtitle("F")
 
-png(filename = "../figures/figure5/figure5e.png", width = 800, height = 800)
-#print(figure5e)
-gridExtra::grid.arrange(figure5e, figure5f, ncol = 2)
+png(filename = "../figures/figure6/figure6e.png", width = 800, height = 800)
+#print(figure6e)
+gridExtra::grid.arrange(figure6e, figure6f, ncol = 2)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/figure5e.eps", 
-plot = figure5e, 
+ggsave(filename = "../figures/figure6/eps/figure6e.eps", 
+plot = figure6e, 
 width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/figure5e.png]]
+[[file:../figures/figure6/figure6e.png]]
 
 
-*** Figure 5 multipanel 
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/figure5_multipanel.png  :width 1600 :height 1600 :eval yes :tangle figure_Rscripts/figure5.R
-## Figure 5 multipanel ---------------------------------------------------------
+*** Figure 6 multipanel 
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/figure6_multipanel.png  :width 1600 :height 1600 :eval yes :tangle figure_Rscripts/figure6.R
+## Figure 6 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 library(ggplot2)
 library(gridExtra)
@@ -3600,37 +3600,38 @@ layout <- rbind(c(1,2,3),
 
 
 ## PDF output
-pdf(file = "../figures/figure5/figure5_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
-gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout)
+pdf(file = "../figures/figure6/figure6_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
+gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, layout_matrix = layout)
 dev.off()
 
 ## EPS output
-ggsave(filename = "../figures/figure5/eps/figure5_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout), 
+ggsave(filename = "../figures/figure6/eps/figure6_multipanel.eps", 
+       plot = gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
-png(filename = "../figures/figure5/figure5_multipanel.png", width = 1600, height = 1600)
-gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout)
+png(filename = "../figures/figure6/figure6_multipanel.png", width = 1600, height = 1600)
+gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, layout_matrix = layout)
 dev.off()
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/figure5_multipanel.png]]
+[[file:../figures/figure6/figure6_multipanel.png]]
 
 
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
-## Figure 5 multipanel ---------------------------------------------------------
-figure5: ./figures/figure5/figure5_multipanel.pdf
-./figures/figure5/figure5_multipanel.pdf : ./src/figure_Rscripts/figure5.R \
+## Figure 6 multipanel ---------------------------------------------------------
+figure6: ./figures/figure6/figure6_multipanel.pdf
+./figures/figure6/figure6_multipanel.pdf : ./src/figure_Rscripts/figure6.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-NFKBi_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv \
-	./figures/figure5/defensin_gene_family.txt \
+	./figures/figure6/defensin_gene_family.txt \
+	./data/figure6/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv \
 	./data/figure1/161206_survival/survival_and_ELISA.csv
-	R -e "setwd('./src/'); source('figure_Rscripts/figure5.R')"
+	R -e "setwd('./src/'); source('figure_Rscripts/figure6.R')"
 #+end_src
 
 * Figure 7 
@@ -4426,7 +4427,7 @@ source("custom_fun.R")
 # m0: the null value for the difference in means to be tested for. Default is 0. 
 # equal.variance: whether or not to assume equal variance. Default is FALSE. 
 # t.test2 <- function(m1,m2,s1,s2,n1,n2,m0=0,equal.variance=FALSE)
-tt.fig7b <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli" &
+tt.fig8b <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli" &
                                        data_mean$hr == 20,]$mean[1],
                     m2 = data_mean[data_mean$treatment == "E. coli + SC-514" &
                                        data_mean$hr == 20,]$mean,
@@ -5635,15 +5636,15 @@ dev.off()
 
 #+RESULTS:
 : 1
-** Figure 5 - Supplement 2
+** Figure 6 - Supplement 2
 *** Data import and manipulation 
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/supplemental.R
 ## FIGURE 5 - Supplement 2 -----------------------------------------------------
 ## import data
-data2 <- read.csv(file = "../data/figure5/170831_BD_invitro_growth/170831_OD600.csv",
+data2 <- read.csv(file = "../data/figure6/170831_BD_invitro_growth/170831_OD600.csv",
                    header = TRUE, skip = 2, stringsAsFactors = FALSE)
 
-plate2 <- read.csv(file = "../data/figure5/170831_BD_invitro_growth/170831_plate_layout.csv",
+plate2 <- read.csv(file = "../data/figure6/170831_BD_invitro_growth/170831_plate_layout.csv",
                   header = TRUE, stringsAsFactors = FALSE)
 
 ## long format
@@ -5670,10 +5671,10 @@ plot.data <- data2 %>%
 #+end_src
 
 *** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/sfigure5_2.png :eval yes :tangle figure_Rscripts/supplemental.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/sfigure6_2.png :eval yes :tangle figure_Rscripts/supplemental.R
 library(ggplot2)
 source("ggplot2-themes.R")
-sfigure5.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = avg)) +
+sfigure6.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = avg)) +
     geom_point(shape = 21, size = 5, aes(fill = factor(treatment), color = factor(treatment))) +
     geom_errorbar(aes(ymax = avg + sem, ymin = avg - sem, 
                       color = factor(treatment)), width = 0) +
@@ -5690,19 +5691,19 @@ sfigure5.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = av
 	  strip.text = element_text(size = 32)) +
     ggtitle("A")
 
-png(filename = "../figures/figure5/sfigure5_2.png", width = 1200, height = 800)
-print(sfigure5.2)
+png(filename = "../figures/figure6/sfigure6_2.png", width = 1200, height = 800)
+print(sfigure6.2)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/sfigure5_2.eps", 
-plot = sfigure5.2, 
+ggsave(filename = "../figures/figure6/eps/sfigure6_2.eps", 
+plot = sfigure6.2, 
 width = 24, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/sfigure5_2.png]]
+[[file:../figures/figure6/sfigure6_2.png]]
 
 *** K and DT calculation
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure6.R
 ## calculate growth curves & carrying capacity
 library(magrittr)
 ## limit dataset to log - stationary phase (exclude post-stationary phase)
@@ -5726,10 +5727,10 @@ gc.test2 <- t.test(gc.data[gc.data$treatment == 'PBS' & gc.data$strain == "E. co
 #+end_src
 
 *** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/sfigure5_2b.png :eval yes :tangle figure_Rscripts/supplemental.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/sfigure6_2b.png :eval yes :tangle figure_Rscripts/supplemental.R
 library(ggplot2)
 source("ggplot2-themes.R")
-figure5e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 20), y = K)) +
+figure6e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 20), y = K)) +
     geom_boxplot(aes(color = treatment), size = 2, outlier.size = 3) +
     facet_wrap(~strain, ncol = 2) +	
     xlab("") +
@@ -5757,27 +5758,27 @@ figure5e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 
               label = paste("P = ", format(gc.test2, digits = 1))) +
     ggtitle("B")
 
-png(filename = "../figures/figure5/sfigure5_2b.png", width = 1000, height = 800)
-print(figure5e)
+png(filename = "../figures/figure6/sfigure6_2b.png", width = 1000, height = 800)
+print(figure6e)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/sfigure5_2b.png", 
-plot = figure5e, 
+ggsave(filename = "../figures/figure6/eps/sfigure6_2b.png", 
+plot = figure6e, 
 width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/sfigure5_2b.png]]
+[[file:../figures/figure6/sfigure6_2b.png]]
 
 *** ECOR2 Stationary phase
 **** Data import and manipulation
   #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/supplemental.R
 ## import data 
-data <- readr::read_csv(file = "../data/figure5/170825_ECOR2_BD2_invitro/9_1_2017.csv", col_names = TRUE, skip = 12)
+data <- readr::read_csv(file = "../data/figure6/170825_ECOR2_BD2_invitro/9_1_2017.csv", col_names = TRUE, skip = 12)
 ## retrieve letter
 data$letter <- substr(data$Plate_ID,1,1)
 
 ## groups dataframe
-groups <- readr::read_csv(file = "../data/figure5/170825_ECOR2_BD2_invitro/170901_plate_layout.csv", col_names = TRUE)
+groups <- readr::read_csv(file = "../data/figure6/170825_ECOR2_BD2_invitro/170901_plate_layout.csv", col_names = TRUE)
 
 ## map to data frame
 data <- dplyr::left_join(data, groups, by = 'letter')
@@ -5795,7 +5796,7 @@ tt2 <- t.test(data[data$letter == "A" | data$letter == "D",]$Count_per_ml,
   #+end_src
 **** Plotting
 
- #+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/sfigure5_2c.png :width 600 :height 1000 :eval yes :tangle figure_Rscripts/supplemental.R
+ #+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/sfigure6_2c.png :width 600 :height 1000 :eval yes :tangle figure_Rscripts/supplemental.R
 library(ggplot2)
 
 source("ggplot2-themes.R")
@@ -5822,30 +5823,30 @@ print(sfig5.2c)
  #+end_src
 
  #+RESULTS:
- [[file:../figures/figure5/sfigure5_2c.png]]
+ [[file:../figures/figure6/sfigure6_2c.png]]
 
-*** Multipanel Figure 5 Supplement 2 
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5/sfigure5.png :eval yes :tangle figure_Rscripts/supplemental.R
+*** Multipanel Figure 6 Supplement 2 
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure6/sfigure6.png :eval yes :tangle figure_Rscripts/supplemental.R
 library(gridExtra)
 layout <- rbind(c(1,1,1),
                 c(2,2,3))
 
 ## PDF output
-pdf(file = "../figures/figure5/figure5_supplement2.pdf", width = 6400/300, height = 6400/300, onefile = FALSE)
-gridExtra::grid.arrange(sfigure5.2,figure5e,sfig5.2c, layout_matrix = layout)
+pdf(file = "../figures/figure6/figure6_supplement2.pdf", width = 6400/300, height = 6400/300, onefile = FALSE)
+gridExtra::grid.arrange(sfigure6.2,figure6e,sfig5.2c, layout_matrix = layout)
 dev.off()
 
-png(filename = "../figures/figure5/sfigure5_2.png", width = 1920, height = 1600)
-gridExtra::grid.arrange(sfigure5.2,figure5e,sfig5.2c, layout_matrix = layout)
+png(filename = "../figures/figure6/sfigure6_2.png", width = 1920, height = 1600)
+gridExtra::grid.arrange(sfigure6.2,figure6e,sfig5.2c, layout_matrix = layout)
 dev.off()
 
-ggsave(filename = "../figures/figure5/sfigure5_2.eps", 
-plot = gridExtra::grid.arrange(sfigure5.2,figure5e, sfig5.2c, layout_matrix = layout),
+ggsave(filename = "../figures/figure6/sfigure6_2.eps", 
+plot = gridExtra::grid.arrange(sfigure6.2,figure6e, sfig5.2c, layout_matrix = layout),
        width = 48, height = 12)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5/sfigure5.png]]
+[[file:../figures/figure6/sfigure6.png]]
 
 
 * Notes								   :noexport:

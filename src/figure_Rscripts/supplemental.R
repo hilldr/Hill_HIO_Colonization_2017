@@ -829,10 +829,10 @@ dev.off()
 
 ## FIGURE 5 - Supplement 2 -----------------------------------------------------
 ## import data
-data2 <- read.csv(file = "../data/figure5/170831_BD_invitro_growth/170831_OD600.csv",
+data2 <- read.csv(file = "../data/figure6/170831_BD_invitro_growth/170831_OD600.csv",
                    header = TRUE, skip = 2, stringsAsFactors = FALSE)
 
-plate2 <- read.csv(file = "../data/figure5/170831_BD_invitro_growth/170831_plate_layout.csv",
+plate2 <- read.csv(file = "../data/figure6/170831_BD_invitro_growth/170831_plate_layout.csv",
                   header = TRUE, stringsAsFactors = FALSE)
 
 ## long format
@@ -859,7 +859,7 @@ plot.data <- data2 %>%
 
 library(ggplot2)
 source("ggplot2-themes.R")
-sfigure5.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = avg)) +
+sfigure6.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = avg)) +
     geom_point(shape = 21, size = 5, aes(fill = factor(treatment), color = factor(treatment))) +
     geom_errorbar(aes(ymax = avg + sem, ymin = avg - sem, 
                       color = factor(treatment)), width = 0) +
@@ -876,16 +876,16 @@ sfigure5.2 <- ggplot(data = plot.data[plot.data$Time < 6,], aes(x = Time, y = av
 	  strip.text = element_text(size = 32)) +
     ggtitle("A")
 
-png(filename = "../figures/figure5/sfigure5_2.png", width = 1200, height = 800)
-print(sfigure5.2)
+png(filename = "../figures/figure6/sfigure6_2.png", width = 1200, height = 800)
+print(sfigure6.2)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/sfigure5_2.eps", 
-plot = sfigure5.2, 
+ggsave(filename = "../figures/figure6/eps/sfigure6_2.eps", 
+plot = sfigure6.2, 
 width = 24, height = 16)
 
 library(ggplot2)
 source("ggplot2-themes.R")
-figure5e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 20), y = K)) +
+figure6e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 20), y = K)) +
     geom_boxplot(aes(color = treatment), size = 2, outlier.size = 3) +
     facet_wrap(~strain, ncol = 2) +	
     xlab("") +
@@ -913,20 +913,20 @@ figure5e <- ggplot(data = gc.data, aes(x = stringr::str_wrap(treatment, width = 
               label = paste("P = ", format(gc.test2, digits = 1))) +
     ggtitle("B")
 
-png(filename = "../figures/figure5/sfigure5_2b.png", width = 1000, height = 800)
-print(figure5e)
+png(filename = "../figures/figure6/sfigure6_2b.png", width = 1000, height = 800)
+print(figure6e)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/sfigure5_2b.png", 
-plot = figure5e, 
+ggsave(filename = "../figures/figure6/eps/sfigure6_2b.png", 
+plot = figure6e, 
 width = 16, height = 16)
 
 ## import data 
-data <- readr::read_csv(file = "../data/figure5/170825_ECOR2_BD2_invitro/9_1_2017.csv", col_names = TRUE, skip = 12)
+data <- readr::read_csv(file = "../data/figure6/170825_ECOR2_BD2_invitro/9_1_2017.csv", col_names = TRUE, skip = 12)
 ## retrieve letter
 data$letter <- substr(data$Plate_ID,1,1)
 
 ## groups dataframe
-groups <- readr::read_csv(file = "../data/figure5/170825_ECOR2_BD2_invitro/170901_plate_layout.csv", col_names = TRUE)
+groups <- readr::read_csv(file = "../data/figure6/170825_ECOR2_BD2_invitro/170901_plate_layout.csv", col_names = TRUE)
 
 ## map to data frame
 data <- dplyr::left_join(data, groups, by = 'letter')
@@ -968,14 +968,14 @@ layout <- rbind(c(1,1,1),
                 c(2,2,3))
 
 ## PDF output
-pdf(file = "../figures/figure5/figure5_supplement2.pdf", width = 6400/300, height = 6400/300, onefile = FALSE)
-gridExtra::grid.arrange(sfigure5.2,figure5e,sfig5.2c, layout_matrix = layout)
+pdf(file = "../figures/figure6/figure6_supplement2.pdf", width = 6400/300, height = 6400/300, onefile = FALSE)
+gridExtra::grid.arrange(sfigure6.2,figure6e,sfig5.2c, layout_matrix = layout)
 dev.off()
 
-png(filename = "../figures/figure5/sfigure5_2.png", width = 1920, height = 1600)
-gridExtra::grid.arrange(sfigure5.2,figure5e,sfig5.2c, layout_matrix = layout)
+png(filename = "../figures/figure6/sfigure6_2.png", width = 1920, height = 1600)
+gridExtra::grid.arrange(sfigure6.2,figure6e,sfig5.2c, layout_matrix = layout)
 dev.off()
 
-ggsave(filename = "../figures/figure5/sfigure5_2.eps", 
-plot = gridExtra::grid.arrange(sfigure5.2,figure5e, sfig5.2c, layout_matrix = layout),
+ggsave(filename = "../figures/figure6/sfigure6_2.eps", 
+plot = gridExtra::grid.arrange(sfigure6.2,figure6e, sfig5.2c, layout_matrix = layout),
        width = 48, height = 12)

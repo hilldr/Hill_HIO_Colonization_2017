@@ -438,3 +438,23 @@ ggsave(filename = "../figures/figure5/eps/figure5_multipanel.eps",
 png(filename = "../figures/figure5/figure5_multipanel.png", width = 1600, height = 1600)
 gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, figure5e, layout_matrix = layout)
 dev.off()
+
+## calculate growth curves & carrying capacity
+library(magrittr)
+## limit dataset to log - stationary phase (exclude post-stationary phase)
+data3 <- subset(data2, data2$Time < 6)
+
+gc.data <- dplyr::group_by(data3, cell) %>%
+    dplyr::summarise(K = growthcurver::SummarizeGrowth(Time, value)[1]$vals$k,
+                     DT = growthcurver::SummarizeGrowth(Time, value)[1]$vals$t_gen,
+                     t_mid = growthcurver::SummarizeGrowth(Time, value)[1]$vals$t_mid) %>%
+    dplyr::right_join(dplyr::select(data2, cell, treatment, strain) , by = "cell") %>%
+    dplyr::distinct(cell, K, DT, treatment, strain, t_mid)
+
+## statistical tests
+gc.test1 <- t.test(gc.data[gc.data$treatment == 'PBS' & gc.data$strain == "E. coli ECOR2",]$K,
+                   gc.data[gc.data$treatment == '1.0 ug/ml BD-2' & gc.data$strain == "E. coli ECOR2",]$K,
+                   alternative = "greater")$p.value
+gc.test2 <- t.test(gc.data[gc.data$treatment == 'PBS' & gc.data$strain == "E. coli K12",]$K,
+                   gc.data[gc.data$treatment == '1.0 ug/ml BD-2' & gc.data$strain == "E. coli K12",]$K,
+                   alternative = "greater")$p.value
