@@ -204,7 +204,6 @@ hbd2.stats2 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment =
 hbd2.stats3 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment == "heat-inactivated",]$value, alternative = "two.sided")
 hbd2.stats4 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment == "hypoxia",]$value, alternative = "two.sided")
 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5.R
 ## FIGURE 5 --------------------------------------------------------------------
 ## Figure 5D: BD-2 suppresses growth of /E. coli/ /in vitro/
 ## import data
@@ -242,12 +241,12 @@ plot.data <- data2[data2$dose == 1e-8| data2$dose == 0.1 |data2$dose == 1,] %>%
 
 plot.data[plot.data$dose == 1e-8,]$dose <- 0
 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure7.R
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
 ## import data
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/results.csv")
+data <- readr::read_csv(file = "../data/figure8/results.csv")
 
 ## data wrangling ##########
 
@@ -278,7 +277,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -300,7 +299,7 @@ data_mean$sem <- data_mean$stdev/sqrt(data_mean$num)
 
 
 ##Import csv
-data <- read.table("../data/figure7/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",", stringsAsFactors = FALSE)
+data <- read.table("../data/figure8/ECOR2_TNF_IFN_permeability.csv",header=TRUE,sep=",", stringsAsFactors = FALSE)
 
 library(ggplot2)
 
@@ -321,7 +320,7 @@ attributes(data_mean) <- NULL
 data_mean <- rbind(data, data_mean)
 data_mean <- data_mean[order(data_mean$treatment,data_mean$mean),]
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/041417_deltavision/thresh40.csv")
+data <- readr::read_csv(file = "../data/figure8/041417_deltavision/thresh40.csv")
 
 ## data wrangling ##########
 
@@ -352,7 +351,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/041417_deltavision/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/041417_deltavision/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -380,7 +379,7 @@ attributes(data_mean2) <- NULL
 data_mean <- rbind(data_mean, data_mean2)
 
 ## read in the raw data file from ImageJ
-data <- readr::read_csv(file = "../data/figure7/041717_deltavision/thesh40.csv")
+data <- readr::read_csv(file = "../data/figure8/041717_deltavision/thesh40.csv")
 
 ## data wrangling ##########
 
@@ -411,7 +410,7 @@ baseline <- dplyr::select(baseline, organoid, t0, t0_area)
 data <- dplyr::left_join(data, baseline, by = "organoid") 
 
 ## read in sample key
-key <- readr::read_csv(file = "../data/figure7/041717_deltavision/sample_key.csv")
+key <- readr::read_csv(file = "../data/figure8/041717_deltavision/sample_key.csv")
 ## ... and merge
 data <- dplyr::left_join(data, key, by = "organoid") 
 
@@ -460,7 +459,7 @@ tt.fig7b <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli" &
                     n2 = data_mean[data_mean$treatment == "E. coli + SC-514" &
                                        data_mean$hr == 20,]$num,
                     equal.variance = TRUE)
-tt.fig7d <- t.test2(m1 = data_mean[data_mean$treatment == "PBS" &
+tt.fig8d <- t.test2(m1 = data_mean[data_mean$treatment == "PBS" &
                                        data_mean$hr == 20,]$mean[2],
                     m2 = data_mean[data_mean$treatment == "TNF&IFN" &
                                        data_mean$hr == 20,]$mean[1],
@@ -473,7 +472,7 @@ tt.fig7d <- t.test2(m1 = data_mean[data_mean$treatment == "PBS" &
                     n2 = data_mean[data_mean$treatment == "TNF&IFN" &
                                        data_mean$hr == 20,]$num[1],
                     equal.variance = TRUE)
-tt.fig7d2 <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli + TNF&IFN" &
+tt.fig8d2 <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli + TNF&IFN" &
                                        data_mean$hr == 20,]$mean[2],
                     m2 = data_mean[data_mean$treatment == "TNF&IFN" &
                                        data_mean$hr == 20,]$mean[1],
@@ -487,8 +486,8 @@ tt.fig7d2 <- t.test2(m1 = data_mean[data_mean$treatment == "E. coli + TNF&IFN" &
                                        data_mean$hr == 20,]$num[1],
                     equal.variance = TRUE)
 
-## FIGURE 7 --------------------------------------------------------------------
-## Figure 7C: Survival is impaired in presence of NFkB inhibitor
+## FIGURE 8 --------------------------------------------------------------------
+## Figure 8C: Survival is impaired in presence of NFkB inhibitor
 ## import data
 data <- readr::read_csv(file = "../data/figure1/161206_survival/survival_and_ELISA.csv")
 ## subset data
