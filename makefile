@@ -11,7 +11,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
-	./figures/figure4/figure4_multipanel.pdf \
+	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf		
@@ -32,7 +32,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
-	./figures/figure4/figure4_multipanel.pdf \
+	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf \
@@ -56,7 +56,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
-	./figures/figure4/figure4_multipanel.pdf \
+	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf		
@@ -73,8 +73,8 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 
 ## supplemental figures
 supplements: ./supplements/figure1_supplement1.pdf \
-	./supplements/figure4_supplement1.pdf \
-	./supplements/figure4_supplement2.pdf \
+	./supplements/figure5_supplement1.pdf \
+	./supplements/figure5_supplement2.pdf \
 	./supplements/figure6_supplement1.pdf \
 	./supplements/figure7_supplement1.pdf \
 	./supplements/figure8_supplement1.pdf
@@ -97,31 +97,31 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	mv ./src/figure1_supplement2.pdf ./supplements/figure1_supplement2.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure4_supplement1.pdf: ./src/figure4_supplement1.tex
-	pdflatex -output-directory src ./src/figure4_supplement1
-	pdflatex -output-directory src ./src/figure4_supplement1
+./supplements/figure5_supplement1.pdf: ./src/figure5_supplement1.tex
+	pdflatex -output-directory src ./src/figure5_supplement1
+	pdflatex -output-directory src ./src/figure5_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure4_supplement1.pdf ./supplements/figure4_supplement1.pdf
+	mv ./src/figure5_supplement1.pdf ./supplements/figure5_supplement1.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure4_supplement2.pdf: ./src/figure4_supplement2.tex
-	pdflatex -output-directory src ./src/figure4_supplement2
-	pdflatex -output-directory src ./src/figure4_supplement2
+./supplements/figure5_supplement2.pdf: ./src/figure5_supplement2.tex
+	pdflatex -output-directory src ./src/figure5_supplement2
+	pdflatex -output-directory src ./src/figure5_supplement2
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure4_supplement2.pdf ./supplements/figure4_supplement2.pdf
+	mv ./src/figure5_supplement2.pdf ./supplements/figure5_supplement2.pdf
 	rm *.bib *.cls *.bst
 
-./supplements/figure4_supplement3.pdf: ./src/figure4_supplement3.tex
-	pdflatex -output-directory src ./src/figure4_supplement3
-	pdflatex -output-directory src ./src/figure4_supplement3
+./supplements/figure5_supplement3.pdf: ./src/figure5_supplement3.tex
+	pdflatex -output-directory src ./src/figure5_supplement3
+	pdflatex -output-directory src ./src/figure5_supplement3
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
 	cp ./src/model2-names.bst ./
-	mv ./src/figure4_supplement3.pdf ./supplements/figure4_supplement3.pdf
+	mv ./src/figure5_supplement3.pdf ./supplements/figure5_supplement3.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure6_supplement1.pdf: ./src/figure6_supplement1.tex
@@ -245,13 +245,13 @@ figure2: ./figures/figure2/figure2_multipanel.pdf
 	R -e "setwd('./src/'); source('figure_Rscripts/figure2.R')"
 
 ## Figure 4_ multipanel ---------------------------------------------------------
-figure4_: ./figures/figure4_/figure4_multipanel.pdf
-./figures/figure4_/figure4_multipanel.pdf: ./data/figure4_/dapi_ki67_edu_counts.tar.gz \
-	./data/figure4_/EdU_figure_cropped.png \
-	./data/figure4_/sox9_figure.png \
-	./data/figure4_/dppiv_figure.png
-	tar -xzvf ./data/figure4_/dapi_ki67_edu_counts.tar.gz
-	R -e "setwd('./src/'); source('figure_Rscripts/figure4_.R')"
+figure5_: ./figures/figure5_/figure5_multipanel.pdf
+./figures/figure5_/figure5_multipanel.pdf: ./data/figure5_/dapi_ki67_edu_counts.tar.gz \
+	./data/figure5_/EdU_figure_cropped.png \
+	./data/figure5_/sox9_figure.png \
+	./data/figure5_/dppiv_figure.png
+	tar -xzvf ./data/figure5_/dapi_ki67_edu_counts.tar.gz
+	R -e "setwd('./src/'); source('figure_Rscripts/figure5_.R')"
 
 ## Figure 3 multipanel ---------------------------------------------------------
 figure3: ./figures/figure3/figure3_multipanel.pdf
@@ -260,9 +260,9 @@ figure3: ./figures/figure3/figure3_multipanel.pdf
 	./figures/figure3/figure3c.png
 	R -e "setwd('./src/'); source('figure_Rscripts/figure3.R')"
 
-## Generate gene counts and DE from kallisto output for Figure 4
+## Generate gene counts and DE from kallisto output for Figure 5
 ./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_ECOR2-HK-NFKBi.csv ./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv ./results/ECOR2_hypoxia_nfkb/ECOR2_over_ECOR-NFKBi.csv ./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv ./results/ECOR2_hypoxia_nfkb/hypoxia_over_hypoxia-NFKBi.csv ./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv :
-	./src/figure_Rscripts/figure4-kallisto-post.R \
+	./src/figure_Rscripts/figure5-kallisto-post.R \
 	../data/RNA-seq/kallisto-Run_1731/73868_GAGTGG_S95_L006_R1_001.fastq/abundance.h5 \
 	../data/RNA-seq/kallisto-Run_1731/73869_ATCACG_S96_L006_R1_001.fastq/abundance.h5 \
 	../data/RNA-seq/kallisto-Run_1731/73870_TAGCTT_S97_L006_R1_001.fastq/abundance.h5 \
@@ -298,18 +298,18 @@ figure3: ./figures/figure3/figure3_multipanel.pdf
 	../data/RNA-seq/kallisto-Run_1731/73904_GATCAG_S32_L008_R1_001.fastq/abundance.h5 \
 	../data/RNA-seq/kallisto-Run_1731/73905_ACTGAT_S33_L008_R1_001.fastq/abundance.h5 \
 	../data/RNA-seq/kallisto-Run_1731/73906_ATTCCT_S34_L008_R1_001.fastq/abundance.h5
-	R -e "setwd('./src/'); source('figure_Rscripts/figure4-kallisto-post.R')"
+	R -e "setwd('./src/'); source('figure_Rscripts/figure5-kallisto-post.R')"
 
-## Figure 4 multipanel ---------------------------------------------------------
-figure4: ./figures/figure4/figure4_multipanel.pdf
-./figures/figure4/figure4_multipanel.pdf ./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv : ./src/figure_Rscripts/figure4.R \
+## Figure 5 multipanel ---------------------------------------------------------
+figure5: ./figures/figure5/figure5_multipanel.pdf
+./figures/figure5/figure5_multipanel.pdf ./results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv : ./src/figure_Rscripts/figure5.R \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_ECOR2-HK-NFKBi.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_ECOR-NFKBi.csv \
 	./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv \
 	./results/ECOR2_hypoxia_nfkb/hypoxia_over_hypoxia-NFKBi.csv \
 	./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv
-	R -e "setwd('./src/'); source('figure_Rscripts/figure4.R')"
+	R -e "setwd('./src/'); source('figure_Rscripts/figure5.R')"
 
 ## Figure 6 multipanel ---------------------------------------------------------
 figure6: ./figures/figure6/figure6_multipanel.pdf

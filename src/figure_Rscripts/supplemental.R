@@ -15,17 +15,17 @@ layout <- rbind(c(1),
                 c(2))
 
 ## PDF output
-pdf(file = "../figures/supplemental/sfigure4_multipanel.pdf", width = 4125/300, height = 5250/300, onefile = FALSE)
+pdf(file = "../figures/supplemental/sfigure5_multipanel.pdf", width = 4125/300, height = 5250/300, onefile = FALSE)
 gridExtra::grid.arrange(sfig4a,sfig4b, layout_matrix = layout)
 dev.off()
 
 ## EPS output
-ggsave(filename = "../figures/supplemental/sfigure4_multipanel.eps", 
+ggsave(filename = "../figures/supplemental/sfigure5_multipanel.eps", 
        plot = gridExtra::grid.arrange(sfig4a,sfig4b, layout_matrix = layout), 
        width = 22, height = 28)
 
 ## PNG output
-png(filename = "../figures/supplemental/sfigure4_multipanel.png", width = 1100, height = 1400)
+png(filename = "../figures/supplemental/sfigure5_multipanel.png", width = 1100, height = 1400)
 gridExtra::grid.arrange(sfig4a,sfig4b, layout_matrix = layout)
 dev.off()
 
@@ -557,9 +557,9 @@ pdf(file = "../figures/supplemental/sfigure1_supp2.pdf", width = 10, height = 10
 print(fig2c)
 dev.off()
 
-## Figure 4 - Supplement 3
+## Figure 5 - Supplement 3
 ## import raw data
-data <- readr::read_csv(file = "../data/figure4/170825_ELISA_results.csv")
+data <- readr::read_csv(file = "../data/figure5/170825_ELISA_results.csv")
 
 ## load libraries
 library(scales)
@@ -823,7 +823,7 @@ elisa <- ggplot(data,
           strip.text = element_text(color = "white", size = 24),
 	  strip.background = element_rect(color = "white",
                                           fill = "grey30"))
-pdf(file = "../figures/supplemental/sfigure4_supp3.pdf", width = 18, height = 15, onefile = FALSE)
+pdf(file = "../figures/supplemental/sfigure5_supp3.pdf", width = 18, height = 15, onefile = FALSE)
 print(elisa)
 dev.off()
 
