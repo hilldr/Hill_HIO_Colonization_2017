@@ -11,6 +11,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
@@ -32,6 +33,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
@@ -56,6 +58,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
@@ -244,21 +247,21 @@ figure2: ./figures/figure2/figure2_multipanel.pdf
 	./data/figure1/161206_survival/survival_and_ELISA.csv
 	R -e "setwd('./src/'); source('figure_Rscripts/figure2.R')"
 
-## Figure 4_ multipanel ---------------------------------------------------------
-figure5_: ./figures/figure5_/figure5_multipanel.pdf
-./figures/figure5_/figure5_multipanel.pdf: ./data/figure5_/dapi_ki67_edu_counts.tar.gz \
-	./data/figure5_/EdU_figure_cropped.png \
-	./data/figure5_/sox9_figure.png \
-	./data/figure5_/dppiv_figure.png
-	tar -xzvf ./data/figure5_/dapi_ki67_edu_counts.tar.gz
-	R -e "setwd('./src/'); source('figure_Rscripts/figure5_.R')"
-
 ## Figure 3 multipanel ---------------------------------------------------------
 figure3: ./figures/figure3/figure3_multipanel.pdf
-./figures/figure3/figure3_multipanel.pdf : ./src/figure_Rscripts/figure3.R \
-	./data/figure3/HIO_O2_final_data.csv \
-	./figures/figure3/figure3c.png
+./figures/figure3/figure3_multipanel.pdf: ./data/figure3/dapi_ki67_edu_counts.tar.gz \
+	./data/figure3/EdU_figure_cropped.png \
+	./data/figure3/sox9_figure.png \
+	./data/figure3/dppiv_figure.png
+	tar -xzvf ./data/figure3/dapi_ki67_edu_counts.tar.gz
 	R -e "setwd('./src/'); source('figure_Rscripts/figure3.R')"
+
+## Figure 4 multipanel ---------------------------------------------------------
+figure4: ./figures/figure4/figure4_multipanel.pdf
+./figures/figure4/figure4_multipanel.pdf : ./src/figure_Rscripts/figure4.R \
+	./data/figure4/HIO_O2_final_data.csv \
+	./figures/figure4/figure4c.png
+	R -e "setwd('./src/'); source('figure_Rscripts/figure4.R')"
 
 ## Generate gene counts and DE from kallisto output for Figure 5
 ./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_ECOR2-HK-NFKBi.csv ./results/ECOR2_hypoxia_nfkb/ECOR2-HK_over_PBS.csv ./results/ECOR2_hypoxia_nfkb/ECOR2_over_ECOR-NFKBi.csv ./results/ECOR2_hypoxia_nfkb/ECOR2_over_PBS.csv ./results/ECOR2_hypoxia_nfkb/hypoxia_over_hypoxia-NFKBi.csv ./results/ECOR2_hypoxia_nfkb/hypoxia_over_PBS.csv :

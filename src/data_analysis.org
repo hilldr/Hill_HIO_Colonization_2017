@@ -15,6 +15,7 @@ $(FINALTEXT).pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
@@ -36,6 +37,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
@@ -60,6 +62,7 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	./figures/figure1/figure1_multipanel.pdf \
 	./figures/figure2/figure2_multipanel.pdf \
 	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
 	./figures/figure5/figure5_multipanel.pdf \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
@@ -1718,32 +1721,32 @@ figure2: ./figures/figure2/figure2_multipanel.pdf
 #+begin_src sh :tangle figure3_count.sh :shebang "#!/bin/bash"
 ## AUTHOR: David R. Hill
 ## Count number of unique lines in each cell count index file
-FILES=../data/figure5_/dapi_ki67_edu_counts/*
-echo "count  file" > ../data/figure5_/cell_counts.tsv
+FILES=../data/figure3/dapi_ki67_edu_counts/*
+echo "count  file" > ../data/figure3/cell_counts.tsv
 for f in $FILES
 do
-    wc -l $f >> ../data/figure5_/cell_counts.tsv
+    wc -l $f >> ../data/figure3/cell_counts.tsv
 done	 
 #+end_src
 
 
 ** Rscript 
-*** Figure 4A_: Edu and Ki67 counts
+*** Figure 3A: Edu and Ki67 counts
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5_.R
-## FIGURE 4_ --------------------------------------------------------------------
-## Figure 4A_: EdU and Ki67 count data
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure3.R
+## FIGURE 3 --------------------------------------------------------------------
+## Figure 3A: EdU and Ki67 count data
 ## execute counting script
-system("./figure5_count.sh")
+system("./figure3_count.sh")
 ## import data
-counts <- readr::read_delim(file = "../data/figure5_/cell_counts.tsv", delim = "\t",
+counts <- readr::read_delim(file = "../data/figure3/cell_counts.tsv", delim = "\t",
                             col_names = FALSE, skip = 1)
 
 ## separate count data from file name
 library(magrittr) # enables pipe operation ('%>%')
-counts$count <- stringr::str_split_fixed(string = counts$X1, pattern = " ../data/figure5_/d", n = 2)[,1] %>% as.numeric()
-counts$file <- stringr::str_split_fixed(string = counts$X1, pattern = " ../data/figure5_/d", n = 2)[,2]
+counts$count <- stringr::str_split_fixed(string = counts$X1, pattern = " ../data/figure3/d", n = 2)[,1] %>% as.numeric()
+counts$file <- stringr::str_split_fixed(string = counts$X1, pattern = " ../data/figure3/d", n = 2)[,2]
 
 ## remove unnecessary info from files names, store as metadata string
 counts$meta <- gsub("api_ki67_edu_counts/", "", counts$file) %>%
@@ -1780,7 +1783,7 @@ data$ki67_prop <- data$ki67/data$dapi
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5_/figure5a_.png :eval yes :tangle figure_Rscripts/figure5_.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3a.png :eval yes :tangle figure_Rscripts/figure3.R
 library(ggplot2)
 source("ggplot2-themes.R")
 library(magrittr)
@@ -1823,7 +1826,7 @@ data.sum$treatment %<>% gsub("pbs", "PBS", .) %>%
     gsub("ecoli", "E. coli", .) %>%
     factor(levels = c("PBS", "E. coli"))
 
-figure5a_ <- ggplot(data = data.sum, aes(x = hr, y = mean)) +
+figure3a <- ggplot(data = data.sum, aes(x = hr, y = mean)) +
     geom_smooth(aes(color = treatment)) +
     geom_errorbar(aes(ymax = mean + sem, ymin = mean - sem, color = treatment),
                    width = 0, size = 2) +
@@ -1860,22 +1863,22 @@ figure5a_ <- ggplot(data = data.sum, aes(x = hr, y = mean)) +
            legend.text = element_text(size = 32)) +
      ggtitle("B")
 
-png(filename = "../figures/figure5_/figure5a_.png", width = 800, height = 800)
-print(figure5a_)
+png(filename = "../figures/figure3/figure3a.png", width = 800, height = 800)
+print(figure3a)
 dev.off()
-ggsave(filename = "../figures/figure5_/eps/figure5a_.eps", 
-plot = figure5a_, 
+ggsave(filename = "../figures/figure3/eps/figure3a.eps", 
+plot = figure3a, 
 width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
 [[file:../figures/figure5_/figure5a_.png]]
 
-*** Figure 4E_: Supporting RNA-seq heatmap
+*** Figure 3E: Supporting RNA-seq heatmap
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure5_.R
-## FIGURE 4_ --------------------------------------------------------------------
-## Figure 4E_: Cell proliferation heatmap
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure3.R
+## FIGURE 3 --------------------------------------------------------------------
+## Figure 3E: Cell proliferation heatmap
 ## load dataset from file
 data.dir <- "../results/ECOR2HIO_24-96-RNAseq/"
 library(magrittr)
@@ -1914,7 +1917,7 @@ data.scaled <- dplyr::group_by(melt.data, SYMBOL) %>%
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5_/figure5e_.png :eval yes :tangle figure_Rscripts/figure5_.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3e.png :eval yes :tangle figure_Rscripts/figure3.R
 ## plot
 library(ggplot2)
 source("ggplot2-themes.R")
@@ -1925,7 +1928,7 @@ ord <- hclust(dist(dat[,2:5], method = "euclidean"), method = "ward.D")$order
 
 data.scaled$SYMBOL <- factor(data.scaled$SYMBOL, levels = unique(data.scaled$SYMBOL)[ord])
 
-figure5e_ <- ggplot(data.scaled,
+figure3e <- ggplot(data.scaled,
               aes(y = SYMBOL, x = hr)) +
     geom_tile(stat = "identity", aes(fill = mean_zscore)) +
     facet_grid(category ~ ., scales = "free_y", space = "free", switch = "y") +
@@ -1945,19 +1948,19 @@ figure5e_ <- ggplot(data.scaled,
     coord_fixed(ratio = 2) +
     ggtitle("E")
 
-png(filename = "../figures/figure5_/figure5e_.png", width = 500, height = 1000)
-print(figure5e_)
+png(filename = "../figures/figure3/figure3e.png", width = 500, height = 1000)
+print(figure3e)
 dev.off()
-ggsave(filename = "../figures/figure5_/eps/figure5e_.eps", 
-plot = figure5e_, 
+ggsave(filename = "../figures/figure3/eps/figure3e.eps", 
+plot = figure3e, 
 width = 16, height = 16)
 #+end_src
 
 #+RESULTS:
 [[file:../figures/figure5_/figure5e_.png]]
 
-*** Figure 4_ multipanel 
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure5_/figure5_multipanel.png  :width 1600 :height 1600 :eval yes :tangle figure_Rscripts/figure5_.R
+*** Figure 3 multipanel 
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3_multipanel.png  :width 1600 :height 1600 :eval yes :tangle figure_Rscripts/figure3.R
 ## Figure 6 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 source("custom_fun.R")
@@ -1965,15 +1968,15 @@ library(ggplot2)
 library(gridExtra)
 
 ## EdU staining
-figure5b_ <- png2ggplot("../data/figure5_/EdU_figure_cropped.png") +
+figure3b <- png2ggplot("../data/figure3/EdU_figure_cropped.png") +
     img.theme + coord_fixed(ratio = 1/1.5) + ggtitle("A")
 
 ## Sox9 staining
-figure5c_ <- png2ggplot("../data/figure5_/sox9_figure.png") +
+figure3c <- png2ggplot("../data/figure3/sox9_figure.png") +
     img.theme + coord_fixed(ratio = 1/1.5) + ggtitle("C")
 
 ## dppIV staining
-figure5d_ <- png2ggplot("../data/figure5_/dppiv_figure.png") +
+figure3d <- png2ggplot("../data/figure3/dppiv_figure.png") +
     img.theme + coord_fixed(ratio = 1/1.75) + ggtitle("D")
 
 layout <- rbind(c(1,1,1,2,2),
@@ -1984,49 +1987,49 @@ layout <- rbind(c(1,1,1,2,2),
 		c(4,4,4,5,5))
 
 ## PDF output
-pdf(file = "../figures/figure5_/figure5_multipanel.pdf", width = 8000/300, height = 8250/300, onefile = FALSE)
-gridExtra::grid.arrange(figure5b_, figure5a_, figure5c_, figure5d_, figure5e_, layout_matrix = layout)
+pdf(file = "../figures/figure3/figure3_multipanel.pdf", width = 8000/300, height = 8250/300, onefile = FALSE)
+gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, figure3e, layout_matrix = layout)
 dev.off()
 
 ## EPS output
-ggsave(filename = "../figures/figure5_/eps/figure5_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure5b_, figure5a_, figure5c_, figure5d_, figure5e_, layout_matrix = layout), 
+ggsave(filename = "../figures/figure3/eps/figure3_multipanel.eps", 
+       plot = gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, figure3e, layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
-png(filename = "../figures/figure5_/figure5_multipanel.png", width = 1865, height = 2000)
-gridExtra::grid.arrange(figure5b_, figure5a_, figure5c_, figure5d_, figure5e_, layout_matrix = layout)
+png(filename = "../figures/figure3/figure3_multipanel.png", width = 1865, height = 2000)
+gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, figure3e, layout_matrix = layout)
 dev.off()
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure5_/figure5_multipanel.png]]
+[[file:../figures/figure3/figure3_multipanel.png]]
 
 ** Makefile 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
-## Figure 4_ multipanel ---------------------------------------------------------
-figure5_: ./figures/figure5_/figure5_multipanel.pdf
-./figures/figure5_/figure5_multipanel.pdf: ./data/figure5_/dapi_ki67_edu_counts.tar.gz \
-	./data/figure5_/EdU_figure_cropped.png \
-	./data/figure5_/sox9_figure.png \
-	./data/figure5_/dppiv_figure.png
-	tar -xzvf ./data/figure5_/dapi_ki67_edu_counts.tar.gz
-	R -e "setwd('./src/'); source('figure_Rscripts/figure5_.R')"
+## Figure 3 multipanel ---------------------------------------------------------
+figure3: ./figures/figure3/figure3_multipanel.pdf
+./figures/figure3/figure3_multipanel.pdf: ./data/figure3/dapi_ki67_edu_counts.tar.gz \
+	./data/figure3/EdU_figure_cropped.png \
+	./data/figure3/sox9_figure.png \
+	./data/figure3/dppiv_figure.png
+	tar -xzvf ./data/figure3/dapi_ki67_edu_counts.tar.gz
+	R -e "setwd('./src/'); source('figure_Rscripts/figure3.R')"
 #+end_src
 
-* Figure 3 
+* Figure 4 
 
 ** Rscript
-*** Figure 3A:  /E. coli/ colonization is associated with a reduction in luminal O_{2}
+*** Figure 4A:  /E. coli/ colonization is associated with a reduction in luminal O_{2}
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure3.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure4.R
 ## FIGURE 3 --------------------------------------------------------------------
-## Figure 3A: /E. coli/ colonization is associated with a reduction in luminal O_{2}
+## Figure 4A: /E. coli/ colonization is associated with a reduction in luminal O_{2}
 ## import data
 library(RColorBrewer)
 library(ggplot2)
-data <- read.table("../data/figure3/HIO_O2_final_data.csv",
+data <- read.table("../data/figure4/HIO_O2_final_data.csv",
                    header = TRUE, sep = ",", stringsAsFactors=FALSE)
 
 ## Summary stats
@@ -2080,7 +2083,7 @@ stats$star <- as.character(lapply(stats$p, star))
 #+end_src
      
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3a.png :eval yes :tangle figure_Rscripts/figure3.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure4/figure4a.png :eval yes :tangle figure_Rscripts/figure4.R
 ## plot
 library(ggplot2)  
 source("ggplot2-themes.R")
@@ -2089,7 +2092,7 @@ data$group <- factor(data$group,
                      levels = c("PBS", "+ E. coli"))
 
 
-figure3a <- ggplot(data[data$time < 72,],
+figure4a <- ggplot(data[data$time < 72,],
                    aes(x= factor(time), y = o2, fill = treatment)) +
     geom_boxplot(notch = FALSE, aes(fill = group),
                  outlier.colour = NULL, outlier.shape = 21, outlier.size = 5,
@@ -2115,24 +2118,24 @@ figure3a <- ggplot(data[data$time < 72,],
     theme(legend.key.size = unit(2,"cm"),
 	  legend.text = element_text(size = 32))
 
-png(filename = "../figures/figure3/figure3a.png", width = 800, height = 800)
-print(figure3a)
+png(filename = "../figures/figure4/figure4a.png", width = 800, height = 800)
+print(figure4a)
 dev.off()
 
-ggsave(filename = "../figures/figure3/eps/figure3a.eps", 
-       plot = figure3a, 
+ggsave(filename = "../figures/figure4/eps/figure4a.eps", 
+       plot = figure4a, 
        width = 20, height = 20)
  #+end_src
 
 #+RESULTS:
-[[file:../figures/figure3/figure3a.png]]
+[[file:../figures/figure4/figure4a.png]]
 
-*** Figure 3B: Reduction in luminal O_{2} associated with /E. coli/ growth
+*** Figure 4B: Reduction in luminal O_{2} associated with /E. coli/ growth
     
 **** Data import and manipulation 
-#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure3.R
+#+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure4.R
 ## FIGURE 3 --------------------------------------------------------------------
-## Figure 3B: Reduction in luminal O_{2} associated with /E. coli/ growth
+## Figure 4B: Reduction in luminal O_{2} associated with /E. coli/ growth
 ## compute fit line for CFU ~ O2
 source("custom_fun.R")
 stats.b <- lm_eqn2(data[data$cfu !=0 & data$time != 0 & data$time != 72,],
@@ -2141,12 +2144,12 @@ stats.b <- lm_eqn2(data[data$cfu !=0 & data$time != 0 & data$time != 72,],
 #+end_src
 
 **** Generate plot
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3b.png :eval yes :tangle figure_Rscripts/figure3.R
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure4/figure4b.png :eval yes :tangle figure_Rscripts/figure4.R
 library(scales)
 library(ggplot2)
 source("ggplot2-themes.R")
 
-figure3b <- ggplot(data[data$cfu != 0 & data$time != 0 & data$time != 72,],
+figure4b <- ggplot(data[data$cfu != 0 & data$time != 0 & data$time != 72,],
                    aes(x = cfu, y = o2)) +
     geom_smooth(data = data[data$cfu !=0 & data$time != 0 & data$time != 72,],
                 aes(x = cfu, y = o2), colour = "black", size = 2,
@@ -2167,20 +2170,20 @@ figure3b <- ggplot(data[data$cfu != 0 & data$time != 0 & data$time != 72,],
     theme1 +
     annotate("text",x = 10000, y = 4.5, label = stats.b, parse = TRUE, size = 8)
 
-png(filename = "../figures/figure3/figure3b.png", width = 1000, height = 1000)
-print(figure3b)
+png(filename = "../figures/figure4/figure4b.png", width = 1000, height = 1000)
+print(figure4b)
 dev.off()
 
-ggsave(filename = "../figures/figure3/eps/figure3b.eps", 
-       plot = figure3b, 
+ggsave(filename = "../figures/figure4/eps/figure4b.eps", 
+       plot = figure4b, 
        width = 20, height = 20)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure3/figure3b.png]]
+[[file:../figures/figure4/figure4b.png]]
 
-*** Figure 3D: PMDZ staining table
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3d.png :eval yes :tangle figure_Rscripts/figure3.R
+*** Figure 4D: PMDZ staining table
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure4/figure4d.png :eval yes :tangle figure_Rscripts/figure4.R
 ## PMDZ staining table
 stain <- data.frame(pbs = c(1,12,13),
                     ecoli = c(10,2,12),
@@ -2201,47 +2204,47 @@ grid.table(t(stain), theme = tt)
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure3/figure3d.png]]
+[[file:../figures/figure4/figure4d.png]]
 
-*** Figure 3 multipanel
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure3/figure3_multipanel.png  :width 1200 :height 1200 :eval yes :tangle figure_Rscripts/figure3.R
-## Figure 3 multipanel ---------------------------------------------------------
+*** Figure 4 multipanel
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/figure4/figure4_multipanel.png  :width 1200 :height 1200 :eval yes :tangle figure_Rscripts/figure4.R
+## Figure 4 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 library(ggplot2)
 library(gridExtra)
 
-figure3c <- png2ggplot("../figures/figure3/figure3c.png") +
+figure4c <- png2ggplot("../figures/figure4/figure4c.png") +
     img.theme + ggtitle("C") + coord_fixed(ratio = 0.6)
 
 layout <- rbind(c(1,1,2,2),
                 c(3,3,3,4))
 
 ## PDF output
-pdf(file = "../figures/figure3/figure3_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
-gridExtra::grid.arrange(figure3a, figure3b, figure3c, tableGrob(t(stain), theme = tt), 
+pdf(file = "../figures/figure4/figure4_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
+gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), 
 layout_matrix = layout)
 dev.off()
 
 ## EPS output
-ggsave(filename = "../figures/figure3/eps/figure3_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure3a, figure3b, figure3c, tableGrob(t(stain), theme = tt), layout_matrix = layout), 
+ggsave(filename = "../figures/figure4/eps/figure4_multipanel.eps", 
+       plot = gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
-png(filename = "../figures/figure3/figure3_multipanel.png", width = 1600, height = 1600)
-gridExtra::grid.arrange(figure3a, figure3b, figure3c, tableGrob(t(stain), theme = tt), layout_matrix = layout)
+png(filename = "../figures/figure4/figure4_multipanel.png", width = 1600, height = 1600)
+gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), layout_matrix = layout)
 dev.off()
 #+end_src
 
 #+RESULTS:
-[[file:../figures/figure3/figure3_multipanel.png]]
+[[file:../figures/figure4/figure4_multipanel.png]]
 
 
 *** Data references in text
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/text-stats.R
 library(RColorBrewer)
 library(ggplot2)
-data <- read.table("../data/figure3/HIO_O2_final_data.csv",
+data <- read.table("../data/figure4/HIO_O2_final_data.csv",
                    header = TRUE, sep = ",", stringsAsFactors=FALSE)
 
 ## Summary stats
@@ -2284,12 +2287,12 @@ base <- t.test(data[data$time == 0,]$o2,
 ** Makefile
 
 #+begin_src makefile :tangle ../makefile :results silent :exports none :eval no
-## Figure 3 multipanel ---------------------------------------------------------
-figure3: ./figures/figure3/figure3_multipanel.pdf
-./figures/figure3/figure3_multipanel.pdf : ./src/figure_Rscripts/figure3.R \
-	./data/figure3/HIO_O2_final_data.csv \
-	./figures/figure3/figure3c.png
-	R -e "setwd('./src/'); source('figure_Rscripts/figure3.R')"
+## Figure 4 multipanel ---------------------------------------------------------
+figure4: ./figures/figure4/figure4_multipanel.pdf
+./figures/figure4/figure4_multipanel.pdf : ./src/figure_Rscripts/figure4.R \
+	./data/figure4/HIO_O2_final_data.csv \
+	./figures/figure4/figure4c.png
+	R -e "setwd('./src/'); source('figure_Rscripts/figure4.R')"
 #+end_src
 
 

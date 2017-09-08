@@ -1,409 +1,184 @@
-## FIGURE 4 --------------------------------------------------------------------
-## Figure 4B: Figure 4B: Identification of gene sets 1-4 with scatter plots
+## FIGURE 3 --------------------------------------------------------------------
+## Figure 4A: /E. coli/ colonization is associated with a reduction in luminal O_{2}
 ## import data
-data.dir <- "../results/ECOR2_hypoxia_nfkb/"
-library(magrittr)
-ecor2.nfkbi <- readr::read_csv(file = file.path(data.dir,"ECOR2_over_ECOR-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
-hk.nfkbi <- readr::read_csv(file = file.path(data.dir,"ECOR2-HK_over_ECOR2-HK-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
-hypoxia.nfkbi <- readr::read_csv(file = file.path(data.dir,"hypoxia_over_hypoxia-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
-
-## add comparison ID
-## remember the signs get reversed in the plot - labels reflect the plot orientation
-ecor2.nfkbi$comparison <- "live+NFKBi vs live"#"E. coli -/+ SC-514" #"E. coli/E. coli + SC-514"
-hk.nfkbi$comparison <- "dead+NFKBi vs dead"
-hypoxia.nfkbi$comparison <- "hypoxia+NFKBi vs hypoxia"
-
-
-df <- rbind(hk.nfkbi, hypoxia.nfkbi)
-
-
-## subset columns of interest
-ecor2 <- ecor2.nfkbi %>% dplyr::select(SYMBOL, log2FoldChange, padj, comparison) %>%
-    dplyr::rename(ecor2_log2 = log2FoldChange, ecor2_padj = padj, comparison2 = comparison)
-df <- df %>% dplyr::select(SYMBOL, log2FoldChange, padj, comparison) %>%
-    dplyr::rename(hk_log2 = log2FoldChange, hk_padj = padj)
-
-## join dataframes
-df <- dplyr::left_join(df, ecor2, by = 'SYMBOL') 
-
-## subset data prior to plotting
-df1 <- subset(df, df$ecor2_padj < 0.05 |
-                     df[df$comparison == "dead+NFKBi vs dead",]$hk_padj < 0.05 |
-                                                                              df[df$comparison == "hypoxia+NFKBi vs hypoxia",]$hk_padj < 0.05, na.rm = TRUE)
-
-df1$comparison <- factor(df1$comparison,
-                        levels = c("dead+NFKBi vs dead",
-                                   "hypoxia+NFKBi vs hypoxia"))
-
+library(RColorBrewer)
 library(ggplot2)
-source("ggplot2-themes.R")
-plot.set <- df1[(df1$hk_log2 > 0 & df1$ecor2_log2 > 0 & (df1$ecor2_padj < 0.05 | df1$hk_padj < 0.05)),]
+data <- read.table("../data/figure4/HIO_O2_final_data.csv",
+                   header = TRUE, sep = ",", stringsAsFactors=FALSE)
 
-gs1 <- subset(plot.set,plot.set$comparison == "dead+NFKBi vs dead")$SYMBOL
-gs2 <- subset(plot.set,plot.set$comparison == "hypoxia+NFKBi vs hypoxia")$SYMBOL
+## Summary stats
+data.mean.0 <- aggregate(o2 ~ group, data[data$time == 0,], FUN = mean)
+data.mean.0$sem <- aggregate(o2 ~ group, data[data$time == 0,],
+                             FUN = function(x) sd(x)/sqrt(length(x)))$o2
+data.mean.0$time <- 0
 
-figure4b1 <- ggplot(data = df1, aes(x = -hk_log2, y = -ecor2_log2)) +
-    geom_point(shape = 1, size = 3, fill = "grey", color = "grey") +
-    geom_point(data = df1[(df1$hk_log2 > 0 & df1$ecor2_log2 > 0 & (df1$ecor2_padj < 0.05 | df1$hk_padj < 0.05)),],
-               shape = 21, size = 3, fill = color.set[2], color = color.set[2]) + 
-    stat_density_2d(data = df1[(df1$hk_log2 > 0 & df1$ecor2_log2 > 0 & (df1$ecor2_padj < 0.05 | df1$hk_padj < 0.05)),],
-                    aes(fill = ..level..), geom = "polygon", na.rm = TRUE) +
-    facet_grid(comparison2 ~ comparison) +
-    xlim(c(-3,3)) + ylim(c(-3,3)) +
-    scale_fill_distiller("Density", palette = "Spectral") +
-    labs(x = expression(Log[2]*"FC"),
-         y = expression(Log[2]*"FC")) +
-     annotate("text",
-              x = -1.5, y = -3,
-              label = c(
-                  paste("Gene Set I -",
-                      length(
-                          rownames(
-                              subset(plot.set,plot.set$comparison == "dead+NFKBi vs dead"))),
-                      "genes"),
-                  paste("Gene Set II -",
-                      length(
-                          rownames(
-                              subset(plot.set,plot.set$comparison == "hypoxia+NFKBi vs hypoxia"))),
-                      "genes")
-                  ),
-              color = "grey10",
-              size = 12, fontface = "bold", hjust = 0.3) +
-    theme1 +
-    theme(axis.title = element_text(size = 32),
-          panel.spacing = unit(1, "lines"),
-          #panel.border = element_rect(fill = NA, color = "white"),
-          strip.text =  element_text(size = 32))
+data.mean.24 <- aggregate(o2 ~ group, data[data$time == 24,],
+                          FUN = mean)
+data.mean.24$sem <- aggregate(o2 ~ group, data[data$time == 24,],
+                              FUN = function(x) sd(x)/sqrt(length(x)))$o2
+data.mean.24$time <- 24
 
-png(filename = "../figures/figure4/figure4b1.png", width = 1200, height = 600)
-print(figure4b1)
-dev.off()
+data.mean.48 <- aggregate(o2 ~ group, data[data$time == 48,], FUN = mean)
+data.mean.48$sem <- aggregate(o2 ~ group, data[data$time == 48,],
+                              FUN = function(x) sd(x)/sqrt(length(x)))$o2
+data.mean.48$time <- 48
 
-ecor2.nfkbi <- readr::read_csv(file = file.path(data.dir,"ECOR2_over_ECOR-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
-hk.nfkbi <- readr::read_csv(file = file.path(data.dir,"ECOR2-HK_over_ECOR2-HK-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
-hypoxia.nfkbi <- readr::read_csv(file = file.path(data.dir,"hypoxia_over_hypoxia-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
+summary.data <- rbind(data.mean.0,data.mean.24,data.mean.48)
 
-## add comparison ID
-ecor2.nfkbi$comparison <- "E. coli/E. coli + SC-514"
-hk.nfkbi$comparison <- "HK-E. coli/HK-E. coli + SC-514"
-hypoxia.nfkbi$comparison <- "1% O2/1% O2 + SC-514"
+t0 <- t.test(data[data$time == 0 & data$group == "PBS",]$o2,
+             data[data$time == 0 & data$group != "PBS",]$o2,
+             alternative = "greater")$p.value
+t24 <- t.test(data[data$time == 24 & data$group == "PBS",]$o2,
+              data[data$time == 24 & data$group != "PBS",]$o2,
+              alternative = "greater")$p.value
+t48 <- t.test(data[data$time == 48 & data$group == "PBS",]$o2,
+              data[data$time == 48 & data$group != "PBS",]$o2,
+              alternative = "greater")$p.value
 
-## subset columns of interest
-ecor2 <- ecor2.nfkbi %>% dplyr::select(SYMBOL, log2FoldChange, padj) %>%
-    dplyr::rename(ecor2_log2 = log2FoldChange, ecor2_padj = padj)
-hk <- hk.nfkbi %>% dplyr::select(SYMBOL, log2FoldChange, padj) %>%
-    dplyr::rename(hk_log2 = log2FoldChange, hk_padj = padj)
-hypoxia <- hypoxia.nfkbi %>% dplyr::select(SYMBOL, log2FoldChange, padj) %>%
-    dplyr::rename(hypoxia_log2 = log2FoldChange, hypoxia_padj = padj)
-
-## join dataframes
-df <- dplyr::left_join(ecor2, hk, by = 'SYMBOL') %>%
-    dplyr::left_join(hypoxia, by = 'SYMBOL')
-
-## subset data prior to plotting
-df <- subset(df, df$ecor2_padj < 0.05 & (df$hk_padj < 0.05 | df$hypoxia_padj < 0.05), na.rm = TRUE)
-test <- df
-
-ecor2.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
-hk.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2-HK_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
-hypoxia.pbs <- readr::read_csv(file = file.path(data.dir,"hypoxia_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
-
-## add comparison ID
-ecor2.pbs$comparison <- "E. coli/PBS"
-hk.pbs$comparison <- "dead E. coli/PBS"
-hypoxia.pbs$comparison <- "hypoxia/PBS"
-
-df3 <- rbind(hk.pbs, hypoxia.pbs)
-
-## subset columns of interest
-ecor2 <- ecor2.pbs %>% dplyr::select(SYMBOL, log2FoldChange, padj, comparison) %>%
-    dplyr::rename(ecor2_log2 = log2FoldChange, ecor2_padj = padj, comparison2 = comparison)
-df3 <- df3 %>% dplyr::select(SYMBOL, log2FoldChange, padj, comparison) %>%
-    dplyr::rename(hk_log2 = log2FoldChange, hk_padj = padj)
-
-## join dataframes
-df2 <- dplyr::left_join(df3, ecor2, by = 'SYMBOL') 
-
-
-df2 <- df2[-which(df2$SYMBOL %in% df$SYMBOL),]
-
-df <- df2
-
-## subset data prior to plotting
-df <- subset(df, df$ecor2_padj < 0.05 |
-                     df[df$comparison == "dead E. coli/PBS",]$hk_padj < 0.05 |
-
-                                                              df[df$comparison == "hypoxia/PBS",]$hk_padj < 0.05, na.rm = TRUE)
-
-df$comparison <- factor(df$comparison,
-                        levels = c("dead E. coli/PBS",
-                                   "hypoxia/PBS"))
-
-library(ggplot2)
-source("ggplot2-themes.R")
-#df <- df[complete.cases(df),]
-plot.set <- df[(df$hk_log2 > 0 & df$ecor2_log2 > 0 & (df$ecor2_padj < 0.05 | df$hk_padj < 0.05)),]
-#plot.set <- df[(df$hk_log2 > 0 & df$ecor2_log2 > 0),]
-
-plot.set <- plot.set[complete.cases(plot.set),]
-
-gs3 <- subset(plot.set,plot.set$comparison == "dead E. coli/PBS")$SYMBOL
-gs4 <- subset(plot.set,plot.set$comparison == "hypoxia/PBS")$SYMBOL
-
-figure4b2 <- ggplot(data = df, aes(x = hk_log2, y = ecor2_log2)) +
-    geom_point(shape = 1, size = 3, fill = "grey", color = "grey") +
-     ## geom_point(data = df[(df$hk_log2 < 0 & df$ecor2_log2 < 0 ),],
-     ##            shape = 21, size = 3, fill = color.set[2], color = color.set[2]) + 
-     ## stat_density_2d(data = df[(df$hk_log2 < 0 & df$ecor2_log2 < 0),],
-     ##                 aes(fill = ..level..), geom = "polygon", na.rm = TRUE) +
-     geom_point(data = plot.set,
-                shape = 21, size = 3, fill = color.set[2], color = color.set[2]) + 
-     stat_density_2d(data = plot.set,
-                     aes(fill = ..level..), geom = "polygon", na.rm = TRUE) +
-
-     facet_grid(comparison2 ~ comparison) +
-    xlim(c(-3,3)) + ylim(c(-3,3)) +
-    scale_fill_distiller("Density", palette = "Spectral") +
-    labs(x = expression(Log[2]*"FC"),
-         y = expression(Log[2]*"FC")) +
-    annotate("text",
-             x = -1.5, y = 3,
-              label = c(
-                  paste("Gene Set III -",
-                      length(
-                          rownames(
-                              subset(plot.set,plot.set$comparison == "dead E. coli/PBS"))),
-                      "genes"),
-                  paste("Gene Set IV -",
-                      length(
-                          rownames(
-                              subset(plot.set,plot.set$comparison == "hypoxia/PBS"))),
-                      "genes")
-                  ),
-
-              color = "grey10",
-              size = 12, fontface = "bold", hjust = 0.1) +
-    theme1 +
-    theme(axis.title = element_text(size = 32),
-          panel.spacing = unit(1, "lines"),
-          #panel.border = element_rect(fill = NA, color = "white"),
-          strip.text =  element_text(size = 32))
-
-png(filename = "../figures/figure4/figure4b2.png", width = 1200, height = 600)
-print(figure4b2)
-dev.off()
-
-library(gridExtra)
-png(filename = "../figures/figure4/figure4b.png", width = 2400, height = 600)
-gridExtra::grid.arrange(figure4b1, figure4b2, ncol = 2)
-dev.off()
-
-
-ggsave(filename = "../figures/figure4/eps/figure4b.eps", 
-       plot = gridExtra::grid.arrange(figure4b1, figure4b2, ncol = 2), 
-       width = 48, height = 12)
-
-## Output supplemental table with genes in each set
-write.csv(gs1, file = "../results/supplemental/Figure4_Gene_set1.csv")
-write.csv(gs2, file = "../results/supplemental/Figure4_Gene_set2.csv")
-write.csv(gs3, file = "../results/supplemental/Figure4_Gene_set3.csv")
-write.csv(gs4, file = "../results/supplemental/Figure4_Gene_set4.csv")
-
-## FIGURE 4 --------------------------------------------------------------------
-## Figure 4C: GO & REACTOME plot
-## import data
-## load data
-data.dir <- "../results/ECOR2_hypoxia_nfkb/"
-data <- readr::read_csv(file = file.path(data.dir, "nfkb-dependent_complete-goANDreactome-results.csv.bak"))
-
-data2 <- readr::read_csv(file = file.path(data.dir, "nfkb-independent_complete-goANDreactome-results.csv"))
-
-reactome.data <- readr::read_csv(file = file.path(data.dir, "REACTOME-requireslive_nfkbindependent_ecoli_subset.csv"))
-
-reactome.data$comparison <- "live-hypoxia"
-
-data2 <- rbind(data2, reactome.data)
-data$nfkb <- "SC-514 suppressed"
-data2$nfkb <- ""
-data2$comparison <- gsub(", nfkb-independent", "", data2$comparison)
-data <- rbind(data, data2)
-
-data$comparison <- paste0(data$comparison,"\n",data$nfkb)
-## load list of pathways to plot
-select <- readr::read_csv(file = file.path(data.dir, "unique_nfkb_pathways.csv"), col_names = TRUE)
-
-## subset data to selections
-#data <- data[which(data$Description %in% unique(select$X2)),]
-data <- data[which(data$Description %in% select$Description),]
-test <- data #check
-data <- subset(data, data$pvalue < 0.004 | data$Description == "Defensins")
-data <- dplyr::left_join(data, select, by = "Description")
-
-data$Description <- gsub("Hypoxia-inducible Factor Alpha", "HIF1a",data$Description)
-data$Description <- gsub("kappa", "k",data$Description)
-data$Description <- gsub("toll-like receptor", "TLR",data$Description)
-data$Description <- gsub("Toll Like Receptor", "TLR",data$Description)
-data$Description <- gsub("Toll-Like Receptors", "All TLR",data$Description)
-data$Description <- gsub(" initiated on plasma membrane", "",data$Description)
-data$Description <- gsub("interleukin", "IL",data$Description)
-data$Description <- gsub("positive regulation", "up-regulation",data$Description)
-data$Description <- gsub("Mediated ", "",data$Description)
-#data$Description <- gsub("response to ", "",data$Description)
-data$Description <- gsub("mediated ", "",data$Description)
-data$Description <- gsub("negative regulation", "down-regulation",data$Description)
-data$Description <- gsub("nucleotide-binding oligomerization domain containing", "NOD-like",data$Description)
-data$Description <- gsub("lic process", "",data$Description)
-data$Description <- gsub("catabo", "catabolism",data$Description)
-data$Description <- gsub("metabo", "metabolism",data$Description)
-data$Description <- gsub("signaling pathway", "pathway",data$Description)
-data$Description <- gsub("TLR T", "T",data$Description)
-data$Description <- gsub("The citric acid ", "",data$Description)
-data$Description <- gsub("\\(TCA\\)", "TCA",data$Description)
-data$Description <- gsub("TAK1 activates NFkB by phosphorylation and activation of IKKs complex", "TAK1 activates NFkB",data$Description)
-data$Description <- gsub("\\(TLR5\\)|\\(TLR10\\)|\\(TLR9\\)|\\(TLR2\\)|\\(TLR3\\)|\\(TLR4\\)|", "",data$Description)
-data$Description <- gsub("  ", " ",data$Description)
-
-data$comparison <- gsub(pattern = "live-HK",
-                       replacement = "Associated with\nbacterial contact", data$comparison)
-data$comparison <- gsub(pattern = "live-hypoxia",
-                       replacement = "Associated with\nbacterial hypoxia", data$comparison)
-data$category <- gsub("Innate and adaptive defense", "Innate and adaptive\ndefense",data$category)
-
-## apply gene ratio cut-off
-data <- data[data$gene_ratio > 0.01,]
-
-data$comparison <- factor(data$comparison,
-                          levels = c(
-                              "Associated with\nbacterial contact\nSC-514 suppressed",
-                              "Associated with\nbacterial hypoxia\nSC-514 suppressed",
-                              "Associated with\nbacterial contact\n",                 
-                              "Associated with\nbacterial hypoxia\n",                 
-                              "hk-hypoxia\nSC-514 suppressed",                        
-                              "hk-hypoxia\n"))   
-
- data$category <- factor(data$category,
-                         levels = c(
-                             "TLR signaling",
-                             "Innate and adaptive\ndefense",
-                             "NF-kB signaling",
-                             "Epithelial barrier",
-                             "Mucins",
-                             "Metabolism",
-                             "Mitochondria",
-                             "Hypoxia",
-                             "Development",
-                             "Cell cycle"))
-
-data <- data[order( data$comparison,data$gene_ratio, decreasing = FALSE),]
-
-data$Description <- factor(data$Description,
-                                levels = unique(data$Description))
-
-
-#data$combo_group <- paste0(data$hypoxia_status," \n ",data$hk_status)
-write.csv(data, file = file.path(data.dir, "plotted-nfkb_complete-goANDreactome-results.csv"))
-
-library(ggplot2)
-library(ggstance)
-source("ggplot2-themes.R")
-
-## Use "Gene Set" names
-data$comparison <- gsub("Associated with\nbacterial contact\nSC-514 suppressed", "Gene Set I", data$comparison)
-data$comparison <- gsub("Associated with\nbacterial hypoxia\nSC-514 suppressed", "Gene Set II", data$comparison)
-data$comparison <- gsub("Associated with\nbacterial contact\n", "Gene Set III", data$comparison)
-data$comparison <- gsub("Associated with\nbacterial hypoxia\n", "Gene Set IV", data$comparison)                 
-
-
-figure4c <- ggplot(data = data[data$comparison != "hk-hypoxia\n" &
-                                        #   data$category != "Hypoxia" &
-                                             data$category != "NF-kB signaling" &                               
-                                              data$comparison != "hk-hypoxia\nSC-514 suppressed",],
-                   aes(x = gene_ratio*100, y = Description, fill = -log10(pvalue))) +
-    geom_barh(stat = "identity") +
-    facet_grid(category ~ comparison, scales = "free_y", space = "free_y") +
-    scale_fill_gradient(expression(paste("-log"[10],"(P-value)")),
-                        high = blue.set[8],
-                        low = blue.set[4])+
-    xlab("% genes matched to pathway") + ylab("") +
-    theme1 + 
-    theme(strip.text.x =  element_text(size = 32, face = "bold"),
-          strip.text.y =  element_text(size = 32, 
-                                       angle = 360),
-          strip.background = element_rect(color = "grey30", fill = "white", size = 2.5),
-          panel.background = element_rect(color = NA, fill = "grey90"),
-          legend.position = "bottom",
-	  legend.title = element_text(size = 24),
-          axis.text.y = element_text(size = 24),
-	  axis.title = element_text(size = 24),
-	  plot.subtitle = element_text(size = 26, hjust = 0.5, face = "bold"),
-	  panel.spacing.x = unit(0.25, "lines"),
-	  panel.spacing = unit(1.5, "lines"),
-	  panel.border = element_blank(),
-	  legend.key.size = unit(1,"cm")) + ggtitle("C")
-
-
-png(filename = "../figures/figure4/figure4c.png", width = 2400, height = 1550)
-print(figure4c)
-dev.off()
-ggsave(filename = "../figures/figure4/eps/figure4c.eps", 
-       plot = figure4c, 
-       width = 48, height = 31)
-
-## multipanel plot -------------------------------------------------------------
-library(ggplot2)
-source("ggplot2-themes.R")
-source("custom_fun.R")
-
-if (file.exists("../figures/figure4/figure4a-cairo.Rdata") == TRUE) {
-    load(file = "../figures/figure4/figure4a-cairo.Rdata")
-} else {    
-    ##https://www.stat.auckland.ac.nz/~paul/Reports/Rlogo/Rlogo.html
-    ##convertPicture("../figures/figure4/figure4a.svg", "../figures/figure4/figure4a-cairo.svg")
-    ## this step takes a while
-    figure4a <- grImport2::readPicture("../figures/figure4/figure4a-cairo.svg")
-    save(figure4a, file = "../figures/figure4/figure4a-cairo.Rdata")
-    load(file = "../figures/figure4/figure4a-cairo.Rdata")
+stats <- cbind(summary.data[summary.data$group == "+ E. coli",],c(t0,t24,t48))
+colnames(stats)[5] <- "p"
+star <- function(x){
+    if (x > 0.05){
+        return("")
+    } else {
+        if (x < 0.001){
+            return("***")
+        } else {
+            if (x < 0.01){
+                return("**")
+            } else {
+                return("*")
+            }
+        }
+    }
 }
 
-library(grid)
-library(gridSVG)
-library(grImport2)
-fig4a <- gTree(children = gList(pictureGrob(figure4a, ext = "gridSVG")))
+stats$star <- as.character(lapply(stats$p, star))
 
-figure4a <- qplot(1:100, 1:100, alpha = I(0)) +
-    theme_bw() +
-    annotation_custom(fig4a, xmin = -Inf,
-                      xmax = Inf,
-                      ymin = -Inf,
-                      ymax = Inf) +
-    img.theme + ggtitle("A") + coord_fixed(ratio = 0.354)
+## plot
+library(ggplot2)  
+source("ggplot2-themes.R")
 
-layout <- rbind(c(1),
-                c(1),
-                c(2),
-		c(3),
-                c(3),
-                c(3),
-                c(3))
+data$group <- factor(data$group,
+                     levels = c("PBS", "+ E. coli"))
+
+
+figure4a <- ggplot(data[data$time < 72,],
+                   aes(x= factor(time), y = o2, fill = treatment)) +
+    geom_boxplot(notch = FALSE, aes(fill = group),
+                 outlier.colour = NULL, outlier.shape = 21, outlier.size = 5,
+                 size = 2, width = 0.4) +
+    ylab(expression("%O"[2])) +
+    ggtitle("A") + 
+    xlab("Hours post-microinjection") + 
+    theme1 +
+    theme(legend.position = c(0.15, 0.1),
+          legend.text = element_text(size = 28)) +
+    guides(fill = guide_legend(override.aes = list(size = 1))) +
+
+    annotate("text", x = c(1,2,3), y = c(9.75,6,9.75),
+             label = paste("P = ",round(stats$p, digits = c(2,3,6))), size = 10) +
+    annotate("segment",
+             x = 1.85, xend = 2.15, y = 5.5, yend = 5.5,
+             color = "black", size = 2) +
+    annotate("segment",
+             x = 2.85, xend = 3.15, y = 9.25, yend = 9.25,
+             color = "black", size = 2) + 
+    scale_fill_brewer(palette = "Set1", direction = -1) +
+    scale_color_brewer(palette = "Set1") +
+    theme(legend.key.size = unit(2,"cm"),
+	  legend.text = element_text(size = 32))
+
+png(filename = "../figures/figure4/figure4a.png", width = 800, height = 800)
+print(figure4a)
+dev.off()
+
+ggsave(filename = "../figures/figure4/eps/figure4a.eps", 
+       plot = figure4a, 
+       width = 20, height = 20)
+
+## FIGURE 3 --------------------------------------------------------------------
+## Figure 4B: Reduction in luminal O_{2} associated with /E. coli/ growth
+## compute fit line for CFU ~ O2
+source("custom_fun.R")
+stats.b <- lm_eqn2(data[data$cfu !=0 & data$time != 0 & data$time != 72,],
+                log(data[data$cfu !=0 & data$time != 0 & data$time != 72,]$cfu),
+                data[data$cfu !=0 & data$time != 0 & data$time != 72,]$o2)
+
+library(scales)
+library(ggplot2)
+source("ggplot2-themes.R")
+
+figure4b <- ggplot(data[data$cfu != 0 & data$time != 0 & data$time != 72,],
+                   aes(x = cfu, y = o2)) +
+    geom_smooth(data = data[data$cfu !=0 & data$time != 0 & data$time != 72,],
+                aes(x = cfu, y = o2), colour = "black", size = 2,
+                method = "lm",
+                formula = y ~ x,
+                level = 0.95) +
+    geom_point(size = 8,shape = 21, fill = color.set[1] ) +
+    scale_y_continuous(breaks = c(0:5)) + 
+    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    annotation_logticks(sides = "b", size = 2,
+                        short = unit(.75,"mm"),
+                        mid = unit(3,"mm"),
+                        long = unit(5,"mm")) +
+    ylab(expression("%O"[2])) +
+    ggtitle("B") + 
+    xlab("CFU/HIO") + 
+    theme1 +
+    annotate("text",x = 10000, y = 4.5, label = stats.b, parse = TRUE, size = 8)
+
+png(filename = "../figures/figure4/figure4b.png", width = 1000, height = 1000)
+print(figure4b)
+dev.off()
+
+ggsave(filename = "../figures/figure4/eps/figure4b.eps", 
+       plot = figure4b, 
+       width = 20, height = 20)
+
+## PMDZ staining table
+stain <- data.frame(pbs = c(1,12,13),
+                    ecoli = c(10,2,12),
+                    hk = c(3,10,13),
+                    o2 = c(14,0,14))
+rownames(stain) <- c("PMDZ +", "PMDZ -", "n")
+colnames(stain) <- c("PBS\n(negative control)", "E. coli\n(live)", "E. coli\n(heat-inactivated)", "1% oxygen\n(positive control)")
 
 library(gridExtra)
 library(grid)
+tt <- ttheme_default(
+		     colhead=list(fg_params=list(col="black", fontface=4L, cex = 1.5),
+                                  bg_params = list(fill = c(rep('grey70', times = 2), 'grey80'))),
+                     core = list(fg_params = list(fontface = "bold", cex = 1.5)),
+                     rowhead = list(fg_params=list(col="black", fontface=4L, cex = 1.5, hjust = 1),
+                                    bg_params = list(fill = c("white",rep(c('grey90','grey80'), times = 5)))))
+grid.table(t(stain), theme = tt) 
 
-figure4b <- gridExtra::grid.arrange(figure4b1, figure4b2, ncol = 2,
-                                  top = textGrob("B", hjust = 32,
-                                                 gp = gpar(fontsize = 45, font = 2)))
+## Figure 4 multipanel ---------------------------------------------------------
+source("ggplot2-themes.R")
+library(ggplot2)
+library(gridExtra)
+
+figure4c <- png2ggplot("../figures/figure4/figure4c.png") +
+    img.theme + ggtitle("C") + coord_fixed(ratio = 0.6)
+
+layout <- rbind(c(1,1,2,2),
+                c(3,3,3,4))
 
 ## PDF output
-pdf(file = "../figures/figure4/figure4_multipanel.pdf", width = 9200/300, height = 14562/300, onefile = FALSE)
-gridExtra::grid.arrange(figure4a, figure4b, figure4c, layout_matrix = layout)
+pdf(file = "../figures/figure4/figure4_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
+gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), 
+layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure4/eps/figure4_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure4a, figure4b, figure4c, layout_matrix = layout), 
-       width = 48, height = 67, limitsize = FALSE, device = "eps")
+       plot = gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), layout_matrix = layout), 
+       width = 20, height = 20)
 
 ## PNG output
-png(filename = "../figures/figure4/figure4_multipanel.png", width = 2400, height = 3350)
-gridExtra::grid.arrange(figure4a, figure4b, figure4c, layout_matrix = layout)
+png(filename = "../figures/figure4/figure4_multipanel.png", width = 1600, height = 1600)
+gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), layout_matrix = layout)
 dev.off()

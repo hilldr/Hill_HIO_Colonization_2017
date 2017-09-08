@@ -88,7 +88,7 @@ d2surv <- data2[data2$variable == "Survival" & data2$treatment == "E. coli" & da
 
 library(RColorBrewer)
 library(ggplot2)
-data <- read.table("../data/figure3/HIO_O2_final_data.csv",
+data <- read.table("../data/figure4/HIO_O2_final_data.csv",
                    header = TRUE, sep = ",", stringsAsFactors=FALSE)
 
 ## Summary stats
