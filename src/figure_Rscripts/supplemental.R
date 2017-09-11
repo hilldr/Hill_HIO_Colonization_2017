@@ -473,6 +473,119 @@ gridExtra::grid.arrange(sfigure1a, sfigure1b, sfigure1c, sfigure1d,
                                    c(3,3,4,4)))
 dev.off()
 
+## Figure 1 - Supplement 3
+# Import dataset in SRC header
+library(ggplot2)
+source("ggplot2-themes.R")
+library(scales)      
+
+cfudata <- readr::read_csv(file = "../data/figure1/culture_optimization/LB_pbs_data.csv")
+
+# T-test
+stats <- t.test(cfudata[cfudata$media == "LB",]$CFU_HIO,cfudata[cfudata$media == "PBS",]$CFU_HIO,alternative= "greater", var.equal =TRUE)
+lbplot <- ggplot(cfudata, aes( x= factor(media), y = CFU_HIO)) +
+    geom_boxplot(aes(color = factor(media)), size = 2) +
+   # geom_dotplot(binaxis='y', stackdir='center', dotsize=1) +
+    ylab("CFU/HIO") + xlab("") +
+    annotate("text", y=4000000, x= 2,
+             label = paste("P = ", format(stats$p.value,digits = 1)),
+             color="grey30",size =10) +
+    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    theme1 + ggtitle("B")
+
+print(lbplot)
+
+data <- read.table("../data/figure1/culture_optimization/ECOR2growth.csv",
+                   header = TRUE, sep = ",",
+                   stringsAsFactors=FALSE)
+stats <- t.test(data[data$sample == "Remove abx",]$mean,
+                data[data$sample == "Retain abx",]$mean,
+                alternative= "greater", var.equal =TRUE)
+library(ggplot2)
+source("ggplot2-themes.R")
+library(scales)      
+fig1b <- ggplot(data, aes(x=sample, y=mean,)) +
+    geom_boxplot(aes(color=sample), size = 2) +
+    ylab("CFU/HIO") +
+    xlab("") + theme1 + 
+    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    annotation_logticks(sides="l",size= 2) +
+    annotate("text", y=400000, x= 2,
+             label = paste(" P = ",round(stats$p.value,digits = 3)),
+             color = "grey30", size = 8) + ggtitle("C")
+
+print(fig1b)
+
+## import data
+data <- readr::read_csv(file = "../data/figure1/culture_optimization/zoi_data.csv", col_names = TRUE)
+
+## convert measured pixels to um
+## 1mm = 106 px
+data$mm <- data$Length/106
+
+## add group designations
+data$treatment <- rep(c("ENR + abx", "ENR after washout"), times = length(data$Label)/2)
+
+library(ggplot2)
+source("ggplot2-themes.R")
+source("custom_fun.R")
+
+library(ggstance)
+
+data$treatment <- factor(data$treatment, levels = c( "ENR after washout", "ENR + abx"))
+
+stats <- t.test(data[data$treatment == "ENR after washout",]$mm,
+                data[data$treatment == "ENR + abx",]$mm,
+                alternative= "less", var.equal =TRUE)
+
+zoi <- ggplot(data, aes(y = mm, x = treatment,)) +
+    geom_boxplot(aes(color=treatment), size = 1) +
+    xlab("") +
+    ylab("Inhibition zone diameter (mm)") + theme1 + 
+    annotation_logticks(sides="l",size= 2) +
+    annotate("text", y= 1, x= 1,
+             label = paste("P = ", format(stats$p.value,digits = 1)),
+             color="grey30",size =10) +
+    theme1 +
+    theme(axis.text.x = element_text(angle = 45,
+                                     vjust = 1,
+                                     hjust =1))
+
+fig <- png2ggplot("../data/figure1/culture_optimization/representative_zoi.png") +
+    img.theme + coord_fixed(ratio = 1/2) + ggtitle("D")
+
+layout2 <- rbind(c(1),
+                c(2),
+                c(2))
+
+
+gridExtra::grid.arrange(fig, zoi, layout_matrix = layout2)
+
+## Figure 1 - Supplement 3 multipanel ---------------------------------------------------------
+library(ggplot2)
+library(gridExtra)
+source("ggplot2-themes.R")
+source("custom_fun.R")
+
+schematic <- png2ggplot(filename = "../figures/figure1/schematic.png") +
+    coord_fixed(ratio = 1.5) + ggtitle("A") + img.theme
+
+layout <- rbind(c(1,1,1,2),
+                c(1,1,1,3),
+                c(1,1,1,4),
+                c(1,1,1,4))
+
+
+sfig3d <- gridExtra::grid.arrange(fig, zoi, layout_matrix = layout2)
+
+## PDF output
+pdf(file = "../figures/figure1/sfigure1-3_multipanel.pdf", width = 7500/300, height = 7500/300, onefile = FALSE)
+gridExtra::grid.arrange(schematic, lbplot, fig1b, sfig3d, 
+             layout_matrix = layout)
+dev.off()
+
 #+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/sfigure1_supp2.pdf :eval yes :tangle figure_Rscripts/supplemental.R
 ## Minimum density /E. coli/ required to establish colonization 
 

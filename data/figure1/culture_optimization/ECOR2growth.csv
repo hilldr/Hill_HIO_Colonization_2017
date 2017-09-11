@@ -1,0 +1,26 @@
+sample,undiluted,diluted,CFU_HIO_1,CFU_HIO_2,mean
+Retain abx,,30,,60000,60000
+Retain abx,15,,30,,30
+Retain abx,60,,120,,120
+Retain abx,77,,154,,154
+Retain abx,,1,,2000,2000
+Retain abx,53,,106,,106
+Retain abx,91,,182,,182
+Retain abx,30,,60,,60
+Retain abx,,13,,26000,26000
+Retain abx,117,1,234,2000,1117
+Retain abx,,2,,4000,4000
+Retain abx,18,,36,,36
+Retain abx,,42,,84000,84000
+Retain abx,44,,88,,88
+Retain abx,48,,96,,96
+Remove abx,207,,414,,414
+Remove abx,,40,,80000,80000
+Remove abx,,4,,8000,8000
+Remove abx,,178,,356000,356000
+Remove abx,,6,,12000,12000
+Remove abx,684,1,1368,2000,1684
+Remove abx,772,,1544,,1544
+Remove abx,,25,,50000,50000
+Remove abx,,2,,4000,4000
+Remove abx,,80,,160000,160000
