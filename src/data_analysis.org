@@ -1725,7 +1725,7 @@ figure2: ./figures/figure2/figure2_multipanel.pdf
 	R -e "setwd('./src/'); source('figure_Rscripts/figure2.R')"
 #+end_src
 
-* Proliferation/differentiation figure
+* Figure 3
 ** Count data shell script
 #+begin_src sh :tangle figure3_count.sh :shebang "#!/bin/bash"
 ## AUTHOR: David R. Hill
@@ -1978,36 +1978,41 @@ library(gridExtra)
 
 ## EdU staining
 figure3b <- png2ggplot("../data/figure3/EdU_figure_cropped.png") +
-    img.theme + coord_fixed(ratio = 1/1.5) + ggtitle("A")
+    img.theme + coord_fixed(ratio = 1/1.4) + ggtitle("A")
 
 ## Sox9 staining
 figure3c <- png2ggplot("../data/figure3/sox9_figure.png") +
-    img.theme + coord_fixed(ratio = 1/1.5) + ggtitle("C")
+    img.theme + coord_fixed(ratio = 1/1.75) + ggtitle("C")
 
 ## dppIV staining
 figure3d <- png2ggplot("../data/figure3/dppiv_figure.png") +
     img.theme + coord_fixed(ratio = 1/1.75) + ggtitle("D")
 
-layout <- rbind(c(1,1,1,2,2),
-                c(1,1,1,2,2),
-                c(3,3,3,2,2),
-                c(3,3,3,5,5),
-                c(4,4,4,5,5),
-		c(4,4,4,5,5))
+figure3a <- figure3a + coord_fixed(ratio = 0.5)
+
+## layout <- rbind(c(1,1,1,2,2,2),
+##                 c(1,1,1,2,2,2),
+##                 c(3,3,3,3,3),
+##                 c(3,3,3,3,3),
+##                 c(4,4,4,4,4),
+## 		c(4,4,4,4,4))
+
+layout <- rbind(c(1,1,1,2),
+                c(3,3,4,4))
 
 ## PDF output
-pdf(file = "../figures/figure3/figure3_multipanel.pdf", width = 8000/300, height = 8250/300, onefile = FALSE)
-gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, figure3e, layout_matrix = layout)
+pdf(file = "../figures/figure3/figure3_multipanel.pdf", width = 8000/300, height = 7500/300, onefile = FALSE)
+gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure3/eps/figure3_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, figure3e, layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
 png(filename = "../figures/figure3/figure3_multipanel.png", width = 1865, height = 2000)
-gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, figure3e, layout_matrix = layout)
+gridExtra::grid.arrange(figure3b, figure3a, figure3c, figure3d, layout_matrix = layout)
 dev.off()
 #+end_src
 
