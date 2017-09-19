@@ -310,6 +310,7 @@ source("ggplot2-themes.R")
 ## adjust order for legend
 data2$treatment <- factor(data2$treatment,
                      levels = c("PBS", "E. coli"))
+
 ## remove NAs from other experimental conditions
 data2 <- subset(data2, data2$treatment == "PBS" | data2$treatment == "E. coli")
 
@@ -322,9 +323,9 @@ figure2e  <- ggplot(data = data2[data2$variable != "Survival",],
     geom_line(aes(color = treatment), size = 0.5) +
     geom_point(data = data2[data2$variable != "Survival",], shape = 21, size = 5) +
     facet_wrap(~ variable, scales = "free_y", ncol = 1, 
-               strip.position = "left") +
+               strip.position = "right") +
     xlab("day") +
-    ylab("") +
+    ylab("pg/ml") +
     scale_x_continuous(breaks = c(0,1,2,3,4,5,6,7,8,9)) +
     scale_colour_brewer(palette = "Set1", direction = -1) +
     scale_fill_brewer(palette = "Set1", direction = -1) +
@@ -372,33 +373,3 @@ ggsave(filename = "../figures/figure2/eps/figure2_multipanel.eps",
 png(filename = "../figures/figure2/figure2_multipanel.png", width = 1600, height = 2000)
 gridExtra::grid.arrange(figure2a, figure2b, figure2c, figure2d, figure2e, layout_matrix = layout)
 dev.off()
-
-## plot
-library(ggplot2)
-source("ggplot2-themes.R")
-
-figure2s1 <- ggplot(data.scaled,
-              aes(y = SYMBOL, x = factor(hr))) +
-    geom_tile(stat = "identity", aes(fill = mean_zscore)) +
-   # facet_grid(category ~ ., scales = "free_y", space = "free", switch = "y") +
-    scale_fill_distiller(name = "Z-score ", palette = "RdYlBu") +
-    scale_y_discrete(position = "right") +
-    ylab("") + xlab("") + 
-    theme1 + 
-    theme(strip.text =  element_text(size = 32),
-          legend.position = "bottom",
-	  legend.title = element_text(size = 32),
-	  legend.key.size = unit(1.5,"cm"),
-	  panel.spacing = unit(2, "lines"),
-	  panel.border = element_blank()) +
-	  coord_fixed(ratio =0.5)
-pdf(file = "../figures/figure2/figure2-NFkB_supplement.pdf", width = 2500/300, height = 4500/300, onefile = FALSE)
-print(figure2s1)
-dev.off()
-
-png(filename = "../figures/figure2/figure2-NFkB_supplement.png", width = 550, height = 1000)
-print(figure2s1)
-dev.off()
-ggsave(filename = "../figures/figure2/figure2-NFkB_supplement.eps", 
-       plot = figure2s1, 
-       width = 12, height = 20)

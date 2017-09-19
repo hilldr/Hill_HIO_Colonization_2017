@@ -1531,9 +1531,9 @@ figure2e  <- ggplot(data = data2[data2$variable != "Survival",],
     geom_line(aes(color = treatment), size = 0.5) +
     geom_point(data = data2[data2$variable != "Survival",], shape = 21, size = 5) +
     facet_wrap(~ variable, scales = "free_y", ncol = 1, 
-               strip.position = "left") +
+               strip.position = "right") +
     xlab("day") +
-    ylab("") +
+    ylab("pg/ml") +
     scale_x_continuous(breaks = c(0,1,2,3,4,5,6,7,8,9)) +
     scale_colour_brewer(palette = "Set1", direction = -1) +
     scale_fill_brewer(palette = "Set1", direction = -1) +
