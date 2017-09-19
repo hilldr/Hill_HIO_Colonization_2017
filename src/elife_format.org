@@ -15,7 +15,7 @@
 (set (make-local-variable 'org-latex-pdf-process); swap bibtex for default biber
         '("pdflatex%f" 
           "pdflatex %f"
-          "bibtex %b"
+         b "bibtex %b"
           "pdflatex %f"
           "pdflatex %f"
           )

@@ -4107,9 +4107,9 @@ data <- dplyr::left_join(data, key, by = "organoid")
 data$normalized <- data$Mean/data$t0
 data$normalized_area <- data$Mean_area/data$t0_area
 
-#data <- data[data$exclude != 1,]
-#data <- subset(data, data$organoid > 3 & data$organoid < 15)
-data <- subset(data, data$treatment != "PBS") ## HIOs dried out
+## remove unreliable data
+data <- subset(data, data$treatment != "PBS" & data$organoid != 7) ## HIOs dried out
+
 library(magrittr)
 data_mean3 <- dplyr::group_by(data, treatment, hr) %>%
     dplyr::summarise(mean = mean(normalized, na.rm = TRUE), 
@@ -4451,14 +4451,13 @@ plot.data1 <- subset(data_mean,
 plot.data2 <- subset(data_mean,
                      data_mean$treatment %in% c("PBS",
                                                 "E. coli",
-                                              #  "PBS + SC-514",
+                                                "PBS + SC-514",
                                                 "E. coli + SC-514"))
 
 
 
 figure8b <- ggplot(plot.data2, aes(x = hr, y = mean, color = treatment)) +
-    scale_color_brewer(palette = "Set1", name = "Treatment group", direction = -1) +
-    scale_color_manual(name = expression(paste("h",beta,"D-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
+    scale_color_brewer(palette = "Spectral", name = "Treatment group", direction = -1) +
     geom_smooth(size = 3) +
     ylim(c(0.25, 1.05)) +
     xlab("Time post-treatment (h)") +
@@ -4467,7 +4466,7 @@ figure8b <- ggplot(plot.data2, aes(x = hr, y = mean, color = treatment)) +
     theme1 + ggtitle("B") +
     theme(
        # legend.position = "bottom",
-          legend.position = c(0.25,0.1),
+          legend.position = c(0.25,0.15),
     	  legend.key.size = unit(1,"cm"),
           legend.text = element_text(size = 32))
 
@@ -4520,8 +4519,10 @@ data2[data2$variable == "Survival",]$total <- 48 - data2[data2$variable == "Surv
 levels(data2$variable) <- c("BD1 (pg/ml)", "BD2 (pg/ml)", "IL-6 (pg/ml)", "IL-8 (pg/ml)", "VEGF (pg/ml)", "Survival")
 
 ## list PBS first
+data2 <- data2[data2$treatment !="HK- E. coli" ,]
+data2 <- data2[complete.cases(data2),]
 data2$treatment <- factor(data2$treatment,
-                          levels = c("PBS", "E. coli", "E. coli + vehicle", "E. coli + SC-514", "HK- E. coli"))
+                          levels = c("PBS", "E. coli", "E. coli + vehicle", "E. coli + SC-514"))
 
 ## survival numbers to reference in text
 d9surv <- data2[data2$variable == "Survival" & data2$treatment == "E. coli" & data2$day == 9,]$total
