@@ -5177,6 +5177,40 @@ dev.off()
  #+RESULTS:
  [[file:../figures/supplemental/sfigure1_multipanel.png]]
 
+** Figure 1 - Supplement 2
+#+begin_src R :session *R* :exports none :eval yes :tangle figure_Rscripts/supplemental.R
+library(ggplot2)
+library(ggtree)
+library(magrittr)
+source("ggplot2-themes.R")
+tree <- read.tree(file = "../data/ecor2/ECOR2-50.nwk")
+plot <- ggtree(tree, size = 2) %>% collapse(node = 86)
+plot <- plot + geom_treescale(width = 0.015) + #xlim(NA, 100) +
+  #  geom_hilight(76, "steelblue") +
+    geom_tiplab(size = 7) +
+    geom_cladelabel(node = 53,
+                    label = "non-pathogenic E. coli",
+                    align = FALSE,
+                    offset = 0.01,
+                    offset.text = 1e-3,
+                    fontsize = 12,
+                    barsize = 2) +
+    #geom_text2(aes(subset=!isTip, label=node), hjust=-.3) + 
+    geom_tippoint(aes(subset=(node == 26)),
+                  size = 8,
+                  shape = 21,
+                  fill = color.set[1],
+                  color = color.set[1])
+
+    
+## PDF output
+pdf(file = "../figures/figure1/sfigure1-2_tree.pdf", width = 9000/300, height = 7500/300, onefile = FALSE)
+print(plot)
+dev.off()
+#+end_src
+
+#+RESULTS:
+: 2
 ** Figure 1 - Supplement 3
 *** Test 24 h ECOR2 growth in LB vs. PBS microinjection
 
@@ -5314,6 +5348,45 @@ dev.off()
 
 #+RESULTS:
 [[file:../figures/figure1/sfigure1-3_multipanel.png]]
+
+
+** Figure 3 - Supplement 1
+
+*** Pathway analysis 
+#+begin_src R :session *R* :results silent :exports none :eval yes
+
+## import data
+library(magrittr)
+data <- readr::read_csv(file = "../results/ECOR2HIO_24-96-RNAseq/ECOR2_over_PBS_48hr.csv") %>%
+    dplyr::rename(external_gene_name = X1)
+## convert to pathview format
+library(pathview)
+entrez.names <- id2eg(ids = data$external_gene_name, category ="SYMBOL", org = "Hs")
+diff.mat <- data$log2FoldChange
+names(diff.mat) <- data$external_gene_name
+entrez.data <- mol.sum(mol.data = diff.mat, id.map = entrez.names, sum.method = "sum")
+
+## vecor of multiple pathways to query
+setwd("../results/ECOR2HIO_24-96-RNAseq/KEGG-pathview")
+
+
+pv.out <- pathview(gene.data = entrez.data,
+                   pathway.id = "hsa04110",
+                   species = "hsa",
+                   out.suffix = "cellcycle_48",
+                   low = list(gene = color.set[2],
+                              cpd = "blue"),
+                   high = list(gene = color.set[1]),
+                   mid = list(gene = "white"),
+                   kegg.native = FALSE,
+                   cex = 0.7,
+                   pdf.size = c(10,10))
+
+setwd("../../../src")
+
+
+
+#+end_src
 
 
 ** Figure 1 - Supplement 2 
@@ -5935,7 +6008,7 @@ figure5s1f <- ggplot(data = go.data, aes(x = -log10(qvalue),
     theme(strip.text.x =  element_text(size = 24, face = "bold"),
           strip.text.y =  element_text(size = 32),
           strip.background = element_rect(color = "grey30", fill = "white", size = 2.5),
-          panel.background = element_rect(color = NA, fill = "#A8D8A7"),
+          panel.background = element_rect(color = NA, fill = "#B6D8B5"),
 #          legend.position = "bottom",
 	  legend.title = element_text(size = 24),
           axis.text.y = element_text(size = 24),

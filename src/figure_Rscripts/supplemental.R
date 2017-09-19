@@ -473,6 +473,35 @@ gridExtra::grid.arrange(sfigure1a, sfigure1b, sfigure1c, sfigure1d,
                                    c(3,3,4,4)))
 dev.off()
 
+library(ggplot2)
+library(ggtree)
+library(magrittr)
+source("ggplot2-themes.R")
+tree <- read.tree(file = "../data/ecor2/ECOR2-50.nwk")
+plot <- ggtree(tree, size = 2) %>% collapse(node = 86)
+plot <- plot + geom_treescale(width = 0.015) + #xlim(NA, 100) +
+  #  geom_hilight(76, "steelblue") +
+    geom_tiplab(size = 7) +
+    geom_cladelabel(node = 53,
+                    label = "non-pathogenic E. coli",
+                    align = FALSE,
+                    offset = 0.01,
+                    offset.text = 1e-3,
+                    fontsize = 12,
+                    barsize = 2) +
+    #geom_text2(aes(subset=!isTip, label=node), hjust=-.3) + 
+    geom_tippoint(aes(subset=(node == 26)),
+                  size = 8,
+                  shape = 21,
+                  fill = color.set[1],
+                  color = color.set[1])
+
+    
+## PDF output
+pdf(file = "../figures/figure1/sfigure1-2_tree.pdf", width = 9000/300, height = 7500/300, onefile = FALSE)
+print(plot)
+dev.off()
+
 ## Figure 1 - Supplement 3
 # Import dataset in SRC header
 library(ggplot2)
@@ -669,6 +698,508 @@ fig2c <- ggplot(data, aes(x=inject, y=mean)) +
 pdf(file = "../figures/supplemental/sfigure1_supp2.pdf", width = 10, height = 10, onefile = FALSE)
 print(fig2c)
 dev.off()
+
+## FIGURE 5 - Supplement 1 ---------------------------------------------------
+## Figure 5 Supplement 1A: RNA-seq NF-kb heatmap
+## import data
+## Load dataset from file
+data.dir <- "../results/ECOR2HIO_24-96-RNAseq/"
+library(magrittr)
+df <- readr::read_csv(file = file.path(data.dir,"complete-dataset_DESeq2-normalized-counts.csv")) %>% dplyr::rename(SYMBOL = X1)
+
+## list of genes to extract
+paths <- readr::read_csv("../results/ECOR2_hypoxia_nfkb/plotted-nfkb_complete-goANDreactome-results.csv")
+
+nfkb <- paths[grep("NF-kB", paths$Description),]$geneID
+nfkb.path <- paths[grep("NF-kB", paths$Description),]$Description
+
+nfkb.genes <- sapply(nfkb, 
+                    function(x) {
+                        v <- stringr::str_split(x, "/")
+                                         })
+nfkb.genes.list <- c(unique(unlist(nfkb.genes)))
+#nfkb.genes <- nfkb.genes[-grep("MUC12|B3GNT6|ADAM|IL|CHST4", nfkb.genes)]
+
+
+
+data.sub <- df[which(df$SYMBOL %in% nfkb.genes.list),]
+melt.data <- reshape::melt(as.data.frame(data.sub), id.vars = "SYMBOL")
+melt.data$variable <- gsub("\\_[0-9]*$", "", melt.data$variable)
+melt.data <- tidyr::separate(melt.data, col = variable, into = c('treatment', 'hr'), sep = "-")
+#melt.data <- dplyr::left_join(melt.data, nfkb.genes, by = 'SYMBOL')
+#melt.data$hr <- as.numeric(melt.data$hr)
+
+
+library(magrittr)
+## calculate mean and stats
+data.mean <- dplyr::group_by(melt.data, SYMBOL, hr) %>%
+    dplyr::summarise(stdev = sd(value),
+                     num = n(),
+                     iqr = IQR(value),
+                     min = min(value),
+                     max = max(value),
+		     mean = mean(value),
+                     median = median(value))
+
+data.mean$sem <- data.mean$stdev/sqrt(data.mean$num)
+
+## claculate zscore
+scale_this <- function(x) as.vector(scale(x))
+
+melt.data$hr <- as.numeric(melt.data$hr)
+data.scaled <- dplyr::group_by(melt.data, SYMBOL) %>%
+    dplyr::mutate(zscore = scale_this(value)) %>%
+    dplyr::group_by(SYMBOL, hr) %>%
+    dplyr::summarize(mean_zscore = mean(zscore))
+
+data.cor <- dplyr::group_by(melt.data, SYMBOL) %>%
+    dplyr::summarize(cor = cor(hr, value))
+
+top.cor <- data.cor[data.cor$cor > quantile(data.cor$cor, 0.75) | data.cor$cor < quantile(data.cor$cor, 0.25),]
+
+## data.scaled$category <- "Glycotransferases"
+## data.scaled[grep("MUC", data.scaled$SYMBOL),]$category <- "Mucins"
+data.scaled <- data.scaled[which(data.scaled$SYMBOL %in% top.cor$SYMBOL),]
+## data.scaled <- data.scaled[order(data.scaled$hr,-data.scaled$mean_zscore),]
+## data.scaled$SYMBOL <- factor(data.scaled$SYMBOL,
+##                          levels = unique(data.scaled$SYMBOL))
+data.scaled$hr <- as.character(data.scaled$hr)
+data.scaled$hr <- factor(data.scaled$hr, levels = c("0", "24", "48", "96"))
+dat <- dplyr::select(data.scaled, hr, mean_zscore) %>% tidyr::spread(hr, mean_zscore)
+ord <- hclust(dist(dat[,2:5], method = "euclidean"), method = "ward.D")$order
+
+data.scaled$SYMBOL <- factor(data.scaled$SYMBOL, levels = unique(data.scaled$SYMBOL)[ord])
+
+## plot
+library(ggplot2)
+source("ggplot2-themes.R")
+
+figure5s1a <- ggplot(data.scaled,
+              aes(y = SYMBOL, x = factor(hr))) +
+    geom_tile(stat = "identity", aes(fill = mean_zscore)) +
+   # facet_grid(category ~ ., scales = "free_y", space = "free", switch = "y") +
+    scale_fill_distiller(name = "Z-score ", palette = "RdYlBu") +
+    scale_y_discrete(position = "right") +
+    ylab("") + xlab("") + 
+    theme1 + 
+    theme(strip.text =  element_text(size = 32),
+          legend.position = "bottom",
+	  legend.title = element_text(size = 32),
+	  legend.key.size = unit(1.5,"cm"),
+	  panel.spacing = unit(2, "lines"),
+	  panel.border = element_blank()) +
+	  coord_fixed(ratio =0.5) + ggtitle("A")
+pdf(file = "../figures/figure5/figure5-NFkB_supplement.pdf", width = 2500/300, height = 4500/300, onefile = FALSE)
+print(figure5s1a)
+dev.off()
+
+png(filename = "../figures/figure5/figure5-NFkB_supplement.png", width = 550, height = 1000)
+print(figure5s1a)
+dev.off()
+ggsave(filename = "../figures/figure5/figure5-NFkB_supplement.eps", 
+       plot = figure5s1a, 
+       width = 12, height = 20)
+
+## load data and set directory for output
+## plotting
+
+library(ggplot2)
+library(ggstance)
+source("ggplot2-themes.R")
+library(RColorBrewer)
+red.set <- brewer.pal(n = 8, name = "Reds")
+
+## multi-volcano ---------------------------------------------------------------
+data.dir <- "../results/ECOR2_hypoxia_nfkb"
+library(magrittr)
+ecor2.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+hk.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2-HK_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+hypoxia.pbs <- readr::read_csv(file = file.path(data.dir,"hypoxia_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+ecor2i.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2-NFKBi_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+nfkbi.pbs <- readr::read_csv(file = file.path(data.dir,"NFkBi_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+hki.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2-HK_over_ECOR2-HK-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
+hypoxiai.pbs <- readr::read_csv(file = file.path(data.dir,"ECOR2-HK_over_ECOR2-HK-NFKBi.csv")) %>% dplyr::rename(SYMBOL = X1)
+
+## add comparison ID
+ecor2.pbs$comparison <- "E. coli"
+hk.pbs$comparison <- "HK-E. coli"
+hypoxia.pbs$comparison <- "1% O2"
+ecor2i.pbs$comparison <- "E. coli + SC-514"
+nfkbi.pbs$comparison <- "SC-514 alone"
+hki.pbs$comparison <- "HK-E. coli + SC-514"
+hypoxiai.pbs$comparison <- "1% O2 + SC-514"
+
+## bind in single dataframe
+data <- rbind(ecor2.pbs,
+              hk.pbs,
+              hypoxia.pbs,
+              ecor2i.pbs,
+	      nfkbi.pbs,
+	      hki.pbs,
+	      hypoxiai.pbs)
+
+plot.data <- data
+
+plot.data$comparison <- factor(plot.data$comparison,
+                               levels = rev(c("E. coli", 
+                                          "1% O2",
+                                          "HK-E. coli",
+					  "SC-514 alone",
+                                          "E. coli + SC-514",
+					  "HK-E. coli + SC-514",
+					  "1% O2 + SC-514")))
+
+plot.data$status <- ifelse(plot.data$padj > 0.05 | is.na(plot.data$padj), "a",
+                    ifelse(plot.data$log2FoldChange > 0, "b", "c"))
+
+plot.data <- plot.data[order(plot.data$status),]
+
+library(ggplot2)
+source("ggplot2-themes.R")
+figure5s1c <- ggplot(data = plot.data, aes(y = comparison, x = log2FoldChange)) +
+    geom_point(position = position_jitter(w = 0.33), aes(fill = status, color = status), shape = 21) +
+    scale_fill_manual(values = c("grey70", color.set[1], color.set[2])) +
+    scale_color_manual(values = c("grey70", color.set[1], color.set[2])) +
+    xlim(c(-5,5)) +
+    ylab("") +
+    xlab(expression(paste("log"[2],"FC over PBS"))) +
+    theme1 + 
+    theme(axis.text.x = element_text(size = 20)) + ggtitle("C")
+
+print(figure5s1c)
+
+data.dir <- "../results/ECOR2_hypoxia_nfkb"
+library(magrittr)
+df <- readr::read_csv(file = file.path(data.dir,"NFkBi_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+
+library(clusterProfiler)
+library(org.Hs.eg.db)
+## SC-514-regualted genes
+up.ids <- bitr(df[df$padj < 0.05 & df$log2FoldChange > 0,]$SYMBOL,
+               fromType = "SYMBOL",
+               toType = "ENTREZID",
+               OrgDb = "org.Hs.eg.db")
+
+## background gene set
+all.ids <- bitr(df$SYMBOL,
+                fromType = "SYMBOL",
+                toType = "ENTREZID",
+                OrgDb = "org.Hs.eg.db")
+
+## over-representation test, Up-regualted
+go.ec <- enrichGO(gene = up.ids$ENTREZID,
+                  universe = all.ids$ENTREZID,
+                  OrgDb = "org.Hs.eg.db",
+                  ont = "BP",
+                  pAdjustMethod = "none",
+                  pvalueCutoff = 0.05,
+                  qvalueCutoff = 0.05,
+                  readable = TRUE)
+
+## KEGG over-representation test
+kegg.ec <- enrichKEGG(gene = up.ids$ENTREZID,
+                      organism = 'hsa',
+                      pvalueCutoff = 0.05)
+library(ReactomePA)
+## KEGG over-representation test
+reactome.ec <- enrichPathway(gene = up.ids$ENTREZID,
+                     # organism = 'hsa',
+                      pvalueCutoff = 0.05, readable = TRUE)
+
+## add column annotating source
+reactome.ec@result$DATABASE <- "REACTOME"
+kegg.ec@result$DATABASE <- "KEGG"
+go.ec@result$DATABASE <- "GO"
+
+## bind all over-representation test results
+enrich.result.ec <- rbind(reactome.ec@result,
+                          go.ec@result,
+			  kegg.ec@result)
+
+write.csv(enrich.result.ec, file = file.path(data.dir, "nfkbi_up_pathways.csv"))
+
+## SC-514-regualted genes
+up.ids <- bitr(df[df$padj < 0.05 & df$log2FoldChange < 0,]$SYMBOL,
+               fromType = "SYMBOL",
+               toType = "ENTREZID",
+               OrgDb = "org.Hs.eg.db")
+
+## background gene set
+all.ids <- bitr(df$SYMBOL,
+                fromType = "SYMBOL",
+                toType = "ENTREZID",
+                OrgDb = "org.Hs.eg.db")
+
+## over-representation test, Up-regualted
+go.ec <- enrichGO(gene = up.ids$ENTREZID,
+                  universe = all.ids$ENTREZID,
+                  OrgDb = "org.Hs.eg.db",
+                  ont = "BP",
+                  pAdjustMethod = "none",
+                  pvalueCutoff = 0.05,
+                  qvalueCutoff = 0.05,
+                  readable = TRUE)
+
+## KEGG over-representation test
+kegg.ec <- enrichKEGG(gene = up.ids$ENTREZID,
+                      organism = 'hsa',
+                      pvalueCutoff = 0.05)
+library(ReactomePA)
+## KEGG over-representation test
+reactome.ec <- enrichPathway(gene = up.ids$ENTREZID,
+                     # organism = 'hsa',
+                      pvalueCutoff = 0.05, readable = TRUE)
+
+## add column annotating source
+reactome.ec@result$DATABASE <- "REACTOME"
+kegg.ec@result$DATABASE <- "KEGG"
+go.ec@result$DATABASE <- "GO"
+
+## bind all over-representation test results
+enrich.result.ec <- rbind(reactome.ec@result,
+                          go.ec@result,
+			  kegg.ec@result)
+write.csv(enrich.result.ec, file = file.path(data.dir, "nfkbi_down_pathways.csv"))
+
+## import data
+data.dir <- "../results/ECOR2_hypoxia_nfkb"
+go.up <- readr::read_csv(file = file.path(data.dir, "nfkbi_up_pathways.csv"))
+go.up$direction <- "Up-regulated by SC-514"
+go.down <- readr::read_csv(file = file.path(data.dir, "nfkbi_down_pathways.csv"))
+go.down$direction <- "Down-regulated by SC-514"
+## combine datasets
+go.data <- rbind(go.up, go.down)
+
+library(magrittr)
+go.data %<>% dplyr::select(Description, qvalue, DATABASE, direction) %>%
+    dplyr::group_by(DATABASE, direction) %>%
+    dplyr::mutate(pctile = ecdf(-log10(qvalue))(-log10(qvalue))) %>%
+    dplyr::arrange(-pctile) %>%
+    subset(.$pctile > 0.9)
+
+go.data <- go.data[order(go.data$qvalue, decreasing = TRUE),]
+
+go.data$Description <- factor(go.data$Description,
+                                levels = unique(go.data$Description))
+
+library(ggplot2)
+library(ggstance)
+source("ggplot2-themes.R")
+figure5s1d <- ggplot(data = go.data, aes(x = -log10(qvalue),
+                                   y = Description,
+                                   fill = -log10(qvalue))) +
+    geom_barh(stat = "identity") +
+    facet_grid(direction ~ ., scales = "free_y", space = "free") +
+    theme1 +
+    ylab("") +
+    scale_fill_gradient(expression(paste("-log"[10],"(P-value)")),
+                        high = blue.set[8],
+                        low = blue.set[4]) +
+    theme(strip.text.x =  element_text(size = 24, face = "bold"),
+          strip.text.y =  element_text(size = 32),
+          strip.background = element_rect(color = "grey30", fill = "white", size = 2.5),
+          panel.background = element_rect(color = NA, fill = "grey90"),
+          legend.position = "bottom",
+	  legend.title = element_text(size = 24),
+          axis.text.y = element_text(size = 24),
+	  axis.title = element_text(size = 24),
+	  plot.subtitle = element_text(size = 26, hjust = 0.5, face = "bold"),
+	  panel.spacing.x = unit(0.25, "lines"),
+	  panel.spacing = unit(1.5, "lines"),
+	  panel.border = element_blank(),
+	  legend.key.size = unit(1,"cm")) + ggtitle("D")
+
+print(figure5s1d)           
+
+## import datsets
+library(magrittr)
+gs1 <-readr::read_csv(file = "../results/supplemental/Figure5_Gene_set1.csv")$x
+gs2 <-readr::read_csv(file = "../results/supplemental/Figure5_Gene_set2.csv")$x
+nfkbi.dwn <- readr::read_csv(file = "../results/ECOR2_hypoxia_nfkb/NFkBi_over_PBS.csv")
+nfkbi.dwn <- subset(nfkbi.dwn, nfkbi.dwn$padj < 0.05 & nfkbi.dwn$log2FoldChange < 0)$X1
+
+library(VennDiagram)
+source("ggplot2-themes.R")
+venn.plot <- venn.diagram(list(gs1, gs2, nfkbi.dwn), NULL,
+                          fill = c(color.set[1], color.set[2], color.set[3]),
+                          alpha = 0.5,
+                          lwd = 5,
+                          cex = 4,
+                          fontfamily = "sans",
+                          lty = 0,
+                          cat.font.family,
+                          cat.fontfamily = "sans",
+                          cat.cex = 2.5,
+                          cat.pos = c(-30,30, 180),
+                          cat.dist = c(0.08, 0.08,0.08),
+                          category.names = c("Gene Set I\n(contact induced)",
+                                              "Gene Set II\n(hypoxia-induced)",
+                                              "Genes down-regulated\nby SC-514 at baseline"),
+                          main.cex = 4,
+                          main.fontfamily = "sans",
+                          main.pos =c(0.5,0.025),
+                          scaled = TRUE, euler.d = TRUE)
+
+library(gridExtra)
+library(grid)
+figure5s1e <- grid.arrange(gTree(children=venn.plot), ncol = 1,
+                         top = textGrob("E", hjust = 7,
+                         gp = gpar(fontsize = 50, font =2)))
+
+print(figure5s1e)
+
+data.dir <- "../results/ECOR2_hypoxia_nfkb"
+library(magrittr)
+df <- readr::read_csv(file = file.path(data.dir,"NFkBi_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+
+library(clusterProfiler)
+library(org.Hs.eg.db)
+## SC-514-regualted genes
+gs1.ids <- bitr(intersect(gs1, nfkbi.dwn),
+               fromType = "SYMBOL",
+               toType = "ENTREZID",
+               OrgDb = "org.Hs.eg.db")
+
+## background gene set
+all.ids <- bitr(df$SYMBOL,
+                fromType = "SYMBOL",
+                toType = "ENTREZID",
+                OrgDb = "org.Hs.eg.db")
+
+## over-representation test, Up-regualted
+go.ec <- enrichGO(gene = gs1.ids$ENTREZID,
+                  universe = all.ids$ENTREZID,
+                  OrgDb = "org.Hs.eg.db",
+                  ont = "BP",
+                  pAdjustMethod = "none",
+                  pvalueCutoff = 0.05,
+                  qvalueCutoff = 0.05,
+                  readable = TRUE)
+
+## KEGG over-representation test
+kegg.ec <- enrichKEGG(gene = gs1.ids$ENTREZID,
+                      organism = 'hsa',
+                      pvalueCutoff = 0.05)
+library(ReactomePA)
+## KEGG over-representation test
+reactome.ec <- enrichPathway(gene = gs1.ids$ENTREZID,
+                     # organism = 'hsa',
+                      pvalueCutoff = 0.05, readable = TRUE)
+
+## add column annotating source
+reactome.ec@result$DATABASE <- "REACTOME"
+kegg.ec@result$DATABASE <- "KEGG"
+go.ec@result$DATABASE <- "GO"
+
+## bind all over-representation test results
+enrich.result.ec <- rbind(reactome.ec@result,
+                          go.ec@result,
+			  kegg.ec@result)
+enrich.result.ec$gene_set <- "Gene Set I - baseline NFkB suppression"
+write.csv(enrich.result.ec, file = file.path(data.dir, "nfkbi_gs1_pathways.csv"))
+
+data.dir <- "../results/ECOR2HIO-RNAseq/"
+library(magrittr)
+df <- readr::read_csv(file = file.path(data.dir,"NFkBi_over_PBS.csv")) %>% dplyr::rename(SYMBOL = X1)
+
+library(clusterProfiler)
+library(org.Hs.eg.db)
+## SC-514-regualted genes
+gs2.ids <- bitr(intersect(gs2, nfkbi.dwn),
+               fromType = "SYMBOL",
+               toType = "ENTREZID",
+               OrgDb = "org.Hs.eg.db")
+
+## background gene set
+all.ids <- bitr(df$SYMBOL,
+                fromType = "SYMBOL",
+                toType = "ENTREZID",
+                OrgDb = "org.Hs.eg.db")
+
+## over-representation test, Up-regualted
+go.ec <- enrichGO(gene = gs2.ids$ENTREZID,
+                  universe = all.ids$ENTREZID,
+                  OrgDb = "org.Hs.eg.db",
+                  ont = "BP",
+                  pAdjustMethod = "none",
+                  pvalueCutoff = 0.05,
+                  qvalueCutoff = 0.05,
+                  readable = TRUE)
+
+## KEGG over-representation test
+kegg.ec <- enrichKEGG(gene = gs2.ids$ENTREZID,
+                      organism = 'hsa',
+                      pvalueCutoff = 0.05)
+library(ReactomePA)
+## KEGG over-representation test
+reactome.ec <- enrichPathway(gene = gs2.ids$ENTREZID,
+                     # organism = 'hsa',
+                      pvalueCutoff = 0.05, readable = TRUE)
+
+## add column annotating source
+reactome.ec@result$DATABASE <- "REACTOME"
+kegg.ec@result$DATABASE <- "KEGG"
+go.ec@result$DATABASE <- "GO"
+
+## bind all over-representation test results
+enrich.result.ec <- rbind(reactome.ec@result,
+                          go.ec@result,
+			  kegg.ec@result)
+enrich.result.ec$gene_set <- "Gene Set II - baseline NFkB suppression"
+write.csv(enrich.result.ec, file = file.path(data.dir, "nfkbi_gs2_pathways.csv"))
+
+## import data
+data.dir <- "../results/ECOR2_hypoxia_nfkb/"
+go.up <- readr::read_csv(file = file.path(data.dir, "nfkbi_gs1_pathways.csv"))
+go.down <- readr::read_csv(file = file.path(data.dir, "nfkbi_gs2_pathways.csv"))
+## combine datasets
+go.data <- rbind(go.up, go.down)
+
+library(magrittr)
+go.data %<>% dplyr::select(Description, qvalue, DATABASE, gene_set) %>%
+    dplyr::group_by(DATABASE, gene_set) %>%
+    dplyr::mutate(pctile = ecdf(-log10(qvalue))(-log10(qvalue))) %>%
+    dplyr::arrange(-pctile) %>%
+    subset(.$pctile > 0.9)
+
+go.data <- go.data[order(go.data$qvalue, decreasing = TRUE),]
+
+go.data$Description <- factor(go.data$Description,
+                                levels = unique(go.data$Description))
+
+go.data$gene_set <- gsub(pattern = " - baseline NFkB suppression",
+                       replacement = "",go.data$gene_set)
+library(ggplot2)
+library(ggstance)
+source("ggplot2-themes.R")
+figure5s1f <- ggplot(data = go.data, aes(x = -log10(qvalue),
+                                   y = Description,
+				   fill = gene_set)) +
+#                                   fill = -log10(qvalue))) +
+    geom_barh(stat = "identity") +
+    facet_grid(gene_set ~ c("Subset supressed by\nSC-514 at baseline"), scales = "free_y", space = "free") +
+    theme1 +
+    ylab("") +
+    scale_fill_brewer(palette = "Set1", direction = 1) +
+   # scale_fill_gradient(expression(paste("-log"[10],"(P-value)")),
+   #                     high = blue.set[8],
+   #                     low = blue.set[4]) +
+    theme(strip.text.x =  element_text(size = 24, face = "bold"),
+          strip.text.y =  element_text(size = 32),
+          strip.background = element_rect(color = "grey30", fill = "white", size = 2.5),
+          panel.background = element_rect(color = NA, fill = "#B6D8B5"),
+#          legend.position = "bottom",
+	  legend.title = element_text(size = 24),
+          axis.text.y = element_text(size = 24),
+	  axis.title = element_text(size = 24),
+	  plot.subtitle = element_text(size = 26, hjust = 0.5, face = "bold"),
+	  panel.spacing.x = unit(0.25, "lines"),
+	  panel.spacing = unit(1.5, "lines"),
+	  panel.border = element_blank(),
+	  legend.key.size = unit(1,"cm")) +
+    ggtitle("F")
+
+print(figure5s1f)            
 
 ## Figure 5 - Supplement 3
 ## import raw data
