@@ -276,3 +276,33 @@ png(filename = "../figures/figure1/figure1_multipanel.png", width = 2000, height
 gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e, 
              layout_matrix = layout)
 dev.off()
+
+## Figure 5 - Supplement 1 Multipanel -------------------------------------------
+library(ggplot2)
+library(gridExtra)
+source("ggplot2-themes.R")
+source("custom_fun.R")
+
+figure5s1b <- png2ggplot("../data/figure5/p-65.png") +
+    img.theme + ggtitle("B") + coord_fixed(ratio = 0.5)
+
+
+
+
+layout <- rbind(c(1,2,2,4,4,4,4),
+                c(1,3,3,4,4,4,4),
+                c(1,5,5,5,6,6,6),
+                c(1,5,5,5,6,6,6))
+
+
+## PDF output
+pdf(file = "../figures/supplemental/figure5s1_multipanel.pdf", width = 9500/300, height = 7500/300, onefile = FALSE)
+gridExtra::grid.arrange(figure5s1a,figure5s1b,figure5s1c,figure5s1d,figure5s1e,figure5s1f,
+             layout_matrix = layout)
+dev.off()
+
+## PNG output
+png(filename = "../figures/supplemental/figure5s1_multipanel.png", width = 3000, height = 2500)
+gridExtra::grid.arrange(figure5s1a,figure5s1b,figure5s1c,figure5s1d,figure5s1e,figure5s1f,
+             layout_matrix = layout)
+dev.off()

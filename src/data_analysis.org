@@ -5179,13 +5179,13 @@ dev.off()
  [[file:../figures/supplemental/sfigure1_multipanel.png]]
 
 ** Figure 1 - Supplement 2
-#+begin_src R :session *R* :exports none :eval yes :tangle figure_Rscripts/supplemental.R
+#+begin_src R :session *R* :exports none :eval no :tangle figure_Rscripts/supplemental.R
 library(ggplot2)
 library(ggtree)
 library(magrittr)
 source("ggplot2-themes.R")
 tree <- read.tree(file = "../data/ecor2/ECOR2-50.nwk")
-plot <- ggtree(tree, size = 2) %>% collapse(node = 86)
+plot <- ggtree(tree, size = 2) %>% ggtree::collapse(node = 86)
 plot <- plot + geom_treescale(width = 0.015) + #xlim(NA, 100) +
   #  geom_hilight(76, "steelblue") +
     geom_tiplab(size = 7) +
@@ -5211,7 +5211,7 @@ dev.off()
 #+end_src
 
 #+RESULTS:
-: 2
+: 3
 ** Figure 1 - Supplement 3
 *** Test 24 h ECOR2 growth in LB vs. PBS microinjection
 

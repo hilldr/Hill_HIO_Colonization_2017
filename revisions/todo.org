@@ -105,15 +105,15 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	  ((agenda ""
 		   ((org-agenda-files 		     
 		   '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
-		   (org-agenda-ndays 3)
+		   (org-agenda-ndays 10)
 		   (org-deadline-warning-days 14)
 		    ))
-	   (todo "TODO" ;alltodo ""
+	   (todo "TODO|IN-PROGRESS" ;alltodo ""
 		 ((org-agenda-files 		   
 		 '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
 		 (org-agenda-skip-function
 		 '(org-agenda-skip-entry-if 'deadline 'scheduled))))
-	   (todo "WAITING|IN-PROGRESS" ;alltodo ""
+	   (todo "WAITING" ;alltodo ""
 		 ((org-agenda-files 
 		 '("/home/david/Data/HIO_Ecoli_paper/DOC/eLife/revisions/todo.org"))
 		 (org-agenda-skip-function
@@ -123,14 +123,14 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [34%]
+* eLife revision due date [88%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
    :END:
 ESSENTIAL REVISIONS:
 General comments on presentation in the paper
-** TODO Revise methods reporting [1/6]
+** TODO Revise methods reporting [3/6]
  Especially for a paper where the main point is development of an experimental system, the technical validation and reporting of the methods and results in the paper must be completely solid. The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends. The methods section was considered incomplete to allow a researcher from a related field to exactly reproduce every experiment shown - concentrations, solvents and timings - e.g. Fig 7, how much TNF, how much IFNgamma? It was unclear exactly how the false discovery rate was assessed - which algorithm was used? What sample numbers were used in the calculations and how reproducible were the experiments? Specific information about the E. coli strain should be given, and whether it is motile.
 
 *** TODO Update number of biological and technical replicates in each experiment
@@ -139,22 +139,43 @@ General comments on presentation in the paper
  The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends.
 *** TODO Describe FDR calculation
 "It was unclear exactly how the false discovery rate was assessed - which algorithm was used? "
-*** TODO Give specific information about E. coli strain
+*** DONE [#A] Give specific information about E. coli strain
 "Specific information about the E. coli strain should be given, and whether it is motile."
-*** TODO Clarify the application of antibiotics
+
+RESPONSE: Regarding the E. coli strain ECOR2 that was used for these studies, we have performed whole geneome sequencing, annotation, and assembly. Details are given in the Materials and Methods and this data is available using the PATRIC online bacterial genomics platform.  A complete characterization of this strain is beyond the scope of the manuscript and is outside our area of expertise, but preliminary phylogenetic analysis of the complete genome (Figure 1 - Supplement 2) indicates that ECOR2 is closely related to the well-studied E. coli type strain K-12 MG1655 and other non-pathogenic E. coli isolates.  E. coli strain ECOR2 is available from ATCC. We have also indicated in the manuscript that we are willing to share isolates of this organism with interested researchers.
+
+*** DONE Clarify the application of antibiotics
 "The model depends on selective injection of live bacteria into HIOs and evidence is provided in Figure 1 about this. The experimental protocol needs to be far more explicit in the main body of the text: in the methods under 'HIO culture' it is stated 'HIOs were maintained in ENR media without antibiotics prior to microinjection experiments'; then under 'Microinjection', '..... cultures were rinsed with PBS and treated with ENR media containing penicillin and streptomycin...'. Controls that assess the potential influence of carry-over of antibiotics of the readouts reported in Figure 1 are required."
 *** DONE Clarify dose for figure 1D
  " C. What dose(s) of injections were used for 1D?"
 
 RESPONSE: For Figure 1D, the HIOs were microinjected with 10 CFU E. coli each. The figure legend has been amended to fix this.
 
-** TODO Generate control data that assess the influence of abx 
+** DONE Generate control data that assess the influence of abx [4/4]
+cross reference: [[bd2-hypoxia]]
   Major comments
   The model depends on selective injection of live bacteria into HIOs and evidence is provided in Figure 1 about this. The experimental protocol needs to be far more explicit in the main body of the text: in the methods under 'HIO culture' it is stated 'HIOs were maintained in ENR media without antibiotics prior to microinjection experiments'; then under 'Microinjection', '..... cultures were rinsed with PBS and treated with ENR media containing penicillin and streptomycin...'. Controls that assess the potential influence of carry-over of antibiotics of the readouts reported in Figure 1 are required.
 and ...
 "Further, the final sentence of the third paragraph of page 4 and the results quoted in the following paragraph after day 3 are contradictory. Controls are absolutely necessary to ensure that these findings are not simply due to antibiotic carry-over."
-** TODO Respond to fixation and/or freezing artifacts criticism of Fig 1B
+
+*** DONE Collect conditioned media samples
+    SCHEDULED: <2018-08-14 Tue>-<2017-08-16 Wed>
+    - ENR
+    - ENR + abx from HIO microinjection post-treatment
+    - ENR at 24 h after HIO microinjection (abx- media on HIO overnight after removal of ENR+abx)
+*** DONE Test ECOR2 growth inhibition with HIO media [2/2]
+    SCHEDULED: <2017-09-01 Fri>
+    - plate lawn of ECOR2, add drops of media
+      - https://www.hindawi.com/journals/bmri/2013/927323/
+    - inoculate media with 10,000 CFU ECOR2, test growth overnight
+**** DONE Check plate, take pictures
+     SCHEDULED: <2017-09-05 Tue>
+**** DONE Generate abx control figure
+** DONE Respond to fixation and/or freezing artifacts criticism of Fig 1B
+   SCHEDULED: <2017-08-31 Thu>
 "Fig 1B appears to be compromised by fixation and/or freezing artifacts."
+
+RESPONSE: We have replaced this figure with a high magnification confocal micrograph of an HIO at 24 hours after microinjection with live E. coli from a separate experiment. We hope the use of high magnification will allow the reader to see physical relationship between the HIO and E. coli with greater clarity.
 ** DONE Fix Fig 1C axis label
    SCHEDULED: <2017-08-01 Tue>
 "B. In Figure 1C the y axis is labelled 24h delta CFU. Given that the scale becomes fractional, it seems likely that ratios rather than differences are being used."
@@ -166,12 +187,16 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
   B. In Figure 1C the y axis is labelled 24h delta CFU. Given that the scale becomes fractional, it seems likely that ratios rather than differences are being used.
   C. What dose(s) of injections were used for 1D?
   D. As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated. Further, the final sentence of the third paragraph of page 4 and the results quoted in the following paragraph after day 3 are contradictory. Controls are absolutely necessary to ensure that these findings are not simply due to antibiotic carry-over.
-** TODO Consider removal or replacement of 1E
+** DONE Consider removal or replacement of 1E
 "As a main panel of Figure 1E, showing two agar plates does not add much, especially when the legend does not give details of exactly when are how they were generated."
-** IN-PROGRESS [#A] Experiment evaluating HIO morphology and differentiation [8/10]
+
+RESPONSE: Figure 1E has been removed from the main figure. Our intended purpose was to illustrate the growth of E. coli within the HIO lumen and the absence of growth in the external media, findings that are made clear in Figures 1D and 1F (now 1E). The figure showing the two agar plates has been moved to a Figure 1 Supplement containing a schematic of our protocol and supporting data.
+** DONE [#A] Figure 1 - Supplement Schematic of protocol
+   SCHEDULED: <2017-09-11 Mon>
+** DONE [#A] Experiment evaluating HIO morphology and differentiation [17/18]
 
  "The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?"
-*** DONE Treat and collect HIOs [100%]
+*** DONE Treat and collect HIOs [87%]
    SCHEDULED: <2017-07-24 Mon>
 
 **** DONE Spike HIOs with 10 uM EdU
@@ -205,8 +230,37 @@ RESPONSE: The reviewers are correct in pointing out that the y-axis label in Fig
      SCHEDULED: <2017-08-03 Thu>
 **** DONE [#A] Submit HIOs for processing in MIL
      SCHEDULED: <2017-08-04 Fri>
-*** IN-PROGRESS Give embedded HIOs to Mindy for sectioning
+
+*** DONE Give embedded HIOs to Mindy for sectioning
     SCHEDULED: <2017-08-07 Mon>
+
+*** DONE Pick up stained slides from Mindy
+    SCHEDULED: <2017-08-16 Wed>
+
+*** DONE Schedule microscope time
+    SCHEDULED: <2017-08-16 Wed>
+
+*** DONE [#A] BSRB-Nikon-A1-Confocal
+   <2017-08-17 Thu 12:00-14:00>
+   :PROPERTIES:
+   :Effort:   0
+   :END: 
+
+*** DONE [#A] BSRB-Nikon-A1-Confocal
+   <2017-08-18 Fri 13:00-17:00>
+   :PROPERTIES:
+   :Effort:   0
+   :END: 
+
+*** DONE Prepare images for quantitation
+    SCHEDULED: <2017-08-24 Thu>
+
+*** DONE Quantitate Ki67/E-cadherin staining
+
+*** DONE Plot EdU/Ki67 proliferation data
+
+*** DONE Make representative epithelial proliferation figure 
+    SCHEDULED: <2017-09-05 Tue>
  The transcriptomic approach does not capture all basic information about the system. Does the E. coli injection alter the size, morphology and longevity of the HIOs? Does it alter the rate of epithelial cell turnover (which could be easily tested by BrdU labeling, and would be predicted from e.g. Proc Natl Acad Sci U S A. 2011 Mar 15;108 Suppl 1:4570-7)? Does it alter the pattern of epithelial cell maturation, i.e. the fraction of mature paneth cells, goblet cells, enteroendocrine cells etc?
 
 Samples (9):
@@ -241,17 +295,31 @@ Set 4 (lower priority)
  - Ecad
  - Any one of MUC2/CHGA/LYZ/DEFA5/dppIV/SI
 
-*** TODO Does goblet cell differentiation contribute to mucus expression?
-     In relation to figure 6, can induction of mucus production and induction of goblet cell differentiation be delineated? The slow appearance of mucin gene upregulation appears more consistent with a differentiation phenotype than simple gene expression?
+** DONE [#A] Write up results for Figure 3
+   SCHEDULED: <2017-09-11 Mon>
+
+** DONE Does goblet cell differentiation contribute to mucus expression?
+    In relation to figure 6, can induction of mucus production and induction of goblet cell differentiation be delineated? The slow appearance of mucin gene upregulation appears more consistent with a differentiation phenotype than simple gene expression?
 
 ** TODO Discuss "caveats" to studying hypoxia in absence of blood vessels
 "It is accepted that enteroids are 3 dimensional structures, and the study has been productive in the evaluation of stem cell dynamics and other tissue level events. However, organoids are not vascularized with a capillary network that generate O2 gradients in vivo, thus organism level physiological events such as hypoxia are difficult to address and these caveats must be included in the discussion"
-** TODO [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
+** DONE [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
+   SCHEDULED: <2017-09-12 Tue>
 "Using the pathway analysis from the GO and REACTOME databases limits the insight that the reader is given into the changes in gene expression. For example, in Figure 2C 'muscle cell differentiation' is shown as a pathway. It would be possible to report detailed network analyses at least in the supporting material so that the contribution of different transcripts to the overall analysis is clear. This would allow considerable refinement of the time-dependent transcriptional response descriptions in the text."
-** IN-PROGRESS [#A] Repeat PMDZ and E-Cad staining experiment [2/6]
-   SCHEDULED: <2017-08-14 Mon>
+
+RESPONSE: With the GSEA analysis presented in Figure 2, we aimed to present a broad scale overview of the coordinated, time-dependent transcriptional response to E. coli colonization based on GO and REACTOME databases. Gene-level pathway analysis may compliment this approach by illustrating the interactions between genes and suggesting mechanistic relationships. Based on the reviewer's suggestion, we have performed a variety of gene level analysis of previously annotated KEGG pathways using the Pathview software package (R/Bioconductor). This resulted in a pathway diagram demonstrating broad reduction in the expression of cell cycle genes at 48 h post-microinjection in E. coli colonized HIOs, consistent with our findings in Figure 3, and has been included as Figure 3 - Supplement 1 in the revised manuscript. We thank the reviewer for this valuable suggestion.
+
+The KEGG, GO and REACTOME databases are valuable resources for understanding the relationships between genes and interpreting large scale transcriptional changes. However, these tools are inherently limited to known pathways and may fail to identify novel interactions between networks of genes. We performed a gene regulatory network inference analysis of our E. coli colonization timecourse data using the method described by Simoes and Emmert-Streib (PLOS 2012). This analysis identified a large network of genes that are dynamically expressed over 24-96 h post-microinjection that was highly enriched for tissue development, metabolism, carbohydrate transport, and glycotransferases. A preliminary figure illustrating this network is provided below. Further characterization of these putative gene-level interactions is ongoing in our laboratory and is outside the scope of the current manuscript. We are hopeful that this approach will reveal new details about the time-dependent epithelial response to bacterial colonization. Finally, interested readers will find that thegenes included in each of the pathways shown in Figure 2C are listed in the supplemental data table and in the analysis materials at https://github.com/hilldr/Hill_HIO_Colonization_2017
+
+
+** DONE [#A] Repeat PMDZ and E-Cad staining experiment [11/11]
+#+NAME: PMDZ-stain
+see also [[bd2-hypoxia]]
 
   In Figure 3C it is difficult to appreciate whether the cadherin stain has worked in the PBS panel. How reproducible are these results? What happens with a hypoxic control?
+
+RESPONSE: We have repeated the experiment in a new cohort of HIOs and included new representative immunostaining for all conditions, including heat-inactivated E. coli and hypoxic culture controls (Figure 3C). In addition, we tabulated the number of PMDZ+ HIOs in each condition from two combined experiments and have included this data as a sub-panel of Figure 3C. In our hands, the PMDZ staining is quite reliable and demonstrates an apparent decrease in epithelial oxygen content in HIOs injected with live E. coli or HIOs subjected to 1% O2 for 24 hours relative to HIOs injected with heat-inactivated E. coli or PBS. We are pleased with the results of the control staining and appreciate the reviewers for bringing this oversight to our attention.
+
 *** DONE Request HIOs
     SCHEDULED: <2017-07-31 Mon>
 *** DONE [#A] Setup HIOs for PMDZ uptake
@@ -261,72 +329,173 @@ Set 4 (lower priority)
     - Hypoxia
     - dead E. coli
     - dead E. coli + hypoxia 
-see also [[*Test%20BD-2%20induction%20in%20dead%20E.%20coli%20+%20hypoxia%20%5B/%5D][Test BD-2 induction in dead E. coli + hypoxia]]
-*** TODO [#A] Start ECOR2 culture
-    SCHEDULED: <2017-08-13 Sun>
-*** TODO [#A] Microinject live/dead ECOR2 and start hypoxia treatment
+see also [[bd2-hypoxia]]
+*** DONE [#A] Start ECOR2 culture
     SCHEDULED: <2017-08-14 Mon>
-*** TODO [#A] Collect media and fix HIOs in PFA
+*** DONE [#A] Microinject live/dead ECOR2 and start hypoxia treatment
     SCHEDULED: <2017-08-15 Tue>
-*** TODO [#A] Transfer HIOs to 70% Ethanol
-    SCHEDULED: <2017-08-16 Wed>
-** TODO Revise Figure 4 analysis [1/6]
+    - PBS
+    - E. coli
+    - Hypoxia
+    - dead E. coli
+    - dead E. coli + hypoxia 
+*** DONE [#A] Collect media and fix HIOs in PFA
+    SCHEDULED: <2017-08-16 Wed 17:00>
+*** DONE [#A] Transfer HIOs to 70% Ethanol
+    SCHEDULED: <2017-08-17 Thu>
+*** DONE Submit tissue to the MIL
+    SCHEDULED: <2017-08-18 Fri>
+*** DONE Give blocks to Mindy for embedding, sectioning and imaging
+*** DONE Schedule imaging
+    SCHEDULED: <2017-08-25 Fri>
+*** DONE Nikon A1 confocal appt
+    SCHEDULED: <2017-08-28 Mon 15:00-17:00>
+*** DONE Make PMDZ/E-cadherin figure and table
+    SCHEDULED: <2017-09-04 Mon>
+
+** TODO Revise Figure 4 analysis [5/6]
    The data analysis shown in Fig 4. was complex and challenging for the reviewers to appreciate in its current form. The subset organisation must be clear and specific.
-*** TODO [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
-    A. Why is there no PBS control with the NFkB inhibitor? Many cell survival/cell death pathways converge on NFkB signalling and the inhibitor may exert effects already at baseline which would then fall into gene set 1 and gene set 2? From the Venn-diagrams shown in panel A, it appears that genes in set 1 and 2 are mutually exclusive, which would make the lacking control less problematic, but apparently the hypoxia-responsive genes are highly enriched in both (of course these may be different genes in the same pathway? But this would be slightly surprising if a statistical exclusion had been made).
+*** DONE [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
+    A. Why is there no PBS control with the NFkB inhibitor? Many cell survival/cell death pathways converge on NFkB signalling and the inhibitor may exert effects already at baseline which would then fall into gene set 1 and gene set 2? 
+
+RESPONSE: We included control HIOs injected with PBS and treated with SC-514 in our initial experiment and uploaded the relevant RNA-seq data to the public repository at EMBL (E-MTAB-5801), however we did not address this dimension of the experiment in our original manuscript out of concerns that it might over-complicate the presentation of our analysis. However, in response to concerns from the reviewers, we have added supplemental figures which we hope will clarify the baseline effects of the NF-kB inhibitor SC-514. Figure 5 - Supplement 1C the log2-transformed fold-change in gene expression relative to PBS-injected controls for all 7 experimental conditions examined in this set of experiments: live E. coli +/- SC-514, heat-killed E. coli +/- SC-514, and hypoxic culture +/- SC-514, and PBS + SC-514. This figure shows that the number of genes altered by treatment with SC-514 alone is comparable to the set of genes altered in other experimental conditions, although there are generally more genes that are down-regulated by SC-514 exposure than there are genes that are up-regulated by SC-514. We examined over-represented genes sets from the GO, KEGG, and REACTOME databases in genes that were significantly up- or down-regulated by treatment with SC-514 alone (Figure 5 - Supplement 1D) in order to better understand the types of processes that might be influenced by SC-514 exposure. We plotted the pathways that were in the top 90 percentile based on statistical significance, indicating a high degree of enrichment in the gene subsets regulated by NF-kB inhibitor SC-514 at baseline. The data indicates that SC-514 may suppress some aspects of transcription and translation and may up-regulate authophagy and translation-associated processes. Perfect specificity is rare among pharmacologic inhibitors, and in this respect SC-514 is not unique. Notably, SC-514 does not appear to have a strong effect at baseline on the pathways identified in Figure 5 as key KF-kB-dependent responses to bacterial contact and/or hypoxia, namely innate and adaptive defense, epithelial barrier integrity, angiogenesis and hypoxia signaling, or intestinal development.
+
+From the Venn-diagrams shown in panel A, it appears that genes in set 1 and 2 are mutually exclusive, which would make the lacking control less problematic, but apparently the hypoxia-responsive genes are highly enriched in both (of course these may be different genes in the same pathway? But this would be slightly surprising if a statistical exclusion had been made).
+
+RESPONSE: This is an important oversight on our part, as the original version of Figure 5A implied that there were no overlapping genes between Gene Set I and Gene Set II. This was not our intention, as it is perfectly feasible that some genes may be induced by either bacterial contact OR hypoxia via NF-kB. In Figure 5 - Supplement 1E, we plotted a Venn Diagram showing the degree of overlap between Gene Set I, Gene Set II, and the set of genes that are significantly down-regulated in PBS-injected HIOs treated with SC-514. In fact, the Venn diagram shown as Figure 5 - Supplement 1E demonstrates that there are 603 genes that are indeed induced by either hypoxia OR bacterial-contact in an NF-kB dependent. This analysis demonstrates that the majority of contact- or hypoxia-induced genes that are NF-kB dependent are not significantly down-regulated in PBS-injected HIOs treated with SC-514. However, some genes suppressed by SC-514 at baseline may be biologically significant. Therefore, we examined over-represented genes sets from the GO, KEGG, and REACTOME databases in genes that were shared between Gene Set I or II and the set of genes that are significantly down-regulated in PBS-injected HIOs treated with SC-514 (Figure 5 - Supplement 1F). This analysis indicates that the biggest effects of SC-514 at baseline among Gene Set I and Gene Set II genes are related to metabolism, redox state, and stranscription/translation. SC-514 may also have an effect of suppressing the response to hypoxia at baseline, which is not suprising given the relatively low oxygen conditions of HIO culture even prior to treatment (Figure 4). Thus, while SC-514 does have some potentially interesting effects on transcription in the HIO even at baseline, the effect of SC-514 alone cannot account for the major conclusion of Figure 5 that NKF-kB-dependent responses to bacterial contact and/or hypoxia include innate and adaptive defense, epithelial barrier integrity, angiogenesis and hypoxia signaling, or intestinal development.
+
+
+
 *** TODO Alter discussion to include "vital PAMPS"
     B. For the discussion of the analysis, it appears that an assumption is made that the effect of live E. coli is identical to dead E. coli combined with hypoxia. There is a large body of literature on "vital PAMPs" (e.g. Nature. 2011 May 22;474(7351):385-9), which might suggest there is more to it. Nevertheless, there appears to be an excellent correlation between genes regulated by live and dead E. coli in the plots in Fig. 4B. If the hypothesis is correct, then injecting dead E. coli and then immediately transferring the organoids to a hypoxic chamber should produce a gene-expression profile that correlates better that the dead E. coli alone. Noticeably the gradient of the correlation between hypoxia/PBS and live E. coli/PBS seems to be close to zero?
-*** TODO Clarify criteria for scatterplots in 4B
+*** DONE Clarify criteria for scatterplots in 4B
     C. Is there some sort of statistical significance cut-off for the genes identified for each set in panel B? The clouds appear to very closely approach a log2-FC of zero, suggesting genes showing very small changes in expression are included? Would it be logical to show the data pre-filtered for p-value? Or show the limits of the region and color-code for p-value?
-*** TODO Clarify labels for 4C
+
+RESPONSE: We experimented with many different iterations of this figure over the course of our analysis and found the version presented in the manuscript to be the most useful. In composing figures, there is always a tradeoff between the amount of detail presented and clarity/accessibility for the reader. The color coding corresponds to the genes that served as input for the pathway over-representation analysis shown in Figure 5C and shows the density of the plotted points, since many points over lap. The criteria for identifying the color-plotted gene sets were as follows (using the 1st panel as an illustrative example):
+
+Gene Set I = 
+log2FC(dead + NFKBi / dead) < 0 
+AND log2FC(live + NFKBi / live) < 0 
+AND (adjusted P-value dead + NFKBi vs dead < 0.05 OR adjusted P-value live + NFKBi vs live < 0.05)
+
+The explicit implementation of this analysis scheme is available in the annotated code (https://github.com/hilldr/Hill_HIO_Colonization_2017). In this way, we identified genes up-regulated by live AND dead E. coli and highly statistically significant in one of those conditions. This resulted in more inclusive gene sets that were less likely to be enriched for specific pathways, making our results all the more striking. Color coding the points based on P-value does indeed look visually striking, however there is a question of which P- value to use. Using the example above, we would have to choose the color coding based on the adjusted P-value for dead + NFKBi vs dead or the adjusted P-value for live + NFKBi vs live. Neither P-value tells the whole story, as both are used to define Gene Set I. Although the details of the Gene Set identification have been available in the code provided, we have added a brief comment to the Figure 5 legend.
+*** DONE Clarify labels for 4C
     D. In panel C, is it right that "% genes matched to pathway" is this the percentage of genes from each set (e.g. the full 1940 genes in Set 1) that map to the indicated pathway? Thus 5%, i.e. around 400 genes from set 1 map to "regulation of cytoskeleton organization"? Please clarify. 
-*** TODO Supplementary figure showing size changes in gene expression in 4B
+
+RESPONSE: Yes, that is the correct interpretation of the x-axis label. We have revised the label to read "% genes from input set matched to pathway", which we hope will improve clarity for the reader. The plotted value is the proportion of input genes (i.e. the 1,940 genes in Gene Set I) that are included in the given GO or REACTOME pathway set. Therefore if ~4% of genes in Gene Set I map to "regulation of cytoskeleton organization" this would be the equivalent of 0.04 x 1,940 = 97 genes. Note that many genes are assigned to multiple GO and REACTOME terms, and while have tried to avoid redundancy in our choice of pathways in the plot, several of these terms will contain overlapping genes. The complete dataset table of results is available on the GitHub repository (https://github.com/hilldr/Hill_HIO_Colonization_2017).
+
+
+*** DONE Supplementary figure showing size changes in gene expression in 4B
 Also, as the plots in B suggest that many genes are included with a very small up- or down-regulation, it would be important to have some handle on not just the significance, but also the average absolute size of the change observed. A second set of graphs, or a supplementary figure with more information would be helpful.
+
+RESPONSE: To address this concern, we have generated a plot of the log2-transformed fold-change in gene expression relative to PBS-injected controls for all 7 experimental conditions examined in this set of experiments: live E. coli +/- SC-514, heat-killed E. coli +/- SC-514, and hypoxic culture +/- SC-514, and PBS + SC-514. The format of the plot is identical to the plot shown in Figure 2A, and shows the fold-change in expression of all transcripts measured in a given condition relative to PBS treatment alone (grey) with significantly up- and down-regulated transcripts colored in red and blue, respectively. This figure reveals that the scale of the global transcriptional response varies somewhat between experimental conditions. This may be expected, given, for example, that hypoxic culture would be expected to permeate both epithelial and mesenchymal cells throughout the HIO, whereas the impact of heat-inactivated E. coli injected into the HIO lumen may be more limited.
+
 *** DONE Clarify P-value cut-off for 4C
     SCHEDULED: <2017-08-02 Wed>
     E. In the legend, were pathways with enrichment P-values greater than 0.01 excluded?
 
 RESPONSE: This was a typographical error. pathways with P-values > 0.01 were excluded from the plot and the legend has been amended to fix this.
-** TODO [#A] Test BD-2 induction in dead E. coli + hypoxia [2/3]
-SCHEDULED: <2017-08-14 Mon>
+** DONE Test BD-2 induction in dead E. coli + hypoxia [7/7]
+#+NAME: bd2-hypoxia
+cross-reference [[PMDZ-stain]]
     In Fig 5B and C, it would be important to include a group microinjected with dead E. coli, immediately followed by hypoxia, to conclude that both factors act together to induce b-defensins.
-- cross-reference with [[*Repeat PMDZ and E-Cad staining experiment][Repeat PMDZ and E-Cad staining experiment {1/6}]]
 *** DONE Request HIOs
+*** DONE [#A] Microinject live/dead ECOR2 and start hypoxia treatment
+    SCHEDULED: <2017-08-15 Tue>
+    - PBS
+    - E. coli
+    - Hypoxia
+    - dead E. coli
+    - dead E. coli + hypoxia
+*** DONE Collect media
+    SCHEDULED: <2017-08-16 Wed>
 *** DONE Submit Media to ELISA core
-    SCHEDULED: <2017-08-04 Fri>
-*** WAITING Analyze data
-** TODO Respod to reducing agent question as beyond scope
+    SCHEDULED: <2017-08-17 Thu>
+*** DONE [#A] Analyze data
+    SCHEDULED: <2017-08-28 Mon>
+*** DONE Add as supplemental figure 4-3
+*** DONE Add reference to hypoxia ELISA data in text
+    SCHEDULED: <2017-09-19 Tue>
+** DONE Respod to reducing agent question as beyond scope
 For Fig 5D, does hBD-2 require a reducing agent for activity as hBD1 does (Nature 469, 419-423)? Typically, these pore-forming AMPs to exert a stronger effect on the rapidly growing bacteria than in the stationary phase, and in fact, your maximum growth rate (i.e. maximum curve gradient) is even higher where the BD-2 is added, suggesting that something in the BD-2 may even permit faster E coli growth in LB. Death over several hours in late stationary phase may be rather due to accumulation of a toxic metabolite. To control for these effects, it will be important to show growth data with heat-inactivation of the BD-2. 
-** TODO [#A] Test recombinant BD-2 activity during stationary phase [1/3]
+RESPONSE: See below
+** DONE Test heat-inactivated BD-2 & ECOR2/K12 growth [4/5]
+*** DONE Start ECOR2 & K12 cultures
+    SCHEDULED: <2017-08-29 Tue>
+*** DONE Setup growth plate
+    SCHEDULED: <2017-08-30 Wed>
+*** DONE Check BD2 plate and analyze data
+    SCHEDULED: <2017-08-31 Thu>
+*** DONE Prepare BD-2 supplementary figure with E. coli K12
+** DONE Test recombinant BD-2 activity during stationary phase [14/14]
 To focus on killing in the stationary phase a late stationary-phase culture could be treated with differing concentrations of BD-2 over short time-courses (including the inactivated controls), measuring loss of membrane integrity by Sytox-green uptake by flow cytometry or microscopy. As O-antigens can inhibit AMP function, E. coli K-12 could be included in these experiments.
 *** DONE Order BD-2
-*** WAITING Heat-inactivate BD2
+*** DONE Heat-inactivate BD2
+    SCHEDULED: <2017-08-23 Wed>
 Heat at 100C for 30 min
-*** WAITING Treat stationary-phase ECOR2 with BD2
+*** DONE [#A] Start ECOR2 culture
+    SCHEDULED: <2017-08-20 Sun>
+*** DONE Test spiral plater
+    SCHEDULED: <2017-08-21 Mon 15:00>
+*** DONE Pour LB plates (Micah)
+*** DONE Treat stationary-phase ECOR2 with BD2
 Dilute overnight culture 1:1000 in PBS
 1. PBS
 2. PBS + 0.1 ug/ml BD-2
 3. PBS + 1 ug/ml BD-2
 4. PBS + 0.1 ug/ml BD-2 (heat inactivated)
 5. PBS + 10 ug/ml BD-2 (heat inactivated)
-** TODO Prepare BD-2 supplementary figure with E. coli K12
+*** DONE [#A] Start ECOR2 culture
+    SCHEDULED: <2017-08-29 Tue>
+*** DONE Pour LB plates (Micah)
+*** DONE Treat stationary-phase ECOR2 with BD2
+    SCHEDULED: <2017-08-31 Thu 8:00>
+Dilute overnight culture 1:1000 in PBS
+
+Treat for 6 hours
+
+1. PBS
+2. PBS + 0.1 ug/ml BD-2
+3. PBS + 1 ug/ml BD-2
+4. PBS + 0.1 ug/ml BD-2 (heat inactivated)
+5. PBS + 10 ug/ml BD-2 (heat inactivated)
+*** DONE Plate using spiral plater with Micah
+    SCHEDULED: <2017-08-31 Thu 14:00>
+*** DONE Count colonies on plates
+    SCHEDULED: <2017-09-01 Fri>
+*** DONE Analyze stationary phase ECOR2 growth data
+    SCHEDULED: <2017-09-01 Fri>
+*** DONE Write response to reviewer
+RESPONSE: Following the reviewer's suggestion, we have performed in vitro E. coli experiments utilizing heat-inactivated BD-2 as a control (Figure 5 - Supplement 2). We found that heat inactivation of the recombinant BD-2 peptide completely abrogated the reduction in E. coli growth caused by addition of BD-2 to the cultures. Furthermore, we confirmed that this recombinant BD-2 has similar inhibitory activity against E. coli K-12, suggesting that the effects of BD-2 are not strain specific. We have also included data on the effect of BD-2 on bacterial carrying capacity derived from the growth curves (Figure 5D and Figure 5 - Supplement 2). Our original hypothesis was that up-regulation of AMP expression in HIOs following E. coli microinjection (Figures 2E, 5A-C) may contribute to limited E. coli growth in the HIO lumen (Figure 1C-D). BD-2 significantly reduces carrying capacity in vitro at concentrations consistent with conditions in the HIO (Figure 5D and Figure 5 - Supplement 2B). This demonstrates that an AMP expressed by HIOs in response to E. coli colonization has the potential to reduce microbial growth in the HIO. As pointed out by the reviewer, questions remain as to the mechanism of action of human beta defensins. Multiple mechanisms of action have been proposed in the literature (Ulm et al. /Front. Immunol./ 2012, Brogden /Nature Rev. Microbio./ 2005) including pore formation, transcriptional and metabolic inhibition, inhibition of membrane transporters, etc., which vary between defensin family members and specific bacterial targets and can be influenced by the local biochemical conditions such as redox state (Nature 469, 419-423). While we agree that this presents an interesting question, we have not defined the specific mechanism(s) of action for BD-2 against /E. coli/ str. ECOR2. Such mechanistic studies involve complex structural biology and bacterial genetics experiments and lie both outside of our expertise and the time limitations on this revision, and more importantly, outside the intended scope of this manuscript.
+*** DONE Write E. coli/BD-2 growth data into the manuscript
+    SCHEDULED: <2017-09-13 Wed>
 ** DONE Correct statement on epithelial barrier integrity
    SCHEDULED: <2017-08-02 Wed>
     The interpretation that 'Epithelial barrier integrity is enhanced following bacterial association' (p13) is rather at odds with the data in Figure 7 B and D where the PBS and E.coli treated permeability is the same. Is the meaning that NFkappaB signaling is required for the compensatory effects of the barrier in E.coli-treated organoids? 
 
-RESPONSE: The reviewers are correct to note that E. coli colonization itself does not result in a decrease in barrier permeability compared to PBS, and that the presence of NF-kB inhibitor results in increased barrier permeability. This implies that NF-kB is required for the mediating the response to E. coli colonization. Our original intention was to highlight two findings: 1 - that maintenance of epithelial barrier integrity following E. coli colonization is NF-kB dependent, and 2 - that bacterial colonization mitigates damage to the epithelial barrier and increases in epithelial barrier permeability following exposure to pr-inflammatory cytokines. We orignially highlighted these two findings under a single header, stating that both were evidence of enhanced barrier integrity. The reviewer's comments, however, make it clear that these data are probably best presented as two distinct findings, and that is the approach we took in the 'Discussion'. We have therefore separated our description of these results into two distinct headers in the 'Results' section. We hope that this will clarify and highlight the effects of bacterial colonization on HIO barrier function and improve consistency with the interpretation we have laid out in the Discussion.
-** TODO Prepare supplemental figure showing effect of SC514 on barrier function
+RESPONSE: The reviewers are correct to note that E. coli colonization itself does not result in a decrease in barrier permeability compared to PBS, and that the presence of NF-kB inhibitor results in increased barrier permeability. This implies that NF-kB is required for the mediating the response to E. coli colonization. Our original intention was to highlight two findings: 1 - that maintenance of epithelial barrier integrity following E. coli colonization is NF-kB dependent, and 2 - that bacterial colonization mitigates damage to the epithelial barrier and increases in epithelial barrier permeability following exposure to pro-inflammatory cytokines. We orignially highlighted these two findings under a single header, stating that both were evidence of enhanced barrier integrity. The reviewer's comments, however, make it clear that these data are probably best presented as two distinct findings, and that is the approach we took in the 'Discussion'. We have therefore separated our description of these results into two distinct headers in the 'Results' section. We hope that this will clarify and highlight the effects of bacterial colonization on HIO barrier function and improve consistency with the interpretation we have laid out in the Discussion.
+
+** DONE [#A] Prepare supplemental figure showing effect of SC514 on barrier function
+   SCHEDULED: <2017-09-19 Tue>
 What is the effect of the inhibitor alone?
 
-** TODO Revise presentation of Figure 2C 
+RESPONSE: We have added an additional treatment group to Figure 8B. HIOs were microinjected with PBS alone 24 h prior to microinjection with FITC-dextran and the addition of HIO media containing SC-514 ('PBS + SC-514'). Treatment with SC-514 alone had no detrimental effect on barrier function. We interpret this data as demonstrating that inhibition of the NF-kB pathway prevents the epithelial response to bacterial stimuli (both bacterial contact and hypoxia) that normally bolsters barrier function. The result is increased epithelial barrier permeability (Figure 8B) and a higher incidence of bacterial translocation (Figure 8C). 
+
+** DONE Revise presentation of Figure 1C 
     The data shown in Fig 2C is potentially misleading. What you are most likely seeing here is a sigmoidal growth to a reasonably uniform carrying capacity of E. coli. The logarithmic growth rate is likely identical for all different inocula, but the plateau phase is reached earlier with the higher dose injections. Please simply plot the injected CFU and the final CFU per organoid. 
-**** TODO [#A] E. coli growth timecourse for < 24 hours
+**** DONE [#A] E. coli growth timecourse for < 24 hours
 Ideally a time-course over the first 24h of colonization with a low and high dose of E. coli could be shown, giving you a more detailed handle on the type of growth occurring within the organoids.
 
  RESPONSE: Figure 1 - Supplement 2 has been provided to clarify the exact relationship between the input CFU at t=0 and the CFU harvested from the lumen at 24 hours post microinjection. We interpret the imaging data shown in Figure 1A as demonstrating that E. coli starts log-phase growth shortly after introduction to the HIO lumen, similar to the growth of E. coli in broth in vitro (Figure 5).
-** TODO Respond to minor points [1/6]
-*** TODO Provide explanation for BD1 expression
+** TODO Respond to minor points [3/5]
+*** DONE Add units to Figure 2E 
+*** DONE Provide explanation for BD1 expression
      What is the explanation for the increase in BD1 over time in the PBS injected organoids (Figure 2E which lacks units)? It would be interesting to include control panels here for cell death (LDH release or similar) and total cell number per sample volume.
+
+RESPONSE: New data presented in Figure 5 - Supplement 2 may clarify the change in BD1 expression over time reported in Figure 2E. In these experiments, we examined separately the effect of bacterial contact (heat-inactivated E. coli) and hypoxia (hypoxic culture) on BD1 protein secretion. Although heat-inactivated E. coli stimulated a significant increase in BD1 secretion, hypoxic culture was strongly inhibitory. Colonization of the HIO with live E. coli or microinjection with heat-inactivated E. coli and culture in a hypoxic environment produced a significant decrease in BD1 expression, suggesting that the inhibitory effect of hypoxia may be more potent than the induction of BD1 that results from exposure to bacterial PAMPs. Although a full characterization of this phenomena is outside the scope of the current manuscript, these results suggest that a time-dependent increase in hypoxia with in the colonized HIO lumen (Figure 4) may act to inhibit BD1 expression in a time-dependent manner (Figure 2E). Units have also been added to Figure 2E.
+
+We agree with the reviewer that a quantitative measure of cell death relative to total cell number over time in HIO cultures would be a useful assay for interpreting changes in protein expression relative to tissue size. Due to the self contained nature of the HIO, LDH release assays used in monolayer cell cultures are difficult to interpret since it is difficult to determine if LDH released into the internal lumen or bound up in the Matrigel ECM can be quantified with any accuracy. We were unable to develop these assays within the time allotted for revision, but this comment has increased our interest in finding a suitable non-destructive assay for cell death in live HIOs.
+
 *** TODO Address function of fucosylated mucins
      Fucosylation of intestinal glycans has been reported to depend upon the presence of bacterial pathobionts or pathogens (e.g. SFB, Salmonella) and the activity of innate lymphoid cells in the lamina propria (e.g. Science 12 Sep 2014:Vol. 345, Issue 6202, 1254009), or to be associated with mature M cells. "Mature carbohydrate modifications" may be something of an oversimplification, and this observation may even suggest that the closed nature of the organoids leads to a non-pathogenic E. coli strain being recognized as quite aggressive.
 *** DONE Clarify principle component analysis
@@ -353,3 +522,7 @@ RESPONSE: We have added a statement to the Materials and Methods section to conf
 
 ** WAITING Update ArrayExpress publication details
 [[mu4e:msgid:1178471856.15.1501632037672.JavaMail.arrayexpress@ebi.ac.uk][E-MTAB-5801, ArrayExpress release in 30 days time]]
+
+** DONE Add Veda as author, move Mindy up in the list
+
+** TODO Figure 4 rearrange table 

@@ -164,7 +164,7 @@ Finally, we also examined the role of microbial contact and microbe-associated h
 \begin{fullwidth}
 \centering
 \includegraphics[width=0.95\textwidth]{./figures/figure5/figure5_multipanel.pdf}
-\caption{\textbf{A} Analysis scheme for identifying genes sets representing the components of the transcriptional response to live \textit{E. coli} that could be recapitulated with heat-inactivated \textit{E. coli} (contact induced) or hypoxia (microbial-associated hypoxia induced) as well as the subsets of genes induced through NF-$\kappa$B dependent signaling. \textbf{B} Scatter plots with density overlay indicating the genes meeting the \textit{a priori} criteria identified in panel A. \textbf{C} Bar plot of the proportion of genes in the input gene sets mapping to each pathway from the GO and REACTOME databases enrichment \textit{P}-values for each of the gene sets identified in A. Pathways with enrichment \textit{P}-values > 0.01 were excluded from the plot.}
+\caption{\textbf{A} Analysis scheme for identifying genes sets representing the components of the transcriptional response to live \textit{E. coli} that could be recapitulated with heat-inactivated \textit{E. coli} (contact induced) or hypoxia (microbial-associated hypoxia induced) as well as the subsets of genes induced through NF-$\kappa$B dependent signaling. \textbf{B} Scatter plots with density overlay indicating the genes meeting the \textit{a priori} criteria identified in panel A with an FDR-adjusted \textit{P}-value of < 0.05 for least one of the two comparisons listed on the axes of the plot. \textbf{C} Bar plot of the proportion of genes in the input gene sets mapping to each pathway from the GO and REACTOME databases enrichment \textit{P}-values for each of the gene sets identified in A. Pathways with enrichment \textit{P}-values > 0.01 were excluded from the plot.}
 \label{fig:fullwidth}
 \end{fullwidth}
 \end{figure}
@@ -283,8 +283,8 @@ JRS is supported by the Intestinal Stem Cell Consortium (U01DK103141), a collabo
  #+END_LATEX
  #+BEGIN_LATEX
  \begin{figure}
- \begin{fullwidth} \centering\includegraphics[width=0.9\linewidth]{./figures/figure1/sfigure1-4_multipanel.pdf}
- \caption*{\textbf{Figure 1 - Supplement 2. } Phylogenetic tree based on maximum liklihood genomic distance among \textit{E. coli} str. ECOR2 \citep{Ochman:1984}, the strain used in the HIO colonization experiments, closely related \textit{E. coli} isolates available on the PATRIC \citep{Wattam:2017} database, and pathogenic type strains from the genera \textit{Esherichia}, \texit{Shigella}, and \textit{Salmonella}. A PATRIC genome reference number follows name of each taxa.}
+ \begin{fullwidth} \centering\includegraphics[width=0.9\linewidth]{./figures/figure1/sfigure1-2_tree.pdf}
+ \caption*{\textbf{Figure 1 - Supplement 2. } Phylogenetic tree based on maximum liklihood genomic distance among \textit{E. coli} str. ECOR2 \citep{Ochman:1984}, the strain used in the HIO colonization experiments, closely related \textit{E. coli} isolates available on the PATRIC \citep{Wattam:2017} database, and pathogenic type strains from the genera \textit{Esherichia}, \textit{Shigella}, and \textit{Salmonella}. A PATRIC genome reference number follows name of each taxa.}
  \label{fig:fullwidth}
  \end{fullwidth}
  \end{figure}
