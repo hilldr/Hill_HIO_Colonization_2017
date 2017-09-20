@@ -333,6 +333,8 @@ figure8d <- ggplot(plot.data1, aes(x = hr, y = mean, color = treatment)) +
     ylim(c(0.25, 1.05)) +
     xlab("Time post-treatment (h)") +
     ylab("Relative Fluorescence") +
+    ylab(latex2exp::TeX("$\\frac{FITC_{$\\textit{t}=$\\textit{n}}}{FITC_{$\\textit{t}=$\\textit{0}}}")) +
+
     scale_x_continuous(breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24)) +
     theme1 + ggtitle("D") +
     theme(
@@ -382,11 +384,13 @@ figure8b <- ggplot(plot.data2, aes(x = hr, y = mean, color = treatment)) +
     ylim(c(0.25, 1.05)) +
     xlab("Time post-treatment (h)") +
     ylab("Relative Fluorescence") +
+    ylab(latex2exp::TeX("$\\frac{FITC_{$\\textit{t}=$\\textit{n}}}{FITC_{$\\textit{t}=$\\textit{0}}}")) +
+
     scale_x_continuous(breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24)) +
     theme1 + ggtitle("B") +
     theme(
        # legend.position = "bottom",
-          legend.position = c(0.25,0.15),
+          legend.position = c(0.30,0.15),
     	  legend.key.size = unit(1,"cm"),
           legend.text = element_text(size = 32))
 
