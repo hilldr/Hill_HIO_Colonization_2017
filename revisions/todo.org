@@ -526,3 +526,5 @@ RESPONSE: We have added a statement to the Materials and Methods section to conf
 ** DONE Add Veda as author, move Mindy up in the list
 
 ** TODO Figure 4 rearrange table 
+
+** DONE Address VBY comments from [2017-09-20 Wed]
