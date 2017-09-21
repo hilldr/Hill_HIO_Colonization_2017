@@ -72,7 +72,7 @@ figure4a <- ggplot(data[data$time < 72,],
     ggtitle("A") + 
     xlab("Hours post-microinjection") + 
     theme1 +
-    theme(legend.position = c(0.15, 0.1),
+    theme(legend.position = c(0.18, 0.12),
           legend.text = element_text(size = 28)) +
     guides(fill = guide_legend(override.aes = list(size = 1))) +
 
@@ -139,20 +139,21 @@ ggsave(filename = "../figures/figure4/eps/figure4b.eps",
        width = 20, height = 20)
 
 ## PMDZ staining table
-stain <- data.frame(pbs = c(1,12,13),
-                    ecoli = c(10,2,12),
-                    hk = c(3,10,13),
-                    o2 = c(14,0,14))
-rownames(stain) <- c("PMDZ +", "PMDZ -", "n")
-colnames(stain) <- c("PBS\n(negative control)", "E. coli\n(live)", "E. coli\n(heat-inactivated)", "1% oxygen\n(positive control)")
+stain <- data.frame(pbs = c(1,12,13, NA),
+                    ecoli = c(10,2,12, round(chisq.test(stain[1:2,c(1,2)])$p.value, digits = 3)),
+                    hk = c(3,10,13, round(chisq.test(stain[1:2,c(1,3)])$p.value, digits = 3)),
+                    o2 = c(14,0,14,round(chisq.test(stain[1:2,c(1,4)])$p.value, digits = 5)))
+
+rownames(stain) <- c("PMDZ +", "PMDZ -", "N", "P")
+colnames(stain) <- c("PBS (negative control)", "E. coli (live)", "E. coli (heat-inactivated)", "1% oxygen (positive control)")
 
 library(gridExtra)
 library(grid)
 tt <- ttheme_default(
-		     colhead=list(fg_params=list(col="black", fontface=4L, cex = 1.5),
-                                  bg_params = list(fill = c(rep('grey70', times = 2), 'grey80'))),
-                     core = list(fg_params = list(fontface = "bold", cex = 1.5)),
-                     rowhead = list(fg_params=list(col="black", fontface=4L, cex = 1.5, hjust = 1),
+		     colhead=list(fg_params=list(col="black", fontface=4L, cex = 3),
+                                  bg_params = list(fill = c(rep('grey70', times = 2), 'grey80', 'grey80'))),
+                     core = list(fg_params = list(fontface = "bold", cex = 3)),
+                     rowhead = list(fg_params=list(col="black", fontface=4L, cex = 3, hjust = 0.95),
                                     bg_params = list(fill = c("white",rep(c('grey90','grey80'), times = 5)))))
 grid.table(t(stain), theme = tt) 
 
@@ -162,13 +163,16 @@ library(ggplot2)
 library(gridExtra)
 
 figure4c <- png2ggplot("../figures/figure4/figure4c.png") +
-    img.theme + ggtitle("C") + coord_fixed(ratio = 0.6)
+    img.theme + ggtitle("C") + coord_fixed(ratio = 0.5)
 
 layout <- rbind(c(1,1,2,2),
-                c(3,3,3,4))
+                c(1,1,2,2),
+                c(3,3,3,3),
+                c(3,3,3,3),
+		c(4,4,4,4))
 
 ## PDF output
-pdf(file = "../figures/figure4/figure4_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
+pdf(file = "../figures/figure4/figure4_multipanel.pdf", width = 6000/300, height = 7200/300, onefile = FALSE)
 gridExtra::grid.arrange(figure4a, figure4b, figure4c, tableGrob(t(stain), theme = tt), 
 layout_matrix = layout)
 dev.off()
