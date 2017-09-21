@@ -123,14 +123,14 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [91%]
+* eLife revision due date [96%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
    :END:
 ESSENTIAL REVISIONS:
 General comments on presentation in the paper
-** TODO Revise methods reporting [5/5]
+** DONE Revise methods reporting [5/5]
  Especially for a paper where the main point is development of an experimental system, the technical validation and reporting of the methods and results in the paper must be completely solid. The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends. The methods section was considered incomplete to allow a researcher from a related field to exactly reproduce every experiment shown - concentrations, solvents and timings - e.g. Fig 7, how much TNF, how much IFNgamma? It was unclear exactly how the false discovery rate was assessed - which algorithm was used? What sample numbers were used in the calculations and how reproducible were the experiments? Specific information about the E. coli strain should be given, and whether it is motile.
 
 *** DONE Update number of biological and technical replicates in each experiment. Update concentrations of stimulants and number of injected bacteria
@@ -304,8 +304,10 @@ Set 4 (lower priority)
 ** DONE Does goblet cell differentiation contribute to mucus expression?
     In relation to figure 6, can induction of mucus production and induction of goblet cell differentiation be delineated? The slow appearance of mucin gene upregulation appears more consistent with a differentiation phenotype than simple gene expression?
 
-** TODO Discuss "caveats" to studying hypoxia in absence of blood vessels
+** DONE Discuss "caveats" to studying hypoxia in absence of blood vessels
 "It is accepted that enteroids are 3 dimensional structures, and the study has been productive in the evaluation of stem cell dynamics and other tissue level events. However, organoids are not vascularized with a capillary network that generate O2 gradients in vivo, thus organism level physiological events such as hypoxia are difficult to address and these caveats must be included in the discussion"
+
+RESPONSE: In the intestine oxygen is supplied to the epithelium via a network of capillaries that extend into the lamina propria underlying the epithelium. Recent work has demonstrated that healthy intestinal epithelium exists in a state of relative hypoxia in comparison to the underlying mucosae due to the impact of the anaerobic luminal environment (Glover et al. JCI  2016, Kelly et al. Cell Host & Microbe 2015, Schmidt and Kao Gastroenterology 2014), although the molecular mecahnisms that allow the epithelium to fluorish under these conditions remain unclear. Stem cell derived human intestinal organoids (or enteroids) lack endothelial tissue and oxygen is apparently supplied to the tissue via diffusion through the media, similar to traditional cell culture systems. However, our work suggests that HIOs may be an excellent model system for studying the hypoxia gradient that exists between the lumen and the intestinal epithelium and underlying lamina propria and the changes in the relative state of oxygenation that occur during bacterial colonization (Figure 4) and under other conditions such as inflammation. We have added comments to the discussion clarifying the distinction between localized epithelial hypoxia and tissue hypoxia that occurs as a result of changes in blood flow, which cannot be modeled in the HIO at present.
 ** DONE [#A] Detailed network analysis of GO and REACTOME pathways in Fig 2C
    SCHEDULED: <2017-09-12 Tue>
 "Using the pathway analysis from the GO and REACTOME databases limits the insight that the reader is given into the changes in gene expression. For example, in Figure 2C 'muscle cell differentiation' is shown as a pathway. It would be possible to report detailed network analyses at least in the supporting material so that the contribution of different transcripts to the overall analysis is clear. This would allow considerable refinement of the time-dependent transcriptional response descriptions in the text."
@@ -356,7 +358,7 @@ see also [[bd2-hypoxia]]
 *** DONE Make PMDZ/E-cadherin figure and table
     SCHEDULED: <2017-09-04 Mon>
 
-** TODO Revise Figure 4 analysis [5/6]
+** DONE Revise Figure 4 analysis [6/6]
    The data analysis shown in Fig 4. was complex and challenging for the reviewers to appreciate in its current form. The subset organisation must be clear and specific.
 *** DONE [#A] Show PBS control +/- NF-kB inhibitor overlap with other NF-kB dependent subsets
     A. Why is there no PBS control with the NFkB inhibitor? Many cell survival/cell death pathways converge on NFkB signalling and the inhibitor may exert effects already at baseline which would then fall into gene set 1 and gene set 2? 
@@ -369,12 +371,19 @@ RESPONSE: This is an important oversight on our part, as the original version of
 
 
 
-*** TODO Alter discussion to include "vital PAMPS"
+*** DONE Alter discussion to include "vital PAMPS"
     B. For the discussion of the analysis, it appears that an assumption is made that the effect of live E. coli is identical to dead E. coli combined with hypoxia. There is a large body of literature on "vital PAMPs" (e.g. Nature. 2011 May 22;474(7351):385-9), which might suggest there is more to it. Nevertheless, there appears to be an excellent correlation between genes regulated by live and dead E. coli in the plots in Fig. 4B. If the hypothesis is correct, then injecting dead E. coli and then immediately transferring the organoids to a hypoxic chamber should produce a gene-expression profile that correlates better that the dead E. coli alone. Noticeably the gradient of the correlation between hypoxia/PBS and live E. coli/PBS seems to be close to zero?
+
+RESPONSE: The reviewers have clarified an underlying implication of our analysis of microbial contact and hypoxia presented in Figure 5: contact with microbial products under hypoxic conditions may recapitulate the effects of colonization with metabolically active live bacteria. Although this condition was not included in our original RNA-seq analysis and the limited time alotted for revision prevents us from completing a follow-up transcriptional analysis, we have examined this hypothesis by evaluating the role of microbial contact and microbe-associated hypoxia in colonization-induced changes in AMP, cytokine, and growth factor secretion (Figure 5 - Supplement 2). The results indicate a complex interplay between hypoxia and bacterial contact stimuli that shapes protein expression during bacterial colonization, with some factors induced by either microbial contact or hypoxia alone (IL-6), other cases in which either bacterial contact or hypoxia appears to be the dominant stimuli (BD-2), and a third regulatory paradigm in which the response to live E. coli evidently results from the cumulative influence of bacterial contact and hypoxia (BD-1, IL-8, VEGF). Taken together with our transcriptional analysis, this analysis demonstrates that association of immature intestinal epithelium with live E. coli results in a complex interplay between microbial contact and microbe-associated hypoxia induced gene expression and protein secretion. 
+
 *** DONE Clarify criteria for scatterplots in 4B
     C. Is there some sort of statistical significance cut-off for the genes identified for each set in panel B? The clouds appear to very closely approach a log2-FC of zero, suggesting genes showing very small changes in expression are included? Would it be logical to show the data pre-filtered for p-value? Or show the limits of the region and color-code for p-value?
 
-RESPONSE: We experimented with many different iterations of this figure over the course of our analysis and found the version presented in the manuscript to be the most useful. In composing figures, there is always a tradeoff between the amount of detail presented and clarity/accessibility for the reader. The color coding corresponds to the genes that served as input for the pathway over-representation analysis shown in Figure 5C and shows the density of the plotted points, since many points over lap. The criteria for identifying the color-plotted gene sets were as follows (using the 1st panel as an illustrative example):
+RESPONSE: 
+We apologize that this was not made more clear in the initial submission. We did use p-value as a pre-filter for this analysis and we also used only genes that were up-regulated in a treatment group, relative to control. We have revised the text to ensure that this information on how we filtered the data is made more explicit. 
+Since we used p-values as a filter, some genes that had very modest fold change differences were included in the analysis, explaining the log2-FC values that approach zero. We hope that the clarification around this text makes the data presented sufficiently clear.  
+
+We experimented with many different iterations of this figure over the course of our analysis and found the version presented in the manuscript to be the most useful. In composing figures, there is always a tradeoff between the amount of detail presented and clarity/accessibility for the reader. The color coding corresponds to the genes that served as input for the pathway over-representation analysis shown in Figure 5C and shows the density of the plotted points, since many points over lap. The criteria for identifying the color-plotted gene sets were as follows (using the 1st panel as an illustrative example):
 
 Gene Set I = 
 log2FC(dead + NFKBi / dead) < 0 
@@ -490,7 +499,7 @@ RESPONSE: We have added an additional treatment group to Figure 8B. HIOs were mi
 Ideally a time-course over the first 24h of colonization with a low and high dose of E. coli could be shown, giving you a more detailed handle on the type of growth occurring within the organoids.
 
  RESPONSE: Figure 1 - Supplement 2 has been provided to clarify the exact relationship between the input CFU at t=0 and the CFU harvested from the lumen at 24 hours post microinjection. We interpret the imaging data shown in Figure 1A as demonstrating that E. coli starts log-phase growth shortly after introduction to the HIO lumen, similar to the growth of E. coli in broth in vitro (Figure 5).
-** TODO Respond to minor points [3/5]
+** DONE Respond to minor points [5/5]
 *** DONE Add units to Figure 2E 
 *** DONE Provide explanation for BD1 expression
      What is the explanation for the increase in BD1 over time in the PBS injected organoids (Figure 2E which lacks units)? It would be interesting to include control panels here for cell death (LDH release or similar) and total cell number per sample volume.
@@ -499,16 +508,20 @@ RESPONSE: New data presented in Figure 5 - Supplement 2 may clarify the change i
 
 We agree with the reviewer that a quantitative measure of cell death relative to total cell number over time in HIO cultures would be a useful assay for interpreting changes in protein expression relative to tissue size. Due to the self contained nature of the HIO, LDH release assays used in monolayer cell cultures are difficult to interpret since it is difficult to determine if LDH released into the internal lumen or bound up in the Matrigel ECM can be quantified with any accuracy. We were unable to develop these assays within the time allotted for revision, but this comment has increased our interest in finding a suitable non-destructive assay for cell death in live HIOs.
 
-*** TODO Address function of fucosylated mucins
+*** DONE Address function of fucosylated mucins
      Fucosylation of intestinal glycans has been reported to depend upon the presence of bacterial pathobionts or pathogens (e.g. SFB, Salmonella) and the activity of innate lymphoid cells in the lamina propria (e.g. Science 12 Sep 2014:Vol. 345, Issue 6202, 1254009), or to be associated with mature M cells. "Mature carbohydrate modifications" may be something of an oversimplification, and this observation may even suggest that the closed nature of the organoids leads to a non-pathogenic E. coli strain being recognized as quite aggressive.
+
+RESPONSE: Several reports have demonstrated that bacterial colonization is required for the induction of mucus fucosylation (Bry et al Science 1996, Hooper et al. PNAS 1999, Cash et al Science 2006, Nanthakumar et al. Glycobiology 2013). The abscence of mucin fucosylation may increase the risk of infectious/inflammatory disease in infants (Morrow J Peciatrics 2011), however the presence of intestinal fucose residues may act as critical cell surface receptors for other pathogens and therefore increase the risk of those infections (Ruiz-Palacios et al. JBC 2003). As the reviewer suggested, both pathogenic (i.e. Salmonella, Campylobacter) and established mutualistic organisms (i.e. B. thetaiotamicron) are capable of promoting mucus fucosylation. Therefore, we have tried to clarify that when using the term “mature carbohydrate modifications”, we meant to refer to the association between mucosal fucosylation and post-natal bacterial colonization. 
 *** DONE Clarify principle component analysis
     SCHEDULED: <2017-08-02 Wed>
      Page 3, second paragraph. The description of the principal component analysis should read that PC1 correlates with developmental stage, while PC2 correlates with tissue maturation status. Currently the text implies that there is a direct relationship.
 
 RESPONSE: We thank the reviewers for pointing out this inaccuracy and we have made appropriate changes to the text.
 
-*** TODO Include suggested references
+*** DONE Include suggested references
      The authors should be accurate in acknowledging older literature (the hypoxia NFkappaB effect has been known since 1994 and the BD-2 effect since 1997) - albeit not in this context.
+
+RESPONSE: We have added appropriate acknowledgements to the original literature on the connection between NF-kB and hypoxia and the function of BD-2.
 
 ** DONE [#A] Authenticate cell lines [2/2]
    SCHEDULED: <2017-08-01 Tue>
@@ -528,6 +541,12 @@ RESPONSE: We have added a statement to the Materials and Methods section to conf
 
 ** DONE Add Veda as author, move Mindy up in the list
 
-** TODO Figure 4 rearrange table 
+** DONE Figure 4 rearrange table 
 
 ** DONE Address VBY comments from [2017-09-20 Wed]
+
+** TODO Update antibody dilutions table
+
+** TODO Make separate PDF files for each Supplemental Figure
+
+** TODO Revise all formatting with and without track changes
