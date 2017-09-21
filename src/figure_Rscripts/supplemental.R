@@ -478,7 +478,7 @@ library(ggtree)
 library(magrittr)
 source("ggplot2-themes.R")
 tree <- read.tree(file = "../data/ecor2/ECOR2-50.nwk")
-plot <- ggtree(tree, size = 2) %>% collapse(node = 86)
+plot <- ggtree(tree, size = 2) %>% ggtree::collapse(node = 86)
 plot <- plot + geom_treescale(width = 0.015) + #xlim(NA, 100) +
   #  geom_hilight(76, "steelblue") +
     geom_tiplab(size = 7) +

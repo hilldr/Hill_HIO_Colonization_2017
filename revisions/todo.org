@@ -123,22 +123,25 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [88%]
+* eLife revision due date [91%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
    :END:
 ESSENTIAL REVISIONS:
 General comments on presentation in the paper
-** TODO Revise methods reporting [3/6]
+** TODO Revise methods reporting [5/5]
  Especially for a paper where the main point is development of an experimental system, the technical validation and reporting of the methods and results in the paper must be completely solid. The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends. The methods section was considered incomplete to allow a researcher from a related field to exactly reproduce every experiment shown - concentrations, solvents and timings - e.g. Fig 7, how much TNF, how much IFNgamma? It was unclear exactly how the false discovery rate was assessed - which algorithm was used? What sample numbers were used in the calculations and how reproducible were the experiments? Specific information about the E. coli strain should be given, and whether it is motile.
 
-*** TODO Update number of biological and technical replicates in each experiment
+*** DONE Update number of biological and technical replicates in each experiment. Update concentrations of stimulants and number of injected bacteria
 " The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends."
-*** TODO Update concentrations of stimulants and number of injected bacteria
- The reviewers noted missing information on the number of biological and technical repeats, concentrations of stimuli, number of injected bacteria from the figure legends.
-*** TODO Describe FDR calculation
+
+RESPONSE: All figure legends have been revised to include the number of replicates and relevant details regarding the experimental setup. We have recently submitted a revised version of a manuscript describing the methodology for measuring FITC-dextran permeability in HIOs and are awaiting a final decision from the Journal of Visualized Experiments at the time of writing. However, a pre-print version of this manuscript is available at https://github.com/hilldr/HIO_microinjection. We have made reference to this website in the Materials and Methods with the hopes that interested readers will find additional details there. Finally, recognizing the Editor's decision to consider this manuscript for the Tools and Resources section, we have devised a schematic illustrating our experimental setup for the HIO colonization experiments (Figure 1 – Supplement 3). We hope that this will help the reader conceptualize the experimental scheme, evaluate the experiments presented, and devise new experiments to follow up on this work.
+
+*** DONE Describe FDR calculation
 "It was unclear exactly how the false discovery rate was assessed - which algorithm was used? "
+
+RESPONSE: The multiple testing-adjusted FDR was calculated using the DESeq2 (Love et al. Genome Biology  2014) immplementation of the Wald test, a method for differential analysis of count data using shrinkage estimation for dispersions and fold changes to improve stability and interpretability of estimates. This allows us to incorporate the degree of uncertainty present in the alignment of any one 50 bp RNA-seq read to the annotated genome, so that counts of reads per gene are weighted according to the level of confidence in the alignment. An additional comment has been added to the Materials and Methods to clarify this. Interested readers can also refer to the complete analysis scripts available at https://github.com/hilldr/Hill_HIO_Colonization_2017.
 *** DONE [#A] Give specific information about E. coli strain
 "Specific information about the E. coli strain should be given, and whether it is motile."
 
