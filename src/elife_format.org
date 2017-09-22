@@ -114,7 +114,7 @@ We also made correlations between upregulated genes in the RNA-seq data (*Figure
 \begin{figure}
 \begin{fullwidth}
 \centering
-\includegraphics[width=0.85\linewidth]{./figures/figure2/figure2_multipanel.pdf}
+\includegraphics[width=0.80\linewidth]{./figures/figure2/figure2_multipanel.pdf}
 \caption{\textbf{A} Log2-transformed fold change in normalized RNA-seq gene counts in \textit{E. coli} colonized HIOs at 24, 48, and 96 h post-microinjection with \num{e4} live \textit{E. coli} relative to PBS-injected HIOs. Differentially expressed genes (FDR-adjusted \textit{P}-value < 0.05) are indicated in red (up-regulated) or blue (down-regulated). Plotted results are the mean fold change per gene for each group. \textbf{B} Principle component plot of HIOs at 0-96 h post-microinjection derrived from whole-transcriptome RNA-seq normalized gene counts. Cumulative explained variance for PC1 and PC2 is indicated as a percentage on the x- and y-axes, respectively. \textbf{C} Heat map of normalized enrichment scores (NES) from GSEA of normalized RNA-seq expression data using the GO and REACTOME databases. A positive value of NES indicates activation of a given gene set and a negative value suggests relative suppression of a gene set. All NES scores are calculated relative to PBS-microinjected controls. \textbf{D} Mean log$_{2}$ fold change in normalized RNA-seq gene counts at 24-96 h post microinjection relative to PBS-injected control HIOs. \textbf{E} Protein secretion at 0-9 days post-microinjection with PBS or \textit{E. coli} as measured by ELISA in the supernatant of HIO cultures. The genes given in D correspond to the proteins measured in E. \textit{N} = 4 (0 h), 5 (24 h), 3 (48 h), and 4 (96 h) biological replicates consisting of 5-6 pooled HIOs per replicate for panels A-D. \textit{N} = 48 \textit{E. coli}-injected HIOs and \textit{N} = 8 PBS-injected HIOs for panel E.}
 \label{fig:fullwidth}
 \end{fullwidth}
@@ -130,7 +130,7 @@ The transcription factor Sox9 is expressed by progenitor cells in the intestinal
 \begin{figure}
 \begin{fullwidth}
 \centering
-\includegraphics[width=0.85\linewidth]{./figures/figure3/figure3_multipanel.pdf}
+\includegraphics[width=0.95\linewidth]{./figures/figure3/figure3_multipanel.pdf}
 \caption{\textbf{A} Representative confocal micrographs of HIOs injected with PBS or \num{e4} CFU \textit{E. coli} str. ECOR2 at 24-96 h post-microinjection and stained with fluorescent indicators for for EdU$^{+}$ DNA, E-cadherin, or nuclei (DAPI) as indicated in the figure labels . All HIOs were exposed to 10 $\mu$M EdU at 22 h post-microinjection and EdU was removed at 24 h. Panels are representative of 4 HIOs per timepoint per treatment condition. \textbf{B} Quantification of the number of EdU-positive and Ki67-positive epithelial cells (E-cadherin$^{+}$ cells) per 10X confocal microscopy field. One 10X confocal microscopy field consisting of 200-1000 epithelial cells was collected from each of 4 HIOs per timepoint per treatment group. The error bars represent the standard error of the mean and the \textit{P}-values reflect the results of an unpaired two-tailed Student's \textit{t}-test comparing the PBS-injected HIOs to the \textit{E. coli}-injected HIOs at that timepoint. \textbf{C} Representative confocal micrographs of HIOs injected with PBS or \num{e4} CFU \textit{E. coli} str. ECOR2 at 24-96 h post-microinjection and stained with fluorescent antibodies for Sox9, E-cadherin, or nuclei (DAPI) as indicated in the figure labels. Panels are representative of 4 HIOs per timepoint per treatment condition.}
 \label{fig:fullwidth}
 \end{fullwidth}
@@ -143,7 +143,7 @@ The mature intestinal epithelium is characterized by a steep oxygen gradient, ra
 \begin{figure}
 \begin{fullwidth}
 \centering
-\includegraphics[width=0.95\linewidth]{./figures/figure4/figure4_multipanel.pdf}
+\includegraphics[width=0.90\linewidth]{./figures/figure4/figure4_multipanel.pdf}
 \caption{\textbf{A} Luminal oxygen concentration in human intestinal organoids at 0-48 h post-microinjection with \num{e4} CFU live \textit{E. coli}. \textit{P} values reflect results of unpaired one-tailed Students \textit{t}-tests for the comparisons indicated. \textit{N} = 6-11 replicate HIOs per treatment group per time point. \textbf{B} Linear regression analysis of luminal CFU \textit{E. coli} per organoid at and luminal oxygen concentration in the same organoid 24 h post-microinjection . \textbf{C} Confocal micrographs of the HIO epithelium in PBS- and \textit{E. coli}-injected HIOs at 48 h post-microinjection. Images are representative of the replicates detailed in the table, with 12-14 replicate HIOs per treatment group pooled from 2 separate experiments. Individual HIOs were scored as PMDZ$^{+}$ or PMDZ$^{-}$ based on the presence or absence, respectively, of PMDZ conjugates as detected by immunofluorescent microscopy. \textit{P}-values represent the results of $\chi{}^{2}$ contingency tests comparing the distribution of PMDZ$^{+}$ and PMDZ$^{-}$ HIOs in the PBS-treated group to each of the other conditions.}
 \label{fig:fullwidth}
 \end{fullwidth}
@@ -163,7 +163,7 @@ Finally, we also examined the role of microbial contact and hypoxia in colonizat
 \begin{figure}
 \begin{fullwidth}
 \centering
-\includegraphics[width=0.95\textwidth]{./figures/figure5/figure5_multipanel.pdf}
+\includegraphics[width=0.85\textwidth]{./figures/figure5/figure5_multipanel.pdf}
 \caption{\textbf{A} Analysis scheme for identifying genes sets representing the components of the transcriptional response to live \textit{E. coli} that could be recapitulated with heat-inactivated \textit{E. coli} (contact induced) or hypoxia (microbial-associated hypoxia induced) as well as the subsets of genes induced through NF-$\kappa$B dependent signaling. HIOs were microinjected with PBS, \num{e4} CFU \textit{E. coli} or an equivalent concentration of heat-inactivated \textit{E. coli} and cultured under standard cell culture conditions or hypoxic conditions (1\% O$_{2}$, 5\% CO$_{2}$, 94\% N$_{2}$) with and without 10 $\mu$M SC-514. \textbf{B} Scatter plots with density overlay indicating the genes meeting the \textit{a priori} criteria identified in panel A with an FDR-adjusted \textit{P}-value of < 0.05 for the comparisons listed on the axes of the plot. \textbf{C} Bar plot of the proportion of genes in the input gene sets mapping to each pathway from the GO and REACTOME databases enrichment \textit{P}-values for each of the gene sets identified in A. Pathways with enrichment \textit{P}-values > 0.01 were excluded from the plot. Results represent \textit{N} = 4-5 biological replicates per treatment condition, with each replicate consisting of 5-6 pooled and identically treated HIOs. }
 \label{fig:fullwidth}
 \end{fullwidth}
@@ -195,7 +195,7 @@ RNA-seq data suggested that O-linked mucins were highly enriched among the subse
 \begin{figure}
 \begin{fullwidth}
 \centering
-\includegraphics[width=0.9\linewidth]{./figures/figure7/figure7_multipanel.pdf}
+\includegraphics[width=0.8\linewidth]{./figures/figure7/figure7_multipanel.pdf}
 \caption{\textbf{A} Heatmap of normalized RNA-seq glycotransferase and mucin gene counts of HIOs associated with \textit{E. coli} at 0-96 h post-microinjection. \textit{N} = 4 (0 h), 5 (24 h), 3 (48 h), and 4 (96 h) biological replicates consisting of 5-6 pooled HIOs per replicate. \textbf{B} Periodic acid-Schiff and Alcian Blue (PAS-AB) staining of control HIOs or HIOs microinjected with \textit{E. coli} and cultured for 48 h at 10X magnification. \textbf{C} HIO epithelium from control HIOs or HIOs microinjected with \textit{E. coli} and cultured for 48 h stained with H\&E, AB, PAS, or PAS-AB and imaged under 100X light microscopy. \textbf{D} Confocal micrograph of HIO epithelium from a control HIO or an HIO microinjected with \textit{E. coli} and cultured for 48 h. Nuclei are stained blue with DAPI, and fluorescent antibody-labeled proteins E-cadherein and Mucin 5 AC are pseudocolored in white or red, respectively. UEA1 lectin is used to label the carbohydrate moiety Fuc$\alpha$1-2Gal-R, which is pseudo colored in green. 60X optical magnification. \textbf{E} Heatmap of normalized RNA-seq glycotransferase and mucin gene counts of HIOs associated with live or heat-inactivated \textit{E. coli}, \textit{E. coli} + NF-$\kappa$B inhibitor (SC-514) or HIOs cultured under hypoxic conditions for 24 h. Results represent the mean of \textit{N} = 4-5 biological replicates per treatment condition, with each replicate consisting of 5-6 pooled and identically treated HIOs. \textbf{F} PAS-AB staining of HIOs treated as indicated in the figure labels for 24 h. 10X magnification. Histological and immunofluorescent images in panels B-D and F are representative of 3 or more independent experiments, each consisting of 5-10 HIOs per treatment group.}
 \label{fig:fullwidth}
 \end{fullwidth}

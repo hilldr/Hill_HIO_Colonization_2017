@@ -78,6 +78,51 @@ $(BIORXIV).pdf: $(TEXTBR).tex ./src/bibliography.bib \
 	mv $(TEXTBR).pdf $(BIORXIV).pdf
 	rm *.bib *.cls *.bst
 
+## output compressed PDF
+DENSITY=50
+QUALITY=50
+compressed: $(FINALTEXT)_compressed.pdf
+$(FINALTEXT)_compressed.pdf: $(TEXT).tex ./src/bibliography.bib \
+	./figures/figure1/figure1_multipanel.pdf \
+	./figures/figure2/figure2_multipanel.pdf \
+	./figures/figure3/figure3_multipanel.pdf \
+	./figures/figure4/figure4_multipanel.pdf \
+	./figures/figure5/figure5_multipanel.pdf \
+	./figures/figure6/figure6_multipanel.pdf \
+	./figures/figure7/figure7_multipanel.pdf \
+	./figures/figure8/figure8_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure1/figure1_multipanel.pdf -quality $(QUALITY) ./figures/figure1/figure1_multipanel.png
+	convert -density $(DENSITY) ./figures/figure2/figure2_multipanel.pdf -quality $(QUALITY) ./figures/figure2/figure2_multipanel.png
+	convert -density $(DENSITY) ./figures/figure3/figure3_multipanel.pdf -quality $(QUALITY) ./figures/figure3/figure3_multipanel.png
+	convert -density $(DENSITY) ./figures/figure4/figure4_multipanel.pdf -quality $(QUALITY) ./figures/figure4/figure4_multipanel.png
+	convert -density $(DENSITY) ./figures/figure5/figure5_multipanel.pdf -quality $(QUALITY) ./figures/figure5/figure5_multipanel.png
+	convert -density $(DENSITY) ./figures/figure6/figure6_multipanel.pdf -quality $(QUALITY) ./figures/figure6/figure6_multipanel.png
+	convert -density $(DENSITY) ./figures/figure7/figure7_multipanel.pdf -quality $(QUALITY) ./figures/figure7/figure7_multipanel.png
+	convert -density $(DENSITY) ./figures/figure8/figure8_multipanel.pdf -quality $(QUALITY) ./figures/figure8/figure8_multipanel.png
+	convert -density $(DENSITY) ./figures/supplemental/sfigure1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_multipanel.png
+	convert -density $(DENSITY) ./figures/figure1/sfigure1-2_tree.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-2_tree.png
+	convert -density $(DENSITY) ./figures/figure1/sfigure1-3_multipanel.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-3_multipanel.png
+	convert -density $(DENSITY) ./figures/supplemental/sfigure1_supp2.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_supp2.png
+	convert -density $(DENSITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf -quality $(QUALITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png
+	convert -density $(DENSITY) ./figures/supplemental/figure5s1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/figure5s1_multipanel.png
+	convert -density $(DENSITY) ./figures/supplemental/sfigure4_supp3.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_supp3.png
+	convert -density $(DENSITY) ./figures/supplemental/DEFB4B-expression.pdf -quality $(QUALITY) ./figures/supplemental/DEFB4B-expression.png
+	convert -density $(DENSITY) ./figures/figure6/figure6_supplement2.pdf -quality $(QUALITY) ./figures/figure6/figure6_supplement2.png
+	convert -density $(DENSITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.pdf -quality $(QUALITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png
+	convert -density $(DENSITY) ./figures/supplemental/sfigure4_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_multipanel.png
+	cp $(TEXT).tex $(TEXT)_compressed.tex
+	sed -i 's/pdf/png/g' $(TEXT)_compressed.tex # use png versions of figures
+	pdflatex -output-directory src $(TEXT)_compressed
+	pdflatex -output-directory src $(TEXT)_compressed
+	cp ./src/bibliography.bib ./
+	cp ./src/elife.cls ./
+	cp ./src/vancouver-elife.bst ./
+	bibtex $(TEXT)_compressed
+	pdflatex -output-directory src $(TEXT)_compressed
+	pdflatex -output-directory src $(TEXT)_compressed
+	mv $(TEXT)_compressed.pdf $(FINALTEXT)_compressed.pdf
+	rm *.bib *.cls *.bst
+
 ## supplemental figures
 supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure5_supplement1.pdf \
@@ -830,7 +875,6 @@ figure1: ./figures/figure1/figure1_multipanel.pdf
 	./data/figure1/ECOR2growth_fig1.csv \
 	./data/figure1/sample_table_fig1.csv \
 	./data/figure1/ECOR2growth_fig1_timecourse.csv \
-	./figures/figure1/figure1e.png \
 	./data/figure1/161206_survival/survival_and_ELISA.csv
 	R -e "setwd('./src/'); source('figure_Rscripts/figure1.R')"
 #+end_src
@@ -6036,7 +6080,7 @@ print(figure5s1f)
 [[file:../figures/figure5/NFKBi_baseline_GO_pathways_figure.png]]
 
 *** Figure 5 - Supplement 1 Multipanel 
-#+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/figure5s1_multipanel.png :width 2000 :height 2000 :eval yes :tangle figure_Rscripts/figure1.R 
+#+begin_src R :session *R* :exports none :results graphics :file ../figures/supplemental/figure5s1_multipanel.png :width 2000 :height 2000 :eval yes :tangle figure_Rscripts/supplemental.R 
 ## Figure 5 - Supplement 1 Multipanel -------------------------------------------
 library(ggplot2)
 library(gridExtra)
