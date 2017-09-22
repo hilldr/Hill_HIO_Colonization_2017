@@ -43,7 +43,7 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf \
 	./revisions/elife-1st-submission.tex
-	latexdiff --type=UNDERLINE ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
+	latexdiff --type=UNDERLINE -s COLOR ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
 	pdflatex -output-directory src $(TEXT)_changes
 	pdflatex -output-directory src $(TEXT)_changes
 	cp ./src/bibliography.bib ./
@@ -125,18 +125,23 @@ $(FINALTEXT)_compressed.pdf: $(TEXT).tex ./src/bibliography.bib \
 
 ## supplemental figures
 supplements: ./supplements/figure1_supplement1.pdf \
+	./supplements/figure1_supplement2.pdf \
+	./supplements/figure1_supplement3.pdf \
+	./supplements/figure1_supplement4.pdf \
+	./supplements/figure3_supplement1.pdf \
 	./supplements/figure5_supplement1.pdf \
 	./supplements/figure5_supplement2.pdf \
 	./supplements/figure6_supplement1.pdf \
+	./supplements/figure6_supplement2.pdf \
 	./supplements/figure7_supplement1.pdf \
-	./supplements/figure8_supplement1.pdf
+	./supplements/figure8_supplement1.pdf 
 
 ./supplements/figure1_supplement1.pdf: ./src/figure1_supplement1.tex
 	pdflatex -output-directory src ./src/figure1_supplement1
 	pdflatex -output-directory src ./src/figure1_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure1_supplement1.pdf ./supplements/figure1_supplement1.pdf
 	rm *.bib *.cls *.bst
 
@@ -145,7 +150,10 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure1_supplement2
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
+	bibtex ./src/figure1_supplement2
+	pdflatex -output-directory src ./src/figure1_supplement2
+	pdflatex -output-directory src ./src/figure1_supplement2
 	mv ./src/figure1_supplement2.pdf ./supplements/figure1_supplement2.pdf
 	rm *.bib *.cls *.bst
 
@@ -154,8 +162,26 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure1_supplement3
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure1_supplement3.pdf ./supplements/figure1_supplement3.pdf
+	rm *.bib *.cls *.bst
+
+./supplements/figure1_supplement4.pdf: ./src/figure1_supplement4.tex
+	pdflatex -output-directory src ./src/figure1_supplement4
+	pdflatex -output-directory src ./src/figure1_supplement4
+	cp ./src/bibliography.bib ./
+	cp ./src/elsarticle.cls ./
+	cp ./src/vancouver-elife.bst ./
+	mv ./src/figure1_supplement4.pdf ./supplements/figure1_supplement4.pdf
+	rm *.bib *.cls *.bst
+
+./supplements/figure3_supplement1.pdf: ./src/figure3_supplement1.tex
+	pdflatex -output-directory src ./src/figure3_supplement1
+	pdflatex -output-directory src ./src/figure3_supplement1
+	cp ./src/bibliography.bib ./
+	cp ./src/elsarticle.cls ./
+	cp ./src/vancouver-elife.bst ./
+	mv ./src/figure3_supplement1.pdf ./supplements/figure3_supplement1.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure5_supplement1.pdf: ./src/figure5_supplement1.tex
@@ -163,7 +189,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure5_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure5_supplement1.pdf ./supplements/figure5_supplement1.pdf
 	rm *.bib *.cls *.bst
 
@@ -172,17 +198,8 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure5_supplement2
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure5_supplement2.pdf ./supplements/figure5_supplement2.pdf
-	rm *.bib *.cls *.bst
-
-./supplements/figure5_supplement3.pdf: ./src/figure5_supplement3.tex
-	pdflatex -output-directory src ./src/figure5_supplement3
-	pdflatex -output-directory src ./src/figure5_supplement3
-	cp ./src/bibliography.bib ./
-	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
-	mv ./src/figure5_supplement3.pdf ./supplements/figure5_supplement3.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure6_supplement1.pdf: ./src/figure6_supplement1.tex
@@ -190,7 +207,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure6_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure6_supplement1.pdf ./supplements/figure6_supplement1.pdf
 	rm *.bib *.cls *.bst
 
@@ -199,7 +216,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure6_supplement2
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure6_supplement2.pdf ./supplements/figure6_supplement2.pdf
 	rm *.bib *.cls *.bst
 
@@ -208,7 +225,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure7_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure7_supplement1.pdf ./supplements/figure7_supplement1.pdf
 	rm *.bib *.cls *.bst
 
@@ -217,7 +234,7 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	pdflatex -output-directory src ./src/figure8_supplement1
 	cp ./src/bibliography.bib ./
 	cp ./src/elsarticle.cls ./
-	cp ./src/model2-names.bst ./
+	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure8_supplement1.pdf ./supplements/figure8_supplement1.pdf
 	rm *.bib *.cls *.bst
 

@@ -123,7 +123,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [96%]
+* eLife revision due date [99%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
@@ -545,8 +545,8 @@ RESPONSE: We have added a statement to the Materials and Methods section to conf
 
 ** DONE Address VBY comments from [2017-09-20 Wed]
 
-** TODO Update antibody dilutions table
+** DONE Update antibody dilutions table
 
-** TODO Make separate PDF files for each Supplemental Figure
+** DONE Make separate PDF files for each Supplemental Figure
 
-** TODO Revise all formatting with and without track changes
+** DONE Revise all formatting with and without track changes
