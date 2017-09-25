@@ -550,3 +550,71 @@ RESPONSE: We have added a statement to the Materials and Methods section to conf
 ** DONE Make separate PDF files for each Supplemental Figure
 
 ** DONE Revise all formatting with and without track changes
+
+* Letter from eLife [2017-09-25 Mon] [85%]
+Dear Dr. Spence,
+
+Thank you for sending the revised version of your work for consideration at eLife. We have checked your submission and we would like to ask you to address the following points before we proceed:
+
+** DONE Rename supplementary file 1 to video 1
+ *We notice that supplementary file 1 is in fact a video. Please can you therefore rename and cite it as 'Video 1' and provide a video for it in the main article file.
+
+RESPONSE: Supplementary File 1 has been renamed Video 1 in the manuscript. A figure legend for Video 1 has also been appended to the end of the manuscript
+
+** DONE rename and cite supplementary files 2 and 3 as Supplementary Files 1 and 2, and provide legends for them in the main article file.
+ *Please rename and cite supplementary files 2 and 3 as Supplementary Files 1 and 2, and provide legends for them in the main article file.
+
+RESPONSE: Supplementary Files 2 and 3 have been renames Supplementary Files 1 and 2, respectively. Legends for each of these figures have been appended to the end of the manuscript
+
+** DONE Reiterate cell line authentication
+ *Please could you provide further details for the cell lines used in the experiments reported in your article: please report their source, confirm the identity has been authenticated, state the authentication method (such as STR profiling), and report the mycoplasma contamination testing status. These details should be added to the manuscript e.g. in the Materials and Methods.
+
+ Please also provide justification if you have used any cell lines from the list of commonly misidentified cell lines maintained by the International Cell Line Authentication Committee. Cell line authentication services are offered by ATCS, Science Exchange, and others.
+
+RESPONSE: We have performed cell line authentication and Mycoplasma testing for the H9 hESC cell line used to generate all intestinal organoid tissue. This is discussed in the manuscript under "Materials and Methods: HIO culture". Please let us know if you would like us to provide the STR profiling data.
+
+** TODO upload latest Git and add license and reference
+ *We notice that you have made your code available but it seems it hasn't been licensed. Software without a license cannot be safely integrated, modified and redistributed. With this in mind, we would like to ask you to license your code (we would recommend using an open source license [https://opensource.org/licenses]). Guidance on what license might better suit you can be found at https://choosealicense.com<https://choosealicense.com/>/ and instructions on how to add a license to a GitHub repository are available here https://help.github.com/articles/adding-a-license-to-a-repository/. In the interests of reproducibility, eLife maintains a GitHub account [github.com/elifesciences-publications/<http://github.com/elifesciences-publications/>] to archive code cited in papers and deposited on GitHub or other version control service. The code is forked to the eLife account upon acceptance, with a clear link to the authors' original repository.
+
+ In addition, please include a reference in the References list to the code deposited on GitHub (the link should be cited within the text too). The reference should follow this format: Author, Year, Title of the repository, Location, Link, Version number. Please include the last commit number, as per this example: Nellaker C. 2014. Clinical_Face_Phenotype_Space_Pipeline. Github. https://github.com/ChristofferNellaker/Clinical_Face_Phenotype_Space_Pipeline. 7743c1a.
+
+** DONE Justify addition of Veda to authors list
+ We notice that Veda K. Yadagiri has been added as an author at the revised stage, please could you let us know why they have been added at this stage and confirm that all authors agree with their inclusion and place in the author list.
+
+RESPONSE: Veda K. Yadagiri, MS performed approximately 20 hrs of meticulous image analysis for the set of experiments presented in Figure 3. This experiment was designed to address questions raised by the reviewers after our initial submission. Veda's contributions led to important insights into changes in cell proliferation following colonization of human intestinal organoids by bacteria. In recognition of this contribution and following discussions with Veda and the other authors, we have added her name to the list of authors for this manuscript.
+
+ Please note that we will publish the eLife Transparent Reporting Form for submissions accepted for publication on or after August 1, 2017.
+
+** DONE add Research Resource Identifiers
+ To help promote the identification, discovery, and reuse of key research resources, we encourage you to include Research Resource Identifiers (RRIDs) within the Materials and Methods section to identify model organisms, cells lines, antibodies, and tools (such as software or databases) you have used (e.g. RRID:AB_2178887 for an antibody, RRID:MGI:3840442 for an organism, RRID:CVCL_1H60 for a cell line, and RRID:SCR_007358 for a tool). The RRID Portal (https://scicrunch.org/resources) lists existing RRIDs, and instructions for creating a new one if an RRID matching the resource does not already exist.
+
+RESPONSE: We have added RRIDs for the H9 cell line, the PMDZ antibody, and for our bioinformatics tools where RRIDs are available. Unfortunately, in our experience the RRID database is somewhat immature and many of the reagents and resources we have used are not documented there. We have provided traditional references for these materials and resources in the Materials and Methods section.
+
+** DONE refer to Github for source data
+ If you haven't already, we also strongly encourage you to upload relevant additional data files, such as numerical data that are represented as a graph in a figure, or as a summary table. Where provided, these should be in the most useful format, and they can be uploaded as "Source data" files linked to main figures and/or tables (e.g., Figure 1-source data 1, Table 1-source data 1).
+
+RESPONSE: From the beginning of this project, we have attempted to craft not only a scientific manuscript but useful documentation of our analyses and reproducible data scripts. The resulting data and code repository makes use of an number of data science tools including LATEX, GNU Make, SHELL, R, and bibtex which each have their own set of dependencies. Theses scripts are written with a specific directory structure and order of execution, and separating individual source code files from the repository structure would render these scripts non-functional. We strongly feel that GitHub provides the best platform for accessing our data and analyses. Users familiar with the data analysis tools mentioned above will be able to find everything needed to reproduce the analyses in this manuscript. We are excited that eLife has also taken the extra step to host a fork of our GitHub repository, which ensure that readers have secure and free access to our data and source code. 
+
+ You will find your article marked as "Awaiting Author Approval" on the Author Tasks screen, which you can access via the following link:
+
+ https://submit.elifesciences.org/cgi-bin/main.plex?el=A1Hz7Orc2B3HPh1F2A9ftdgp02U7n1UwFEqDbfnGBaiAZ
+
+
+ Please make the changes specified above and then submit your paper following the same steps as before. We look forward to checking your files again in the near future, but please let us know if you have any questions.
+
+ Best wishes,
+
+ Tara
+
+
+ Tara Bristow
+ eLife Editorial Support
+ Phone +44 (0)1223 750665
+ http://elifesciences.org<http://elifesciences.org/>/
+
+
+
+ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock corporation incorporated in the State of Delaware, USA, with company number 5030732, and is registered in the UK with company number FC030576 and branch number BR015634 at the address First Floor, 24 Hills Road, Cambridge CB2 1JP.
+
+
+
