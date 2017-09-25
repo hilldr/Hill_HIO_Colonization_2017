@@ -551,7 +551,7 @@ RESPONSE: We have added a statement to the Materials and Methods section to conf
 
 ** DONE Revise all formatting with and without track changes
 
-* Letter from eLife [2017-09-25 Mon] [85%]
+* Letter from eLife [2017-09-25 Mon] [100%]
 Dear Dr. Spence,
 
 Thank you for sending the revised version of your work for consideration at eLife. We have checked your submission and we would like to ask you to address the following points before we proceed:
@@ -573,14 +573,14 @@ RESPONSE: Supplementary Files 2 and 3 have been renames Supplementary Files 1 an
 
 RESPONSE: We have performed cell line authentication and Mycoplasma testing for the H9 hESC cell line used to generate all intestinal organoid tissue. This is discussed in the manuscript under "Materials and Methods: HIO culture". Please let us know if you would like us to provide the STR profiling data.
 
-** TODO upload latest Git and add license and reference
+** DONE upload latest Git and add license and reference
  *We notice that you have made your code available but it seems it hasn't been licensed. Software without a license cannot be safely integrated, modified and redistributed. With this in mind, we would like to ask you to license your code (we would recommend using an open source license [https://opensource.org/licenses]). Guidance on what license might better suit you can be found at https://choosealicense.com<https://choosealicense.com/>/ and instructions on how to add a license to a GitHub repository are available here https://help.github.com/articles/adding-a-license-to-a-repository/. In the interests of reproducibility, eLife maintains a GitHub account [github.com/elifesciences-publications/<http://github.com/elifesciences-publications/>] to archive code cited in papers and deposited on GitHub or other version control service. The code is forked to the eLife account upon acceptance, with a clear link to the authors' original repository.
 
  In addition, please include a reference in the References list to the code deposited on GitHub (the link should be cited within the text too). The reference should follow this format: Author, Year, Title of the repository, Location, Link, Version number. Please include the last commit number, as per this example: Nellaker C. 2014. Clinical_Face_Phenotype_Space_Pipeline. Github. https://github.com/ChristofferNellaker/Clinical_Face_Phenotype_Space_Pipeline. 7743c1a.
 
-RESPONSE: We have added the appropriate citation format for our Github repository.
+RESPONSE: We have added the appropriate citation format for our Github repository and licensed the source code under the GNU GPLv3 terms.
 
-** TODO Update commit on github
+** DONE Update commit on github
 ** DONE Justify addition of Veda to authors list
  We notice that Veda K. Yadagiri has been added as an author at the revised stage, please could you let us know why they have been added at this stage and confirm that all authors agree with their inclusion and place in the author list.
 

@@ -1,6 +1,6 @@
 # Bacterial colonization stimulates a complex physiological response in the immature human intestinal epithelium
 
-David R. Hill<sup>1</sup>, Sha Huang<sup>1</sup>,  Melinda S. Nagy<sup>1</sup>, Veda K. Yadagiri<sup>1</sup>, Courtney Fields <sup>2</sup>, Disharee Mukherjee<sup>3</sup>, Brooke Bons<sup>2</sup>, Priya H. Dedia<sup>4</sup>, Alana M. Chin<sup>5</sup>, Yu-Hwai Tsai<sup>1</sup>, Shrikar Thodla<sup>1</sup>, Thomas Schmidt<sup>3</sup>,Seth Walk<sup>6</sup>, Vincent B. Young<sup>2,3,#</sup>, and Jason R. Spence<sup>1,5,#</sup>
+David R. Hill<sup>1</sup>, Sha Huang<sup>1</sup>,  Melinda S. Nagy<sup>1</sup>, Veda K. Yadagiri<sup>1</sup>, Courtney Fields <sup>2</sup>, Dishari Mukherjee<sup>3</sup>, Brooke Bons<sup>2</sup>, Priya H. Dedia<sup>4</sup>, Alana M. Chin<sup>5</sup>, Yu-Hwai Tsai<sup>1</sup>, Shrikar Thodla<sup>1</sup>, Thomas M. Schmidt<sup>3</sup>,Seth Walk<sup>6</sup>, Vincent B. Young<sup>2,3,#</sup>, and Jason R. Spence<sup>1,5,#</sup>
 
 
 <sup>1</sup>Department of Internal Medicine, Division of Gastroenterology, University of Michigan, Ann Arbor MI 48109
