@@ -95,17 +95,17 @@ $(FINALTEXT)_compressed.pdf: $(TEXT).tex ./src/bibliography.bib \
 	convert -density $(DENSITY) ./figures/figure6/figure6_multipanel.pdf -quality $(QUALITY) ./figures/figure6/figure6_multipanel.png
 	convert -density $(DENSITY) ./figures/figure7/figure7_multipanel.pdf -quality $(QUALITY) ./figures/figure7/figure7_multipanel.png
 	convert -density $(DENSITY) ./figures/figure8/figure8_multipanel.pdf -quality $(QUALITY) ./figures/figure8/figure8_multipanel.png
-	convert -density $(DENSITY) ./figures/supplemental/sfigure1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_multipanel.png
-	convert -density $(DENSITY) ./figures/figure1/sfigure1-2_tree.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-2_tree.png
-	convert -density $(DENSITY) ./figures/figure1/sfigure1-3_multipanel.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-3_multipanel.png
-	convert -density $(DENSITY) ./figures/supplemental/sfigure1_supp2.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_supp2.png
-	convert -density $(DENSITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf -quality $(QUALITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png
-	convert -density $(DENSITY) ./figures/supplemental/figure5s1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/figure5s1_multipanel.png
-	convert -density $(DENSITY) ./figures/supplemental/sfigure4_supp3.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_supp3.png
-	convert -density $(DENSITY) ./figures/supplemental/DEFB4B-expression.pdf -quality $(QUALITY) ./figures/supplemental/DEFB4B-expression.png
-	convert -density $(DENSITY) ./figures/figure6/figure6_supplement2.pdf -quality $(QUALITY) ./figures/figure6/figure6_supplement2.png
-	convert -density $(DENSITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.pdf -quality $(QUALITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png
-	convert -density $(DENSITY) ./figures/supplemental/sfigure4_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_multipanel.png
+	# convert -density $(DENSITY) ./figures/supplemental/sfigure1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_multipanel.png
+	# convert -density $(DENSITY) ./figures/figure1/sfigure1-2_tree.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-2_tree.png
+	# convert -density $(DENSITY) ./figures/figure1/sfigure1-3_multipanel.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-3_multipanel.png
+	# convert -density $(DENSITY) ./figures/supplemental/sfigure1_supp2.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_supp2.png
+	# convert -density $(DENSITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf -quality $(QUALITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png
+	# convert -density $(DENSITY) ./figures/supplemental/figure5s1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/figure5s1_multipanel.png
+	# convert -density $(DENSITY) ./figures/supplemental/sfigure4_supp3.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_supp3.png
+	# convert -density $(DENSITY) ./figures/supplemental/DEFB4B-expression.pdf -quality $(QUALITY) ./figures/supplemental/DEFB4B-expression.png
+	# convert -density $(DENSITY) ./figures/figure6/figure6_supplement2.pdf -quality $(QUALITY) ./figures/figure6/figure6_supplement2.png
+	# convert -density $(DENSITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.pdf -quality $(QUALITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png
+	# convert -density $(DENSITY) ./figures/supplemental/sfigure4_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_multipanel.png
 	cp $(TEXT).tex $(TEXT)_compressed.tex
 	sed -i 's/pdf/png/g' $(TEXT)_compressed.tex # use png versions of figures
 	pdflatex -output-directory src $(TEXT)_compressed

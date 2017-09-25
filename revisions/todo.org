@@ -578,6 +578,9 @@ RESPONSE: We have performed cell line authentication and Mycoplasma testing for 
 
  In addition, please include a reference in the References list to the code deposited on GitHub (the link should be cited within the text too). The reference should follow this format: Author, Year, Title of the repository, Location, Link, Version number. Please include the last commit number, as per this example: Nellaker C. 2014. Clinical_Face_Phenotype_Space_Pipeline. Github. https://github.com/ChristofferNellaker/Clinical_Face_Phenotype_Space_Pipeline. 7743c1a.
 
+RESPONSE: We have added the appropriate citation format for our Github repository.
+
+** TODO Update commit on github
 ** DONE Justify addition of Veda to authors list
  We notice that Veda K. Yadagiri has been added as an author at the revised stage, please could you let us know why they have been added at this stage and confirm that all authors agree with their inclusion and place in the author list.
 
