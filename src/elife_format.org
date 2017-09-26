@@ -15,7 +15,7 @@
 (set (make-local-variable 'org-latex-pdf-process); swap bibtex for default biber
         '("pdflatex%f" 
           "pdflatex %f"
-         b "bibtex %b"
+          "bibtex %b"
           "pdflatex %f"
           "pdflatex %f"
           )
@@ -24,6 +24,7 @@
 #+end_src
 #+LaTeX_CLASS: elife-paper
 #+LATEX_HEADER:\usepackage[utf8]{inputenc}
+#+LATEX_HEADER:\usepackage[final]{pdfpages}
 #+OPTIONS: tex:t
 #+OPTIONS: toc:nil
 #+OPTIONS: H:7 num:0

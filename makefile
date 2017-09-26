@@ -119,6 +119,95 @@ $(FINALTEXT)_compressed.pdf: $(TEXT).tex ./src/bibliography.bib \
 	mv $(TEXT)_compressed.pdf $(FINALTEXT)_compressed.pdf
 	rm *.bib *.cls *.bst
 
+## output compressed PDF
+DENSITY=50
+QUALITY=50
+compressed-full: $(FINALTEXT)_compressed_full.pdf
+$(FINALTEXT)_compressed_full.pdf: $(TEXT).tex ./src/bibliography.bib \
+	./figures/figure1/figure1_multipanel.png \
+	./figures/figure2/figure2_multipanel.png \
+	./figures/figure3/figure3_multipanel.png \
+	./figures/figure4/figure4_multipanel.png \
+	./figures/figure5/figure5_multipanel.png \
+	./figures/figure6/figure6_multipanel.png \
+	./figures/figure7/figure7_multipanel.png \
+	./figures/figure8/figure8_multipanel.png \
+	./figures/supplemental/sfigure1_multipanel.png \
+	./figures/figure1/sfigure1-2_tree.png \
+	./figures/figure1/sfigure1-3_multipanel.png \
+	./figures/supplemental/sfigure1_supp2.png \
+	./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png \
+	./figures/supplemental/figure5s1_multipanel.png \
+	./figures/supplemental/sfigure4_supp3.png \
+	./figures/supplemental/DEFB4B-expression.png \
+	./figures/figure6/figure6_supplement2.png \
+	./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png \
+	./figures/supplemental/sfigure4_multipanel.png 
+	cp $(TEXT).tex $(TEXT)_compressed_full.tex
+	sed -i 's/\.pdf/.png/g' $(TEXT)_compressed_full.tex # use png versions of figures
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement1.pdf}\\" $(TEXT)_compressed_full.tex 
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement2.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement3.pdf}\\" $(TEXT)_compressed_full.tex  
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement4.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure3_supplement1.pdf}\\" $(TEXT)_compressed_full.tex  
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure5_supplement1.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure5_supplement2.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure6_supplement1.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure6_supplement2.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure7_supplement1.pdf}\\" $(TEXT)_compressed_full.tex
+	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure8_supplement1.pdf}\\" $(TEXT)_compressed_full.tex
+	pdflatex -output-directory src $(TEXT)_compressed_full
+	pdflatex -output-directory src $(TEXT)_compressed_full
+	cp ./src/bibliography.bib ./
+	cp ./src/elife.cls ./
+	cp ./src/vancouver-elife.bst ./
+	bibtex $(TEXT)_compressed_full
+	pdflatex -output-directory src $(TEXT)_compressed_full
+	pdflatex -output-directory src $(TEXT)_compressed_full
+	mv $(TEXT)_compressed_full.pdf $(FINALTEXT)_compressed_full.pdf
+	rm *.bib *.cls *.bst
+
+## make PNG versions of figures
+./figures/figure1/figure1_multipanel.png: ./figures/figure1/figure1_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure1/figure1_multipanel.pdf -quality $(QUALITY) ./figures/figure1/figure1_multipanel.png
+./figures/figure2/figure2_multipanel.png: ./figures/figure2/figure2_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure2/figure2_multipanel.pdf -quality $(QUALITY) ./figures/figure2/figure2_multipanel.png
+./figures/figure3/figure3_multipanel.png: ./figures/figure3/figure3_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure3/figure3_multipanel.pdf -quality $(QUALITY) ./figures/figure3/figure3_multipanel.png
+./figures/figure4/figure4_multipanel.png: ./figures/figure4/figure4_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure4/figure4_multipanel.pdf -quality $(QUALITY) ./figures/figure4/figure4_multipanel.png
+./figures/figure5/figure5_multipanel.png: ./figures/figure5/figure5_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure5/figure5_multipanel.pdf -quality $(QUALITY) ./figures/figure5/figure5_multipanel.png
+./figures/figure6/figure6_multipanel.png: ./figures/figure6/figure6_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure6/figure6_multipanel.pdf -quality $(QUALITY) ./figures/figure6/figure6_multipanel.png
+./figures/figure7/figure7_multipanel.png: ./figures/figure7/figure7_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure7/figure7_multipanel.pdf -quality $(QUALITY) ./figures/figure7/figure7_multipanel.png
+./figures/figure8/figure8_multipanel.png: ./figures/figure8/figure8_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure8/figure8_multipanel.pdf -quality $(QUALITY) ./figures/figure8/figure8_multipanel.png
+./figures/supplemental/sfigure1_multipanel.png: ./figures/supplemental/sfigure1_multipanel.pdf
+	convert -density $(DENSITY) ./figures/supplemental/sfigure1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_multipanel.png
+./figures/figure1/sfigure1-2_tree.png: ./figures/figure1/sfigure1-2_tree.pdf
+	convert -density $(DENSITY) ./figures/figure1/sfigure1-2_tree.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-2_tree.png
+./figures/figure1/sfigure1-3_multipanel.png: ./figures/figure1/sfigure1-3_multipanel.pdf
+	convert -density $(DENSITY) ./figures/figure1/sfigure1-3_multipanel.pdf -quality $(QUALITY) ./figures/figure1/sfigure1-3_multipanel.png
+./figures/supplemental/sfigure1_supp2.png: ./figures/supplemental/sfigure1_supp2.pdf
+	convert -density $(DENSITY) ./figures/supplemental/sfigure1_supp2.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_supp2.png
+./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png: ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf
+	convert -density $(DENSITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf -quality $(QUALITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png
+./figures/supplemental/figure5s1_multipanel.png: ./figures/supplemental/figure5s1_multipanel.pdf
+	convert -density $(DENSITY) ./figures/supplemental/figure5s1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/figure5s1_multipanel.png
+./figures/supplemental/sfigure4_supp3.png: ./figures/supplemental/sfigure4_supp3.pdf
+	convert -density $(DENSITY) ./figures/supplemental/sfigure4_supp3.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_supp3.png
+./figures/supplemental/DEFB4B-expression.png: ./figures/supplemental/DEFB4B-expression.pdf
+	convert -density $(DENSITY) ./figures/supplemental/DEFB4B-expression.pdf -quality $(QUALITY) ./figures/supplemental/DEFB4B-expression.png
+./figures/figure6/figure6_supplement2.png: ./figures/figure6/figure6_supplement2.pdf
+	convert -density $(DENSITY) ./figures/figure6/figure6_supplement2.pdf -quality $(QUALITY) ./figures/figure6/figure6_supplement2.png
+./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png: ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.pdf
+	convert -density $(DENSITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.pdf -quality $(QUALITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png
+./figures/supplemental/sfigure4_multipanel.png: ./figures/supplemental/sfigure4_multipanel.pdf
+	convert -density $(DENSITY) ./figures/supplemental/sfigure4_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_multipanel.png
+
+
 ## supplemental figures
 supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure1_supplement2.pdf \
