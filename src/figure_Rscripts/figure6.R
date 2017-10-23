@@ -268,175 +268,28 @@ ggsave(filename = "../figures/figure6/eps/figure6c.eps",
        plot = figure6c, 
        width = 12, height = 16)
 
-## FIGURE 5 --------------------------------------------------------------------
-## Figure 6D: BD-2 suppresses growth of /E. coli/ /in vitro/
-## import data
-data2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
-                   header = TRUE, skip = 2, stringsAsFactors = FALSE)
-
-plate2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
-                  header = TRUE, stringsAsFactors = FALSE)
-data2 <- reshape2::melt(data2, id.vars =c("Time", "Temperature..C."))
-data2 <- plyr::rename(data2, c("variable"="cell"))
-
-data2$Time <- sapply(strsplit(data2$Time, ":"), function(x) {
-    x <- as.numeric(x)
-    x[1] + ((x[2] + (x[3]/60))/60)
-}
-)
-      
-data2 <- plyr::join(data2, plate2, by ="cell")
-data2$dose <- as.numeric(data2$dose)
-data2 <- data2[complete.cases(data2),]
-
-test1 <- t.test(data2[data2$Time == 18 & data2$dose == 1,]$value,
-                data2[data2$Time == 18 & data2$dose == 0.1,]$value,
-                alternative = "two.sided")
-
-test2 <- t.test(data2[data2$Time == 18 & data2$dose == 1,]$value,
-                data2[data2$Time == 18 & data2$dose == 1e-8,]$value,
-                alternative = "two.sided")
-
-plot.data <- data2[data2$dose == 1e-8| data2$dose == 0.1 |data2$dose == 1,] %>%
-    dplyr::group_by(dose, Time) %>%
-    dplyr::summarize(avg = mean(value), sem = sd(value)/sqrt(n()))
-
-plot.data[plot.data$dose == 1e-8,]$dose <- 0
-
-library(ggplot2)
-source("ggplot2-themes.R")
-figure6d <- ggplot(data = plot.data, aes(x = Time, y = avg)) +
-    geom_point(shape = 21, size = 3.5, aes(fill = factor(dose), color = factor(dose))) +
-    geom_errorbar(aes(ymax = avg + sem, ymin = avg - sem, 
-                      color = factor(dose)), width = 0) +
-    xlab("Time (h)") +
-    ylab(expression(paste(Delta,"OD"[600]))) +
-    scale_fill_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
-    scale_color_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
-    scale_x_continuous(limits = c(0,21),  breaks = c(0, 3, 6, 9, 12, 15, 18)) +
-    theme1 +
-    annotate("segment", x = 18.5, xend = 18.5,
-             y = mean(plot.data[plot.data$Time == 18 & plot.data$dose == 0.1,]$avg),
-             yend = mean(plot.data[plot.data$Time == 18 & plot.data$dose == 1,]$avg),
-             size = 2, color = "grey30") +
-    annotate("text", x = 20, y = 0.3,
-             label = paste("P = ", round(test1$p.value, digits = 3)),
-             size = 8, color = "grey30") +
-    annotate("segment", x = 18.25, xend = 18.25,
-             y = mean(plot.data[plot.data$Time == 18 & plot.data$dose == 0,]$avg),
-             yend = mean(plot.data[plot.data$Time == 18 & plot.data$dose == 1,]$avg),
-             size = 2, color = "grey30") +
-    annotate("text", x = 20, y = 0.45,
-             label = paste("P = ", round(test2$p.value, digits = 3)),
-             size = 8, color = "grey30") +
-    theme(legend.position = c(0.8, 0.15),
-          legend.title = element_text(size = 24),
-	  legend.key.size = unit(1.5,"cm"),
-	  legend.text = element_text(size = 24)) +
-
-    ggtitle("D")
-
-png(filename = "../figures/figure6/figure6d.png", width = 1200, height = 800)
-print(figure6d)
-dev.off()
-ggsave(filename = "../figures/figure6/eps/figure6d.eps", 
-plot = figure6d, 
-width = 24, height = 16)
-
-## calculate growth curves & carrying capacity
-library(magrittr)
-## limit dataset to log - stationary phase (exclude post-stationary phase)
-data3 <- subset(data2, data2$Time < 10)
-
-gc.data <- dplyr::group_by(data3, cell) %>%
-    dplyr::summarise(K = growthcurver::SummarizeGrowth(Time, value)[1]$vals$k,
-                     DT = growthcurver::SummarizeGrowth(Time, value)[1]$vals$t_gen,
-                     t_mid = growthcurver::SummarizeGrowth(Time, value)[1]$vals$t_mid) %>%
-    dplyr::right_join(dplyr::select(data2, cell, dose) , by = "cell") %>%
-    dplyr::distinct(cell, K, DT, dose, t_mid)
-
-gc.data <- subset(gc.data, gc.data$dose > 1e-02 | gc.data$dose == 1e-8)
-gc.data[gc.data$dose == 1e-8,]$dose <- 0
-
-## statistical tests
-gc.test1 <- t.test(gc.data[gc.data$dose == 0,]$K,
-                   gc.data[gc.data$dose == 1,]$K,
-                   alternative = "two.sided")
-gc.test2 <- t.test(gc.data[gc.data$dose == 0,]$K,
-                   gc.data[gc.data$dose == 0.1,]$K,
-                   alternative = "two.sided")
-gc.test3 <- t.test(gc.data[gc.data$dose == 0,]$DT,
-                   gc.data[gc.data$dose == 1,]$DT,
-                   alternative = "two.sided")
-gc.test4 <- t.test(gc.data[gc.data$dose == 0,]$DT,
-                   gc.data[gc.data$dose == 0.1,]$DT,
-                   alternative = "two.sided")
-
-library(ggplot2)
-source("ggplot2-themes.R")
-figure6e <- ggplot(data = gc.data, aes(x = factor(dose), y = K)) +
-    geom_boxplot(aes(color = factor(dose)), size = 2, outlier.size = 3) +
-    xlab(expression(paste("BD-2 (",mu,"g/mL)"))) +
-    ylab("Carrying capacity (K)") +
-    scale_fill_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
-    scale_color_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
-    theme1 +
-    theme(legend.position = "none",
-          legend.title = element_text(size = 24),
-	  legend.key.size = unit(1.5,"cm"),
-	  legend.text = element_text(size = 24)) +
-    annotate("text", x = 2, y = 0.49,
-             label = paste("P = ", round(gc.test2$p.value, digits = 3)),
-             size = 6, color = "grey30") +
-    annotate("text", x = 3, y = 0.47,
-             label = paste("P = ", round(gc.test1$p.value, digits = 4)),
-             size = 6, color = "grey30") +
-    ggtitle("E")
-
-figure6f <- ggplot(data = gc.data, aes(x = factor(dose), y = DT)) +
-    geom_boxplot(aes(color = factor(dose)), size = 2, outlier.size = 3) +
-    xlab(expression(paste("BD-2 (",mu,"g/mL)"))) +
-    ylab("Doubling time (h)") +
-    scale_fill_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
-    scale_color_manual(name = expression(paste("BD-2 (",mu,"g/mL)")), values = c(color.set[3], color.set[2], color.set[1])) +
-    theme1 +
-    theme(legend.position = "none",
-          legend.title = element_text(size = 24),
-	  legend.key.size = unit(1.5,"cm"),
-	  legend.text = element_text(size = 24)) +
-    ggtitle("F")
-
-png(filename = "../figures/figure6/figure6e.png", width = 800, height = 800)
-#print(figure6e)
-gridExtra::grid.arrange(figure6e, figure6f, ncol = 2)
-dev.off()
-ggsave(filename = "../figures/figure6/eps/figure6e.eps", 
-plot = figure6e, 
-width = 16, height = 16)
-
 ## Figure 6 multipanel ---------------------------------------------------------
 source("ggplot2-themes.R")
 library(ggplot2)
 library(gridExtra)
 source("custom_fun.R")
 
-layout <- rbind(c(1,2,3),
-                c(4,4,5))
+layout <- rbind(c(1,2,3))
 
 
 ## PDF output
-pdf(file = "../figures/figure6/figure6_multipanel.pdf", width = 6000/300, height = 6000/300, onefile = FALSE)
-gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, layout_matrix = layout)
+pdf(file = "../figures/figure6/figure6_multipanel.pdf", width = 6000/300, height = 3000/300, onefile = FALSE)
+gridExtra::grid.arrange(figure6a, figure6b, figure6c, layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure6/eps/figure6_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure6a, figure6b, figure6c, layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
-png(filename = "../figures/figure6/figure6_multipanel.png", width = 1600, height = 1600)
-gridExtra::grid.arrange(figure6a, figure6b, figure6c, figure6d, figure6e, layout_matrix = layout)
+png(filename = "../figures/figure6/figure6_multipanel.png", width = 1600, height = 800)
+gridExtra::grid.arrange(figure6a, figure6b, figure6c, layout_matrix = layout)
 dev.off()
 
 ## calculate growth curves & carrying capacity

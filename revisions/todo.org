@@ -621,7 +621,7 @@ RESPONSE: From the beginning of this project, we have attempted to craft not onl
 
 
 
-* TODO Response from eLife [2017-10-22 Sun] [0%]
+* TODO Response from eLife [2017-10-22 Sun] [25%]
 
 Dear Dr. Spence,
 
@@ -687,7 +687,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 
 ** TODO Omit Figures 6D and E 
 
-** TODO Replace Figure 1C with Figure 1 - Supplement 4
+** DONE Replace Figure 1C with Figure 1 - Supplement 4
 
 ** TODO Modify Figure 5A to show overlap between Gene Sets I and II
 

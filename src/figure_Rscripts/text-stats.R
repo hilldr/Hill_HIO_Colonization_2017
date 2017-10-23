@@ -204,43 +204,6 @@ hbd2.stats2 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment =
 hbd2.stats3 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment == "heat-inactivated",]$value, alternative = "two.sided")
 hbd2.stats4 <- t.test(dat[dat$treatment == "E. coli",]$value,dat[dat$treatment == "hypoxia",]$value, alternative = "two.sided")
 
-## FIGURE 5 --------------------------------------------------------------------
-## Figure 6D: BD-2 suppresses growth of /E. coli/ /in vitro/
-## import data
-data2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160517_ECOR2_BD2_OD600.csv",
-                   header = TRUE, skip = 2, stringsAsFactors = FALSE)
-
-plate2 <- read.csv(file = "../data/figure6/160518_ECOR2_BD2/160505_OD600-ECOR2-BD1_plate.csv",
-                  header = TRUE, stringsAsFactors = FALSE)
-data2 <- reshape2::melt(data2, id.vars =c("Time", "Temperature..C."))
-data2 <- plyr::rename(data2, c("variable"="cell"))
-
-data2$Time <- sapply(strsplit(data2$Time, ":"), function(x) {
-    x <- as.numeric(x)
-    x[1] + ((x[2] + (x[3]/60))/60)
-}
-)
-      
-data2 <- plyr::join(data2, plate2, by ="cell")
-data2$dose <- as.numeric(data2$dose)
-data2 <- data2[complete.cases(data2),]
-
-
-test1 <- t.test(data2[data2$Time == 18 & data2$dose == 1,]$value,
-                data2[data2$Time == 18 & data2$dose == 0.1,]$value,
-                alternative = "two.sided")
-
-test2 <- t.test(data2[data2$Time == 18 & data2$dose == 1,]$value,
-                data2[data2$Time == 18 & data2$dose == 1e-8,]$value,
-                alternative = "two.sided")
-
-library(magrittr) 
-plot.data <- data2[data2$dose == 1e-8| data2$dose == 0.1 |data2$dose == 1,] %>%
-    dplyr::group_by(dose, Time) %>%
-    dplyr::summarize(avg = mean(value), sem = sd(value)/sqrt(n()))
-
-plot.data[plot.data$dose == 1e-8,]$dose <- 0
-
 #+begin_src R :session *R* :results silent :exports none :eval yes :tangle figure_Rscripts/figure8.R
 ## FIGURE 8 --------------------------------------------------------------------
 ## Figure 8B&D: FD4 permeability is reduced in /E. coli/ colonized HIOs treated with TNF and IFN 
