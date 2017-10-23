@@ -135,7 +135,6 @@ $(FINALTEXT)_compressed_full.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/supplemental/sfigure1_multipanel.png \
 	./figures/figure1/sfigure1-2_tree.png \
 	./figures/figure1/sfigure1-3_multipanel.png \
-	./figures/supplemental/sfigure1_supp2.png \
 	./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png \
 	./figures/supplemental/figure5s1_multipanel.png \
 	./figures/supplemental/sfigure4_supp3.png \
@@ -148,7 +147,6 @@ $(FINALTEXT)_compressed_full.pdf: $(TEXT).tex ./src/bibliography.bib \
 	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement1.pdf}\\" $(TEXT)_compressed_full.tex 
 	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement2.pdf}\\" $(TEXT)_compressed_full.tex
 	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement3.pdf}\\" $(TEXT)_compressed_full.tex  
-	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure1_supplement4.pdf}\\" $(TEXT)_compressed_full.tex
 	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure3_supplement1.pdf}\\" $(TEXT)_compressed_full.tex  
 	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure5_supplement1.pdf}\\" $(TEXT)_compressed_full.tex
 	sed -i "`wc -l < $(TEXT)_compressed_full.tex`i\\\includepdf{./supplements/figure5_supplement2.pdf}\\" $(TEXT)_compressed_full.tex
@@ -212,7 +210,6 @@ $(FINALTEXT)_compressed_full.pdf: $(TEXT).tex ./src/bibliography.bib \
 supplements: ./supplements/figure1_supplement1.pdf \
 	./supplements/figure1_supplement2.pdf \
 	./supplements/figure1_supplement3.pdf \
-	./supplements/figure1_supplement4.pdf \
 	./supplements/figure3_supplement1.pdf \
 	./supplements/figure5_supplement1.pdf \
 	./supplements/figure5_supplement2.pdf \
@@ -249,15 +246,6 @@ supplements: ./supplements/figure1_supplement1.pdf \
 	cp ./src/elsarticle.cls ./
 	cp ./src/vancouver-elife.bst ./
 	mv ./src/figure1_supplement3.pdf ./supplements/figure1_supplement3.pdf
-	rm *.bib *.cls *.bst
-
-./supplements/figure1_supplement4.pdf: ./src/figure1_supplement4.tex
-	pdflatex -output-directory src ./src/figure1_supplement4
-	pdflatex -output-directory src ./src/figure1_supplement4
-	cp ./src/bibliography.bib ./
-	cp ./src/elsarticle.cls ./
-	cp ./src/vancouver-elife.bst ./
-	mv ./src/figure1_supplement4.pdf ./supplements/figure1_supplement4.pdf
 	rm *.bib *.cls *.bst
 
 ./supplements/figure3_supplement1.pdf: ./src/figure3_supplement1.tex

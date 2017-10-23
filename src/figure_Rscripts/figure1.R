@@ -107,6 +107,88 @@ ggsave(filename = "../figures/figure1/eps/figure1c.eps",
        plot = figure1c, 
        width = 16, height = 16)
 
+## Minimum density /E. coli/ required to establish colonization 
+
+## E. coli growth in HIOs
+## Read in data table
+data <- read.table("../data/figure1/ECOR2growth_fig1.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
+## Index of CFU/HIO injected for each Sample condition (A-G)
+sample.table <- read.table("../data/figure1/sample_table_fig1.csv", header = TRUE, sep = ",", stringsAsFactors=FALSE)
+## Generate index of rows in sample table that match
+## the sample labels in data
+id <- match(data$sample,sample.table$sample)
+## create column in data of of CFU/HIO values in sample table
+## in matching rows listed in id
+data$inject <- sample.table[id,]$value
+data$fold <- data$mean/data$inject
+data$increase <- ifelse(data$mean > data$inject,"increase","decrease")
+  
+group <- aggregate(mean ~ inject, data = data, FUN = mean)
+group.sem <- aggregate(mean ~ inject, data = data,
+                       FUN = function(x) sd(x)/sqrt(length(x)))
+group$sem <- group.sem$mean
+
+## ANOVA of mean CFU/HIO among colonized HIOs
+fit <- aov(mean ~ sample, data = data[data$inject >1,])
+fit2 <- lm(log(data[data$inject > 0 & data$fold !=0,]$fold) ~ log(log(data[data$inject > 0 & data$fold !=0,]$inject)), data[data$inject > 0 & data$fold !=0,])
+
+p1c <- summary(fit)[[1]][["Pr(>F)"]][[1]]
+
+## % colonized at < 5 CFU
+pct1 <- round(100*(1-length(rownames(data[data$inject < 5 & data$inject > 1 & data$mean < 1,] ))/length(rownames(data[data$inject < 5 & data$inject > 1 & data$mean > 1,] ))),1)
+
+## % colonized at > 100 CFU
+pct2 <- round(100*(1-length(rownames(data[data$inject > 100 & data$mean < 1,] ))/length(rownames(data[data$inject < 5 & data$inject > 1 & data$mean > 1,] ))),2)
+
+## plot
+library(ggplot2)
+library(grid)
+library(scales)
+source("ggplot2-themes.R")
+
+scientific_10 <- function(x) {
+    parse(text=gsub("e", " %*% 10^", scientific_format()(x)))
+}
+
+## generate stats string for plot
+source("custom_fun.R")
+stats <- lm_eqn(data[data$inject > 0 & data$fold !=0,],
+                data[data$inject > 0 & data$fold !=0,]$inject,
+                data[data$inject > 0 & data$fold !=0,]$mean)
+
+
+fig2c <- ggplot(data, aes(x=inject, y=mean)) +
+    geom_smooth(
+                aes(x=inject, y=mean), colour = "black",
+                size = 2,
+                method = "lm",
+                formula = y ~ x,
+                level = 0.95) +
+  #  geom_boxplot(aes(group = inject), size =2, fill = color.set[2]) +
+    geom_point(size = 8, shape =21, fill = color.set[2]) +
+    scale_fill_brewer(palette = "Set1") + 
+    ylab(latex2exp::TeX("$\\textbf{CFU$\\cdot{}HIO^{-1}_{$\\textit{t}=24}}$")) +
+    xlab("CFU injected per HIO") + theme1 +
+    scale_y_log10(limits = c(1,50000000),
+                  breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    scale_x_log10(limits = c(1,100000),
+                  breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +    
+    annotation_logticks(sides = "bl", size = 2,
+                        short = unit(.75,"mm"),
+                        mid = unit(3,"mm"),
+                        long = unit(5,"mm")) +
+        ## size of stats label
+    annotate("text",x = 1e3, y = 5e7,
+                           label = substr(stats,62,150),
+                           parse = TRUE,
+                           size = 8) +
+    ggtitle("C")
+
+
+print(fig2c)
+
 ## FIGURE 1D --------------------------------------------------------------------
 ## Figure 1D: E. coli grows within the HIO lumen
 ## import data
@@ -262,17 +344,17 @@ figure1a <- grid.arrange(fig, figure1a,
 
 ## PDF output
 pdf(file = "../figures/figure1/figure1_multipanel.pdf", width = 7500/300, height = 7500/300, onefile = FALSE)
-gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e,
+gridExtra::grid.arrange(figure1a, figure1b, fig2c, figure1d, figure1e,
              layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure1/eps/figure1_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e,  layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure1a, figure1b, fig2c, figure1d, figure1e,  layout_matrix = layout), 
        width = 20, height = 20)
 
 ## PNG output
 png(filename = "../figures/figure1/figure1_multipanel.png", width = 2000, height = 2000)
-gridExtra::grid.arrange(figure1a, figure1b, figure1c, figure1d, figure1e, 
+gridExtra::grid.arrange(figure1a, figure1b, fig2c, figure1d, figure1e, 
              layout_matrix = layout)
 dev.off()
