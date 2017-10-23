@@ -195,12 +195,12 @@ dev.off()
 
 library(gridExtra)
 png(filename = "../figures/figure5/figure5b.png", width = 2400, height = 600)
-gridExtra::grid.arrange(figure5b1, figure5b2, ncol = 2)
+gridExtra::grid.arrange(figure5b1, figure5b2, ncol = 1)
 dev.off()
 
 
 ggsave(filename = "../figures/figure5/eps/figure5b.eps", 
-       plot = gridExtra::grid.arrange(figure5b1, figure5b2, ncol = 2), 
+       plot = gridExtra::grid.arrange(figure5b1, figure5b2, ncol = 1), 
        width = 48, height = 12)
 
 ## Output supplemental table with genes in each set
@@ -208,6 +208,43 @@ write.csv(gs1, file = "../results/supplemental/Figure5_Gene_set1.csv")
 write.csv(gs2, file = "../results/supplemental/Figure5_Gene_set2.csv")
 write.csv(gs3, file = "../results/supplemental/Figure5_Gene_set3.csv")
 write.csv(gs4, file = "../results/supplemental/Figure5_Gene_set4.csv")
+
+## import datsets
+library(magrittr)
+gs1 <-readr::read_csv(file = "../results/supplemental/Figure5_Gene_set1.csv")$x
+gs2 <-readr::read_csv(file = "../results/supplemental/Figure5_Gene_set2.csv")$x
+nfkbi.dwn <- readr::read_csv(file = "../results/ECOR2_hypoxia_nfkb/NFkBi_over_PBS.csv")
+nfkbi.dwn <- subset(nfkbi.dwn, nfkbi.dwn$padj < 0.05 & nfkbi.dwn$log2FoldChange < 0)$X1
+
+library(VennDiagram)
+source("ggplot2-themes.R")
+venn.plot <- venn.diagram(list(gs1, gs2, nfkbi.dwn), NULL,
+                          fill = c(color.set[1], color.set[2], color.set[3]),
+                          alpha = 0.5,
+                          lwd = 5,
+                          cex = 4,
+                          fontfamily = "sans",
+                          lty = 0,
+                          cat.font.family,
+                          cat.fontfamily = "sans",
+                          cat.cex = 2.5,
+                          cat.pos = c(-30,30, 180),
+                          cat.dist = c(0.08, 0.08,0.08),
+                          category.names = c("Gene Set I\n(contact induced)",
+                                              "Gene Set II\n(hypoxia-induced)",
+                                              "Genes down-regulated\nby SC-514 at baseline"),
+                          main.cex = 4,
+                          main.fontfamily = "sans",
+                          main.pos =c(0.5,0.025),
+                          scaled = TRUE, euler.d = TRUE)
+
+library(gridExtra)
+library(grid)
+figure5c <- grid.arrange(gTree(children=venn.plot), ncol = 1,
+                         top = textGrob("C", hjust = 7,
+                         gp = gpar(fontsize = 50, font =2)))
+
+print(figure5c)
 
 ## FIGURE 5 --------------------------------------------------------------------
 ## Figure 5C: GO & REACTOME plot
@@ -314,7 +351,7 @@ data$comparison <- gsub("Associated with\nbacterial contact\n", "Gene Set III", 
 data$comparison <- gsub("Associated with\nbacterial hypoxia\n", "Gene Set IV", data$comparison)                 
 
 
-figure5c <- ggplot(data = data[data$comparison != "hk-hypoxia\n" &
+figure5d <- ggplot(data = data[data$comparison != "hk-hypoxia\n" &
                                         #   data$category != "Hypoxia" &
                                              data$category != "NF-kB signaling" &                               
                                               data$comparison != "hk-hypoxia\nSC-514 suppressed",],
@@ -339,14 +376,14 @@ figure5c <- ggplot(data = data[data$comparison != "hk-hypoxia\n" &
 	  panel.spacing.x = unit(0.25, "lines"),
 	  panel.spacing = unit(1.5, "lines"),
 	  panel.border = element_blank(),
-	  legend.key.size = unit(1,"cm")) + ggtitle("C")
+	  legend.key.size = unit(1,"cm")) + ggtitle("D")
 
 
-png(filename = "../figures/figure5/figure5c.png", width = 2400, height = 1550)
-print(figure5c)
+png(filename = "../figures/figure5/figure5d.png", width = 2400, height = 1550)
+print(figure5d)
 dev.off()
-ggsave(filename = "../figures/figure5/eps/figure5c.eps", 
-       plot = figure5c, 
+ggsave(filename = "../figures/figure5/eps/figure5d.eps", 
+       plot = figure5d, 
        width = 48, height = 31)
 
 ## multipanel plot -------------------------------------------------------------
@@ -378,29 +415,30 @@ figure5a <- qplot(1:100, 1:100, alpha = I(0)) +
                       ymax = Inf) +
     img.theme + ggtitle("A") + coord_fixed(ratio = 0.354)
 
-layout <- rbind(c(1),
-                c(1),
-                c(2),
-		c(3),
-                c(3),
-                c(3),
-                c(3))
+layout <- rbind(c(1,1),
+                c(1,1),
+                c(2,3),
+                c(2,3),
+		c(4,4),
+                c(4,4),
+                c(4,4),
+                c(4,4))
 
 library(gridExtra)
 library(grid)
 
-figure5b <- gridExtra::grid.arrange(figure5b1, figure5b2, ncol = 2,
-                                  top = textGrob("B", hjust = 32,
+figure5b <- gridExtra::grid.arrange(figure5b1, figure5b2, ncol = 1,
+                                  top = textGrob("B", hjust = 15,
                                                  gp = gpar(fontsize = 45, font = 2)))
 
 ## PDF output
 pdf(file = "../figures/figure5/figure5_multipanel.pdf", width = 9200/300, height = 14562/300, onefile = FALSE)
-gridExtra::grid.arrange(figure5a, figure5b, figure5c, layout_matrix = layout)
+gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, layout_matrix = layout)
 dev.off()
 
 ## EPS output
 ggsave(filename = "../figures/figure5/eps/figure5_multipanel.eps", 
-       plot = gridExtra::grid.arrange(figure5a, figure5b, figure5c, layout_matrix = layout), 
+       plot = gridExtra::grid.arrange(figure5a, figure5b, figure5c, figure5d, layout_matrix = layout), 
        width = 48, height = 67, limitsize = FALSE, device = "eps")
 
 ## PNG output
