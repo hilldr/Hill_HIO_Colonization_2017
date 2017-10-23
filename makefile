@@ -107,7 +107,7 @@ $(FINALTEXT)_compressed.pdf: $(TEXT).tex ./src/bibliography.bib \
 	# convert -density $(DENSITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.pdf -quality $(QUALITY) ./figures/figure7/Supplemental_Figure4_Muc2-NFkB.png
 	# convert -density $(DENSITY) ./figures/supplemental/sfigure4_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_multipanel.png
 	cp $(TEXT).tex $(TEXT)_compressed.tex
-	sed -i 's/pdf/png/g' $(TEXT)_compressed.tex # use png versions of figures
+	sed -i 's/\.pdf/\.png/g' $(TEXT)_compressed.tex # use png versions of figures
 	pdflatex -output-directory src $(TEXT)_compressed
 	pdflatex -output-directory src $(TEXT)_compressed
 	cp ./src/bibliography.bib ./

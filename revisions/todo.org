@@ -621,7 +621,7 @@ RESPONSE: From the beginning of this project, we have attempted to craft not onl
 
 
 
-* TODO Response from eLife [2017-10-22 Sun] [25%]
+* TODO Response from eLife [2017-10-22 Sun] [100%]
 
 Dear Dr. Spence,
 
@@ -685,10 +685,10 @@ SA List2 Research Organism(s): E. coli, Human
 eLife Sciences Publications, Ltd is a limited liability non-profit non-stock corporation incorporated in the State of Delaware, USA, with company number 5030732, and is registered in the UK with company number FC030576 and branch number BR015634 at the address First Floor, 24 Hills Road, Cambridge CB2 1JP.
 -----
 
-** TODO Omit Figures 6D and E 
+** DONE Omit Figures 6D and E 
 
 ** DONE Replace Figure 1C with Figure 1 - Supplement 4
 
-** TODO Modify Figure 5A to show overlap between Gene Sets I and II
+** DONE Modify Figure 5A to show overlap between Gene Sets I and II
 
-** TODO Attach latest version of JoVE manuscript to Rebuttal letter
+** DONE Attach latest version of JoVE manuscript to Rebuttal letter
