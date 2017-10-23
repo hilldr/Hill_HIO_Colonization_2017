@@ -123,7 +123,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 	)
 #+end_src
 
-* eLife revision due date [99%]
+* DONE eLife revision due date [99%]
    DEADLINE: <2017-09-22 Fri -60d>
    :PROPERTIES:
    :COOKIE_DATA: todo recursive
@@ -621,3 +621,74 @@ RESPONSE: From the beginning of this project, we have attempted to craft not onl
 
 
 
+* TODO Response from eLife [2017-10-22 Sun] [0%]
+
+Dear Dr. Spence,
+
+Thank you for resubmitting your work entitled "Bacterial colonization stimulates a complex physiological response in the immature human intestinal epithelium" for further consideration at eLife. Your revised article has been favorably evaluated by Wendy Garrett (Senior editor), a Reviewing editor, and 3 reviewers.
+
+The manuscript has been improved but there are some remaining issues that need to be addressed before acceptance, as outlined below:
+
+Please can you respond to the critique of reviewer 1 and make corresponding adjustments. We would be glad of your response to the JOVE overlap (see reviewer 3 comments)
+
+Reviewer #1 (General assessment and major comments (Required)):
+
+The authors have gone to considerable efforts to address our major concerns. The improved data presentation and technical information on the technique is much appreciated. A few minor issues remain.
+
+The only issue that remains a little contentious in my eyes is the data presented on "functional effects" of hBD2 In Fig 6D and E. The changes in OD profiles, if these really directly correspond to live bacterial CFU and are not related to cell size/clumping, are really not consistent with standard antimicrobial peptide-mediated killing (or any known antibiotic). As bacteria in stationary phase are largely dormant, it is extremely hard to kill them - this is a holy grail for handling persistent bacterial infections, so if hBD2 really can do this, it would be huge news. You predominantly expect constant killing of rapidly growing cells (early part of your growth curve) leading to a slower increase in OD. The data in Fig.6D actually show faster growth in hBD2 at high concentrations which is decidedly odd. The data in Fig.6-supplement 2 are more consistent with a very small effect on growing cells. If you really want to show an hBD2 effect, one of these graphs would be more suitable. However, I feel this data risks being a very weak point in an otherwise comprehensive and solid data set, and could simply be omitted.
+
+Reviewer #1 (Minor Comments):
+
+The data in Fig1C should be replaced by those from Fig. 1-supplement 4. They are much clearer and the reader is more than capable of working out that bacteria grow in the organoids if you start with a lower number.
+
+Figure 5a diagrams need to be modified to avoid implying that gene sets I and II are mutually exclusive. Potentially this could be exchanged by one of the supplementary figures that acutally demonstrates the overlap?
+
+The comments of Reviewer # 2 are provided as a courtesy. Reviewer #3's comments address providing access to the JoVE ms.
+
+Reviewer #2 (General assessment and major comments (Required)):
+
+The authors have exhaustively addressed technical criticisms and provided a repository for their methodological approaches. Given the manuscript is now to be considered in the Tools and Resources section, my previous concerns regarding the overall biology impact are now irrelevant.
+
+The authors are to be commended for development and validation of this experimental system.
+
+Reviewer #3 (General assessment and major comments (Required)):
+
+The authors have revised the manuscript. The aim of the resubmission was to strengthen technical details of this manuscript and revise/ clarify questionable results to be published in the Tools and Resources section. This revision has been performed very carefully and questions appropriately addressed.
+
+The notice that the technology has been published effectively very detailed in the Journal of Visualized Experiments takes potentially away the technical advance aspect of the publication.
+I couldn't access the JoVE manuscript in the provided https://github.com/hilldr/HIO_microinjection link. Suggest that the JoVE manuscript and film needs to be provided to elife to assess the overlap.
+
+If your revised article is accepted for publication, please note that authors can choose to have their accepted PDF published by eLife within a few days of acceptance, in advance of the version of record that will be subject to technical processing, editing, and author proofing.
+
+Please consider whether this is suitable for your work, so you can select the appropriate option at the time of resubmission. In the event that the study has potentially broad public relevance, we recommend you consult your press officer before taking this decision.
+
+We will look forward to hearing from you with a revised article and a response letter describing the changes made. We hope you will resubmit in a timely manner for further consideration and you can use the following link when you are ready to resubmit:
+
+https://submit.elifesciences.org/cgi-bin/main.plex?el=A2Hz1Orc5B4HPh7I1A9ftdY6owynJMC0GdJVbv1MecnwZ
+
+Best wishes,
+
+Wendy Garrett
+Senior Editor
+
+On behalf of:
+Eve Marder, Deputy Editor
+Fiona Watt, Deputy Editor
+Detlef Weigel, Deputy Editor
+Randy Schekman, Editor-in-Chief
+
+-----
+Subject area information: SA List1 Major Subject Area(s): Developmental Biology and Stem Cells, Microbiology and Infectious Disease
+SA List2 Research Organism(s): E. coli, Human
+
+
+eLife Sciences Publications, Ltd is a limited liability non-profit non-stock corporation incorporated in the State of Delaware, USA, with company number 5030732, and is registered in the UK with company number FC030576 and branch number BR015634 at the address First Floor, 24 Hills Road, Cambridge CB2 1JP.
+-----
+
+** TODO Omit Figures 6D and E 
+
+** TODO Replace Figure 1C with Figure 1 - Supplement 4
+
+** TODO Modify Figure 5A to show overlap between Gene Sets I and II
+
+** TODO Attach latest version of JoVE manuscript to Rebuttal letter

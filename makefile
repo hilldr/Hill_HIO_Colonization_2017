@@ -38,8 +38,8 @@ $(FINALTEXT)_changes.pdf: $(TEXT).tex ./src/bibliography.bib \
 	./figures/figure6/figure6_multipanel.pdf \
 	./figures/figure7/figure7_multipanel.pdf \
 	./figures/figure8/figure8_multipanel.pdf \
-	./revisions/elife-1st-submission.tex
-	latexdiff --type=UNDERLINE -s COLOR ./revisions/elife-1st-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
+	./revisions/elife-2nd-submission.tex
+	latexdiff --type=UNDERLINE -s COLOR ./revisions/elife-2nd-submission.tex $(TEXT).tex > $(TEXT)_changes.tex
 	pdflatex -output-directory src $(TEXT)_changes
 	pdflatex -output-directory src $(TEXT)_changes
 	cp ./src/bibliography.bib ./
