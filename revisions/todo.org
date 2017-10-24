@@ -693,7 +693,7 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 
 ** DONE Attach latest version of JoVE manuscript to Rebuttal letter
 
-* TODO Re-formatting request from eLife [2017-10-24 Tue] [0%]
+* TODO Re-formatting request from eLife [2017-10-24 Tue] [100%]
 Dear Dr. Spence,
 
 Thank you for sending the revised version of your work for consideration at eLife. We have checked your submission and we would like to ask you to address the following points before we proceed:
@@ -718,6 +718,6 @@ eLife Editorial Support
 Phone +44 (0)1223 750665
 http://elifesciences.org/
 
-** TODO Separate main and supplemental figures as separate files
+** DONE Separate main and supplemental figures as separate files
 
-** TODO Include legends for the supplementary figures within the main article file, below the main figure legends.
+** DONE Include legends for the supplementary figures within the main article file, below the main figure legends.

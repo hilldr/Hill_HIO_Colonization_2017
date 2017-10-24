@@ -211,7 +211,7 @@ $(FINALTEXT)_noFigures.pdf: $(TEXTNF).tex ./src/bibliography.bib
 	convert -density $(DENSITY) ./figures/supplemental/sfigure1_supp2.pdf -quality $(QUALITY) ./figures/supplemental/sfigure1_supp2.png
 ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png: ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf
 	convert -density $(DENSITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.pdf -quality $(QUALITY) ./results/ECOR2HIO_24-96-RNAseq/KEGG-pathview/Fig3s1_hsa04110_cellcycle_48.png
-./figures/supplemental/figure5s1_multipanel.png: ./figures/supplemental/figure5s1_multipanel.pdf
+q./figures/supplemental/figure5s1_multipanel.png: ./figures/supplemental/figure5s1_multipanel.pdf
 	convert -density $(DENSITY) ./figures/supplemental/figure5s1_multipanel.pdf -quality $(QUALITY) ./figures/supplemental/figure5s1_multipanel.png
 ./figures/supplemental/sfigure4_supp3.png: ./figures/supplemental/sfigure4_supp3.pdf
 	convert -density $(DENSITY) ./figures/supplemental/sfigure4_supp3.pdf -quality $(QUALITY) ./figures/supplemental/sfigure4_supp3.png
