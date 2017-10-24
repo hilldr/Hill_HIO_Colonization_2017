@@ -621,7 +621,7 @@ RESPONSE: From the beginning of this project, we have attempted to craft not onl
 
 
 
-* TODO Response from eLife [2017-10-22 Sun] [100%]
+* DONE Response from eLife [2017-10-22 Sun] [100%]
 
 Dear Dr. Spence,
 
@@ -692,3 +692,32 @@ eLife Sciences Publications, Ltd is a limited liability non-profit non-stock cor
 ** DONE Modify Figure 5A to show overlap between Gene Sets I and II
 
 ** DONE Attach latest version of JoVE manuscript to Rebuttal letter
+
+* TODO Re-formatting request from eLife [2017-10-24 Tue] [0%]
+Dear Dr. Spence,
+
+Thank you for sending the revised version of your work for consideration at eLife. We have checked your submission and we would like to ask you to address the following points before we proceed:
+
+*We notice that the main figures are appearing within the main article file. At revised submission, figures and figure supplements should be uploaded separately as separate, individual files (e.g., as figure files or figure supplements). Full details can be found on our Author Guide: http://submit.elifesciences.org/html/elife_author_instructions.html
+
+*Please include the legends for the supplementary figures within the main article file, below the main figure legends.
+
+You will find your article marked as "Awaiting Author Approval" on the Author Tasks screen, which you can access via the following link:
+
+https://submit.elifesciences.org/cgi-bin/main.plex?el=A4Hz2Orc6C3HPh4F6A9ftdgp02U7n1UwFEqDbfnGBaiAZ
+
+
+Please make the changes specified above and then submit your paper following the same steps as before. We look forward to checking your files again in the near future, but please let us know if you have any questions.
+
+Best wishes,
+
+Tara
+
+Tara Bristow
+eLife Editorial Support
+Phone +44 (0)1223 750665
+http://elifesciences.org/
+
+** TODO Separate main and supplemental figures as separate files
+
+** TODO Include legends for the supplementary figures within the main article file, below the main figure legends.
