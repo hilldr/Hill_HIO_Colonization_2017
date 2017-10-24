@@ -5,6 +5,7 @@
 ## LaTeX Makefile
 ## define shorthand file names for text
 TEXT=./src/elife_format
+TEXTNF=./src/eLife_nofigures
 TEXTBR=./src/complete_paper
 FINALTEXT=Hill_eLife
 BIORXIV=Hill_bioRxiv
@@ -167,6 +168,20 @@ $(FINALTEXT)_compressed_full.pdf: $(TEXT).tex ./src/bibliography.bib \
 	pdflatex -output-directory src $(TEXT)_compressed_full
 	pdflatex -output-directory src $(TEXT)_compressed_full
 	mv $(TEXT)_compressed_full.pdf $(FINALTEXT)_compressed_full.pdf
+	rm *.bib *.cls *.bst
+
+## output to eLife PDF
+pdf-nofigures: $(FINALTEXT)_noFigures.pdf
+$(FINALTEXT)_noFigures.pdf: $(TEXTNF).tex ./src/bibliography.bib 
+	pdflatex -output-directory src $(TEXTNF)
+	pdflatex -output-directory src $(TEXTNF)
+	cp ./src/bibliography.bib ./
+	cp ./src/elife.cls ./
+	cp ./src/vancouver-elife.bst ./
+	bibtex $(TEXTNF)
+	pdflatex -output-directory src $(TEXTNF)
+	pdflatex -output-directory src $(TEXTNF)
+	mv $(TEXTNF).pdf $(FINALTEXT)_noFigures.pdf
 	rm *.bib *.cls *.bst
 
 ## make PNG versions of figures
